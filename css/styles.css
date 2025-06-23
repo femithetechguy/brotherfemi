@@ -23,10 +23,30 @@ body {
   padding: 80px 0 60px 0;
   text-align: center;
   animation: fadeInDown 1.2s;
+  position: relative;
+  overflow: hidden;
+}
+.hero img[src$="holybible.svg"] {
+  animation: bibleFadeInOut 4s ease-in-out infinite alternate;
+  will-change: transform;
 }
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-40px); }
   to { opacity: 1; transform: translateY(0); }
+}
+@keyframes bibleFadeInOut {
+  0% {
+    opacity: 0.7;
+    transform: scale(0.98) translateY(10px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03) translateY(-5px);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(0.98) translateY(10px);
+  }
 }
 .section, .section#contact {
   background: #fff;
@@ -165,6 +185,13 @@ body {
   box-shadow: 0 2px 12px rgba(2, 136, 209, 0.06);
   transition: transform 0.2s;
 }
+.mentor-card.card, .contact-form {
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid #b3e5fc;
+  box-shadow: 0 8px 32px rgba(2, 136, 209, 0.13);
+}
 .mentor-card:hover {
   transform: scale(1.03);
   box-shadow: 0 6px 24px rgba(2, 136, 209, 0.12);
@@ -249,56 +276,6 @@ body {
 .social-list a:hover {
   color: #0288d1;
   filter: none;
-}
-.hero img[src$="holybible.svg"] {
-  animation: bibleFadeInOut 4s ease-in-out infinite alternate;
-}
-@keyframes bibleFadeInOut {
-  0% {
-    opacity: 0.7;
-    transform: scale(0.98) translateY(10px);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.03) translateY(-5px);
-  }
-  100% {
-    opacity: 0.7;
-    transform: scale(0.98) translateY(10px);
-  }
-}
-@media (max-width: 767px) {
-  .hero { padding: 40px 0 30px 0; }
-  .section { padding: 18px 8px; }
-  .mentor-card { margin-bottom: 16px; }
-  .display-4 { font-size: 2.2rem; }
-  .section#contact {
-    padding: 24px 0 18px 0;
-    border-radius: 16px;
-  }
-  .section#contact .section-title {
-    font-size: 1.4rem;
-    margin-bottom: 18px;
-  }
-  .section .section-title, .hero .section-title, .section-title.royal {
-    font-size: 1.2rem;
-    padding: 4px 12px 4px 8px;
-    margin-bottom: 10px;
-  }
-  .social-icons a,
-  .social-list a {
-    font-size: 1.4rem;
-  }
-  .social-list li,
-  .social-icons a {
-    width: auto;
-    height: auto;
-  }
-  .hero .section-title {
-    font-size: 1.2rem;
-    padding: 4px 12px 4px 8px;
-    margin-bottom: 10px;
-  }
 }
 .contact-form {
   background: #fff;
@@ -400,4 +377,106 @@ body {
   background: none !important;
   margin: 0;
   padding: 0;
+}
+.mentor-card.card {
+  border: 1.5px solid #b3e5fc;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(2, 136, 209, 0.06);
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-bottom: 0;
+}
+.mentor-card.card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 24px rgba(2, 136, 209, 0.12);
+}
+.mentor-card .card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0288d1;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+.animate-section {
+  opacity: 0;
+  transform: translateY(40px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(.4,1.4,.6,1), transform 0.8s cubic-bezier(.4,1.4,.6,1);
+}
+.animate-section.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.fab-contact {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 999;
+  background: linear-gradient(90deg, #0288d1, #4dd0e1);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 6px 24px rgba(2, 136, 209, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+}
+.fab-contact:hover {
+  background: linear-gradient(90deg, #4dd0e1, #0288d1);
+  box-shadow: 0 12px 32px rgba(2, 136, 209, 0.22);
+  transform: scale(1.08);
+}
+.btn, .cta-link, .fab-contact {
+  position: relative;
+  overflow: hidden;
+}
+.btn:active, .cta-link:active, .fab-contact:active {
+  transform: scale(0.97);
+}
+@media (max-width: 767px) {
+  .hero { padding: 40px 0 30px 0; }
+  .section { padding: 18px 8px; }
+  .mentor-card { margin-bottom: 16px; }
+  .display-4 { font-size: 2.2rem; }
+  .section#contact {
+    padding: 24px 0 18px 0;
+    border-radius: 16px;
+  }
+  .section#contact .section-title {
+    font-size: 1.4rem;
+    margin-bottom: 18px;
+  }
+  .section .section-title, .hero .section-title, .section-title.royal {
+    font-size: 1.2rem;
+    padding: 4px 12px 4px 8px;
+    margin-bottom: 10px;
+  }
+  .social-icons a,
+  .social-list a {
+    font-size: 1.4rem;
+  }
+  .social-list li,
+  .social-icons a {
+    width: auto;
+    height: auto;
+  }
+  .hero .section-title {
+    font-size: 1.2rem;
+    padding: 4px 12px 4px 8px;
+    margin-bottom: 10px;
+  }
+  .fab-contact {
+    right: 16px;
+    bottom: 16px;
+    width: 48px;
+    height: 48px;
+    font-size: 1.4rem;
+  }
+  .section-title.with-icon {
+    font-size: 1.2rem;
+  }
 }
