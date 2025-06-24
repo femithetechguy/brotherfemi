@@ -28,7 +28,14 @@ function handleSocialLinks() {
         window.open(url, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
       } else {
         // On mobile, let the link open normally, but add a history state so user can go back
-        history.pushState(null, '', location.href);
+        history.pushState({mobileSocial: true}, '', location.href);
+        // Listen for popstate to reload the page when user returns
+        window.addEventListener('popstate', function popHandler(e) {
+          if (e.state && e.state.mobileSocial) {
+            window.location.reload();
+            window.removeEventListener('popstate', popHandler);
+          }
+        });
       }
     };
     link.addEventListener('click', link._popupHandler, false);
