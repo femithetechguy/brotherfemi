@@ -1,11 +1,19 @@
-body, .navbar-brand, .nav-link, .section-title, .mentor-card, .footer, h1, h2, h5, p, ul, li, a, button, input, textarea {
-  font-family: 'Inter', sans-serif !important;
+body, .navbar-brand, .nav-link, .footer, h1, h2, h5, p, ul, li, a, button, input, textarea {
+  font-family: 'Source Sans Pro', sans-serif !important;
+}
+.section-title, .section-title.royal, .section-title.with-icon {
+  font-family: sans-serif !important;
 }
 body {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(135deg, #e0f7fa 0%, #b3e5fc 60%, #e1f5fe 100%);
   min-height: 100vh;
   color: #17445e;
+  padding: 8px;
+  border: 4px solid;
+  border-image: linear-gradient(90deg, #0288d1 0%, #4dd0e1 100%) 1;
+  border-radius: 24px;
+  box-sizing: border-box;
 }
 .navbar {
   background: linear-gradient(90deg, #0288d1 60%, #e1f5fe 100%);
@@ -430,12 +438,84 @@ body {
   box-shadow: 0 12px 32px rgba(2, 136, 209, 0.22);
   transform: scale(1.08);
 }
+
+/* Floating Action Button (FAB) for Home */
+.fab-home {
+  position: fixed;
+  bottom: 92px;
+  right: 32px;
+  z-index: 1050;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #0288d1, #4dd0e1);
+  color: #fff;
+  border: none;
+  box-shadow: 0 4px 16px rgba(2, 136, 209, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.fab-home:hover, .fab-home:focus {
+  background: linear-gradient(90deg, #4dd0e1, #0288d1);
+  box-shadow: 0 6px 24px rgba(2, 136, 209, 0.28);
+  color: #fff;
+}
+
 .btn, .cta-link, .fab-contact {
   position: relative;
   overflow: hidden;
 }
 .btn:active, .cta-link:active, .fab-contact:active {
   transform: scale(0.97);
+}
+.about-text {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #17445e;
+}
+.instagram-embed-responsive {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  margin: 24px auto;
+  padding-bottom: 120%; /* Aspect ratio for Instagram post */
+  height: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(2, 136, 209, 0.10);
+  background: #fff;
+}
+.instagram-embed-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.about-instagram-img-wrapper {
+  width: 100%;
+  max-width: 540px;
+  margin: 24px auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(2, 136, 209, 0.10);
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+.about-instagram-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 16px;
 }
 @media (max-width: 767px) {
   .hero { padding: 40px 0 30px 0; }
@@ -479,4 +559,20 @@ body {
   .section-title.with-icon {
     font-size: 1.2rem;
   }
+  body {
+    padding: 2px;
+    border-width: 2px;
+    border-radius: 10px;
+  }
+}
+
+/* Ensure Core Values and Heart Cry content font size matches .about-text and general content */
+.section#core-values ul,
+.section#core-values ul li,
+.section#core-values ul li span,
+.section#heart-cry ul,
+.section#heart-cry ul li {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #17445e;
 }
