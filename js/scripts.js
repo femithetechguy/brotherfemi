@@ -35,4 +35,48 @@ function handleSocialLinks() {
   });
 }
 
+// Section entrance animation on scroll
+function animateSectionsOnScroll() {
+  const sections = document.querySelectorAll(".animate-section");
+  const trigger = window.innerHeight * 0.85;
+  sections.forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top < trigger) {
+      section.classList.add("visible");
+    }
+  });
+}
+window.addEventListener("scroll", animateSectionsOnScroll);
+window.addEventListener("DOMContentLoaded", animateSectionsOnScroll);
+
+// Parallax effect for hero SVG
+const heroImg = document.querySelector('.hero img[src$="holybible.svg"]');
+if (heroImg) {
+  window.addEventListener("scroll", function () {
+    const scrolled = window.scrollY;
+    heroImg.style.transform = `translateY(${scrolled * 0.08}px) scale(1)`;
+  });
+}
+
 document.addEventListener('DOMContentLoaded', handleSocialLinks);
+document.addEventListener('DOMContentLoaded', function () {
+  const howjLink = document.querySelector('a[href="https://www.instagram.com/howj_global"]');
+  if (howjLink) {
+    howjLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      const popupWidth = 600;
+      const popupHeight = 700;
+      const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+      const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+      const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+      const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+      const left = dualScreenLeft + (width - popupWidth) / 2;
+      const top = dualScreenTop + (height - popupHeight) / 2;
+      window.open(
+        'https://www.instagram.com/howj_global',
+        'howjPopup',
+        `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes,resizable=yes`
+      );
+    });
+  }
+});
