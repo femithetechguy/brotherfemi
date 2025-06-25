@@ -539,11 +539,16 @@ body {
   box-shadow: 0 4px 24px rgba(44, 62, 80, 0.12);
   background: #fff;
 }
-.youtube-playlist-embed > div {
+.youtube-playlist-embed > div:first-child {
   position: relative;
   width: 100%;
-  padding-bottom: 7%; /* Less tall: 2.5:1 aspect ratio */
+  padding-bottom: 40%; /* 2.5:1 aspect ratio for desktop */
   height: 0;
+}
+@media (max-width: 767px) {
+  .youtube-playlist-embed > div:first-child {
+    padding-bottom: 56.25%; /* Standard 16:9 aspect ratio for mobile */
+  }
 }
 .youtube-playlist-embed iframe {
   display: block !important;
