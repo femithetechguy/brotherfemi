@@ -305,3 +305,614 @@ document.addEventListener('DOMContentLoaded', function () {
     observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['allowfullscreen'] });
   };
 })();
+// --- Dynamic Mentors Rendering ---
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/mentors.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var mentors = Array.isArray(data) ? data : (data.mentors || []);
+      var container = document.getElementById('mentors-list');
+      if (!container) return;
+      container.innerHTML = '';
+      if (Array.isArray(mentors) && mentors.length > 0) {
+        mentors.forEach(function (mentor) {
+          var col = document.createElement('div');
+          col.className = 'col';
+          var card = document.createElement('div');
+          card.className = 'mentor-card card p-3 h-100 text-center';
+          var name = document.createElement('h5');
+          name.className = 'card-title mb-0';
+          name.textContent = mentor.name || '';
+          card.appendChild(name);
+          // Render Ministry as clickable link (without the label) if both Ministry and minstry_url exist
+          if (mentor.Ministry && mentor.minstry_url) {
+            var p = document.createElement('p');
+            p.className = 'mentor-detail';
+            var a = document.createElement('a');
+            a.href = mentor.minstry_url;
+            a.textContent = mentor.Ministry;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.style.wordBreak = 'break-word';
+            a.addEventListener('click', function(e) {
+              if (!isMobile()) {
+                e.preventDefault();
+                var w = 600;
+                var h = 700;
+                var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                var left = dualScreenLeft + (width - w) / 2;
+                var top = dualScreenTop + (height - h) / 2;
+                window.open(mentor.minstry_url, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+              }
+            });
+            p.appendChild(a);
+            card.appendChild(p);
+          }
+          // Render all other properties except name, Ministry, minstry_url
+          Object.keys(mentor).forEach(function(key) {
+            if (key !== 'name' && key !== 'Ministry' && key !== 'minstry_url') {
+              var p = document.createElement('p');
+              p.className = 'mentor-detail';
+              p.textContent = key.charAt(0).toUpperCase() + key.slice(1) + ': ' + mentor[key];
+              card.appendChild(p);
+            }
+          });
+          col.appendChild(card);
+          container.appendChild(col);
+        });
+      } else {
+        container.innerHTML = '<div class="col"><div class="mentor-card card p-3 h-100 text-center">No mentors found.</div></div>';
+      }
+    })
+    .catch(function () {
+      var container = document.getElementById('mentors-list');
+      if (container) {
+        container.innerHTML = '<div class="col"><div class="mentor-card card p-3 h-100 text-center">Unable to load mentors.</div></div>';
+      }
+    });
+});
+// Dynamic rendering of contact/social links in the contact section
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/brotherfemi.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var contactList = (data && data.brotherFemi && Array.isArray(data.brotherFemi.contact)) ? data.brotherFemi.contact : [];
+      var container = document.getElementById('contact-social-list');
+      if (!container) return;
+      container.innerHTML = '';
+      var iconMap = {
+        'Email': 'bi-envelope',
+        'Instagram': 'bi-instagram',
+        'Thread': 'bi-threads',
+        'Tiktok': 'bi-tiktok',
+        'Youtube': 'bi-youtube',
+        'Facebook': 'bi-facebook',
+        'Website': 'bi-globe'
+      };
+      contactList.forEach(function (item) {
+        if (!item.url) return;
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = item.url;
+        a.title = item.type;
+        a.target = (item.type !== 'Email') ? '_blank' : '';
+        a.rel = (item.type !== 'Email') ? 'noopener' : '';
+        var i = document.createElement('i');
+        i.className = 'bi ' + (iconMap[item.type] || 'bi-link');
+        a.appendChild(i);
+        // Popup logic for all except Email
+        if (item.type !== 'Email') {
+          a.addEventListener('click', function(e) {
+            if (!isMobile()) {
+              e.preventDefault();
+              var w = 600;
+              var h = 700;
+              var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+              var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+              var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+              var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+              var left = dualScreenLeft + (width - w) / 2;
+              var top = dualScreenTop + (height - h) / 2;
+              window.open(item.url, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+            }
+          });
+        }
+        li.appendChild(a);
+        container.appendChild(li);
+      });
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/brotherfemi.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var hero = data && data.brotherFemi ? data.brotherFemi : {};
+      var heroTitle = document.querySelector('.hero .display-4');
+      var heroDetails = document.querySelector('.hero .lead');
+      if (heroTitle && hero.title) heroTitle.textContent = hero.title;
+      if (heroDetails && hero.details) heroDetails.textContent = hero.details;
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/brotherfemi.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var heartCry = data && data.brotherFemi && Array.isArray(data.brotherFemi.heartCry) ? data.brotherFemi.heartCry : [];
+      var heartCryList = document.getElementById('heart-cry-list');
+      if (heartCryList) {
+        heartCryList.innerHTML = '';
+        heartCry.forEach(function (item) {
+          var li = document.createElement('li');
+          li.textContent = item;
+          heartCryList.appendChild(li);
+        });
+      }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/brotherfemi.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var coreValues = data && data.brotherFemi && Array.isArray(data.brotherFemi.coreValues) ? data.brotherFemi.coreValues : [];
+      var coreValuesList = document.getElementById('core-values-list');
+      if (coreValuesList) {
+        coreValuesList.innerHTML = '';
+        coreValues.forEach(function (item) {
+          var li = document.createElement('li');
+          var span = document.createElement('span');
+          span.className = 'gold';
+          span.textContent = item;
+          li.appendChild(span);
+          coreValuesList.appendChild(li);
+        });
+      }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/brotherfemi.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var vision = data && data.brotherFemi && data.brotherFemi.vision ? data.brotherFemi.vision : '';
+      var mission = data && data.brotherFemi && data.brotherFemi.mission ? data.brotherFemi.mission : '';
+      var visionEl = document.getElementById('vision-text');
+      var missionEl = document.getElementById('mission-text');
+      if (visionEl && vision) visionEl.textContent = vision;
+      if (missionEl && mission) missionEl.textContent = mission;
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/brotherfemi.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var testimony = data && data.brotherFemi && data.brotherFemi.testimony ? data.brotherFemi.testimony : {};
+      var textArr = Array.isArray(testimony.text) ? testimony.text : [];
+      var urlObj = testimony.url || {};
+      var iframeObj = testimony.iframe || {};
+      var textContainer = document.getElementById('testimony-text');
+      var iframeContainer = document.getElementById('testimony-iframe-container');
+      if (textContainer) {
+        textContainer.innerHTML = '';
+        textArr.forEach(function(paragraph, idx) {
+          var p = document.createElement('p');
+          p.className = 'about-text';
+          // Insert the link only in the first paragraph if urlObj exists
+          if (idx === 0 && urlObj && urlObj.href) {
+            var howjIdx = paragraph.indexOf('HOWJ Atlanta');
+            if (howjIdx !== -1) {
+              var before = paragraph.substring(0, howjIdx);
+              var after = paragraph.substring(howjIdx + 'HOWJ Atlanta'.length);
+              p.append(document.createTextNode(before));
+              var a = document.createElement('a');
+              a.href = urlObj.href;
+              a.target = urlObj.target || '_blank';
+              a.rel = urlObj.rel || 'noopener';
+              a.textContent = 'HOWJ Atlanta';
+              a.style.wordBreak = 'break-word';
+              a.addEventListener('click', function(e) {
+                if (!isMobile()) {
+                  e.preventDefault();
+                  var w = 600;
+                  var h = 700;
+                  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                  var left = dualScreenLeft + (width - w) / 2;
+                  var top = dualScreenTop + (height - h) / 2;
+                  window.open(urlObj.href, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+                }
+              });
+              p.append(a);
+              p.append(document.createTextNode(after));
+            } else {
+              p.textContent = paragraph;
+            }
+          } else {
+            p.textContent = paragraph;
+          }
+          textContainer.appendChild(p);
+          if (idx < textArr.length - 1) {
+            textContainer.appendChild(document.createElement('br'));
+          }
+        });
+      }
+      if (iframeContainer && iframeObj && iframeObj.src) {
+        iframeContainer.innerHTML = '';
+        var iframe = document.createElement('iframe');
+        iframe.src = iframeObj.src;
+        if ('allowtransparency' in iframeObj) iframe.allowTransparency = iframeObj.allowtransparency;
+        if ('allowfullscreen' in iframeObj) iframe.allowFullscreen = iframeObj.allowfullscreen;
+        if ('frameborder' in iframeObj) iframe.frameBorder = iframeObj.frameborder;
+        if ('scrolling' in iframeObj) iframe.scrolling = iframeObj.scrolling;
+        iframeContainer.appendChild(iframe);
+      }
+    });
+});
+function addInstagramPopupOverlay() {
+  var igIframeContainer = document.getElementById('testimony-iframe-container');
+  if (igIframeContainer) {
+    var iframe = igIframeContainer.querySelector('iframe');
+    if (iframe && !igIframeContainer.querySelector('.ig-popup-overlay')) {
+      igIframeContainer.style.position = 'relative';
+      var overlay = document.createElement('div');
+      overlay.className = 'ig-popup-overlay';
+      overlay.style.position = 'absolute';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.cursor = 'pointer';
+      overlay.style.zIndex = 10;
+      overlay.style.background = 'transparent';
+      overlay.title = 'Open Instagram Post';
+      overlay.addEventListener('click', function(e) {
+        e.preventDefault();
+        var w = 600;
+        var h = 700;
+        var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+        var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+        var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        var left = dualScreenLeft + (width - w) / 2;
+        var top = dualScreenTop + (height - h) / 2;
+        window.open(iframe.src, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+      });
+      igIframeContainer.appendChild(overlay);
+    }
+  }
+}
+document.addEventListener('DOMContentLoaded', function () {
+  // Add overlay after any dynamic rendering
+  setTimeout(addInstagramPopupOverlay, 500);
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/sections.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      sections.forEach(function(section) {
+        var sectionEl = document.getElementById(section.id);
+        if (sectionEl) {
+          var titleEl = sectionEl.querySelector('.section-title');
+          if (titleEl && section.title) {
+            // Only update the text node, preserve icons and classes
+            var icon = titleEl.querySelector('i');
+            titleEl.innerHTML = '';
+            if (icon) titleEl.appendChild(icon);
+            var textNode = document.createTextNode(' ' + section.title);
+            titleEl.appendChild(textNode);
+          }
+        }
+      });
+      // --- Footer Logic ---
+      if (data.footer) {
+        var footer = document.querySelector('footer.footer .container');
+        if (footer) {
+          footer.innerHTML = '';
+          // Get current year
+          var year = (data.footer.year && !isNaN(data.footer.year)) ? data.footer.year : new Date().getFullYear();
+          // Replace {year} in copyright string
+          var copyright = data.footer.copyright ? data.footer.copyright.replace(/\{year\}/g, year) : '';
+          if (copyright) {
+            var p = document.createElement('p');
+            p.className = 'mb-1';
+            p.textContent = copyright;
+            footer.appendChild(p);
+          }
+          if (data.footer.subtitle) {
+            var small = document.createElement('small');
+            small.textContent = data.footer.subtitle;
+            footer.appendChild(small);
+          }
+        }
+      }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/sections.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      var worshipSection = sections.find(function (s) { return s.id === 'worship'; });
+      if (worshipSection) {
+        var worshipSectionEl = document.getElementById('worship');
+        if (worshipSectionEl) {
+          // Remove existing static text nodes
+          var titleEl = worshipSectionEl.querySelector('.section-title');
+          var aboutTexts = worshipSectionEl.querySelectorAll('.about-text');
+          aboutTexts.forEach(function (el) { el.remove(); });
+          // Insert bible verse in quotes first if present
+          var lastInserted = titleEl;
+          if (worshipSection.bibleVerse) {
+            var pVerse = document.createElement('p');
+            pVerse.className = 'about-text';
+            pVerse.textContent = '"' + worshipSection.bibleVerse + '"';
+            if (lastInserted && lastInserted.nextSibling) {
+              worshipSectionEl.insertBefore(pVerse, lastInserted.nextSibling);
+            } else {
+              worshipSectionEl.appendChild(pVerse);
+            }
+            lastInserted = pVerse;
+          }
+          // Insert reference if present
+          if (worshipSection.reference) {
+            var ref;
+            if (worshipSection.bible_url) {
+              ref = document.createElement('a');
+              ref.href = worshipSection.bible_url;
+              ref.target = '_blank';
+              ref.rel = 'noopener';
+              ref.style.fontSize = '1rem';
+              ref.style.color = '#0288d1';
+              ref.textContent = '\u2014 ' + worshipSection.reference;
+              // Popup logic for desktop, normal for mobile
+              ref.addEventListener('click', function(e) {
+                if (!isMobile()) {
+                  e.preventDefault();
+                  var w = 600;
+                  var h = 700;
+                  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                  var left = dualScreenLeft + (width - w) / 2;
+                  var top = dualScreenTop + (height - h) / 2;
+                  window.open(worshipSection.bible_url, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+                }
+              });
+            } else {
+              ref = document.createElement('span');
+              ref.style.fontSize = '1rem';
+              ref.style.color = '#0288d1';
+              ref.textContent = '\u2014 ' + worshipSection.reference;
+            }
+            // Insert after the verse
+            if (lastInserted) {
+              lastInserted.appendChild(document.createElement('br'));
+              lastInserted.appendChild(ref);
+            } else {
+              worshipSectionEl.appendChild(ref);
+            }
+            // No update to lastInserted, keep it for text
+          }
+          // Insert dynamic text
+          if (Array.isArray(worshipSection.text)) {
+            worshipSection.text.forEach(function (paragraph) {
+              var p = document.createElement('p');
+              p.className = 'about-text';
+              p.textContent = paragraph;
+              worshipSectionEl.appendChild(p);
+            });
+          } else if (typeof worshipSection.text === 'string') {
+            var p = document.createElement('p');
+            p.className = 'about-text';
+            p.textContent = worshipSection.text;
+            worshipSectionEl.appendChild(p);
+          }
+          // YouTube iframe is already present in the HTML after dynamic text
+        }
+      }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/sections.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      // --- Worship Section Logic (already present) ---
+      // --- The Word Section Logic ---
+      var wordSection = sections.find(function (s) { return s.id === 'the-word'; });
+      if (wordSection) {
+        var wordSectionEl = document.getElementById('the-word');
+        if (wordSectionEl) {
+          // Remove existing static text nodes
+          var titleEl = wordSectionEl.querySelector('.section-title');
+          var aboutTexts = wordSectionEl.querySelectorAll('.about-text');
+          aboutTexts.forEach(function (el) { el.remove(); });
+          // Insert bible verse in quotes first if present
+          var lastInserted = titleEl;
+          if (wordSection.bibleVerse) {
+            var pVerse = document.createElement('p');
+            pVerse.className = 'about-text';
+            pVerse.textContent = '"' + wordSection.bibleVerse + '"';
+            if (lastInserted && lastInserted.nextSibling) {
+              wordSectionEl.insertBefore(pVerse, lastInserted.nextSibling);
+            } else {
+              wordSectionEl.appendChild(pVerse);
+            }
+            lastInserted = pVerse;
+          }
+          // Insert reference if present
+          if (wordSection.reference) {
+            var ref;
+            if (wordSection.bible_url) {
+              ref = document.createElement('a');
+              ref.href = wordSection.bible_url;
+              ref.target = '_blank';
+              ref.rel = 'noopener';
+              ref.style.fontSize = '1rem';
+              ref.style.color = '#0288d1';
+              ref.textContent = '\u2014 ' + wordSection.reference;
+              ref.addEventListener('click', function(e) {
+                if (!isMobile()) {
+                  e.preventDefault();
+                  var w = 600;
+                  var h = 700;
+                  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                  var left = dualScreenLeft + (width - w) / 2;
+                  var top = dualScreenTop + (height - h) / 2;
+                  window.open(wordSection.bible_url, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+                }
+              });
+            } else {
+              ref = document.createElement('span');
+              ref.style.fontSize = '1rem';
+              ref.style.color = '#0288d1';
+              ref.textContent = '\u2014 ' + wordSection.reference;
+            }
+            if (lastInserted) {
+              lastInserted.appendChild(document.createElement('br'));
+              lastInserted.appendChild(ref);
+            } else {
+              wordSectionEl.appendChild(ref);
+            }
+          }
+          // Insert dynamic text
+          if (Array.isArray(wordSection.text)) {
+            wordSection.text.forEach(function (paragraph) {
+              var p = document.createElement('p');
+              p.className = 'about-text';
+              p.textContent = paragraph;
+              wordSectionEl.appendChild(p);
+            });
+          } else if (typeof wordSection.text === 'string') {
+            var p = document.createElement('p');
+            p.className = 'about-text';
+            p.textContent = wordSection.text;
+            wordSectionEl.appendChild(p);
+          }
+          // YouTube iframe is already present in the HTML after dynamic text
+        }
+      }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/sections.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      // --- Worship Section Logic (already present) ---
+      // --- The Word Section Logic (already present) ---
+      // --- Hymns Section Logic ---
+      var hymnsSection = sections.find(function (s) { return s.id === 'hymns'; });
+      if (hymnsSection) {
+        var hymnsSectionEl = document.getElementById('hymns');
+        if (hymnsSectionEl) {
+          // Remove existing static text nodes
+          var titleEl = hymnsSectionEl.querySelector('.section-title');
+          var aboutTexts = hymnsSectionEl.querySelectorAll('.about-text');
+          aboutTexts.forEach(function (el) { el.remove(); });
+          // Insert bible verse in quotes first if present
+          var lastInserted = titleEl;
+          if (hymnsSection.bibleVerse) {
+            var pVerse = document.createElement('p');
+            pVerse.className = 'about-text';
+            pVerse.textContent = '"' + hymnsSection.bibleVerse + '"';
+            if (lastInserted && lastInserted.nextSibling) {
+              hymnsSectionEl.insertBefore(pVerse, lastInserted.nextSibling);
+            } else {
+              hymnsSectionEl.appendChild(pVerse);
+            }
+            lastInserted = pVerse;
+          }
+          // Insert reference if present
+          if (hymnsSection.reference) {
+            var ref;
+            if (hymnsSection.bible_url) {
+              ref = document.createElement('a');
+              ref.href = hymnsSection.bible_url;
+              ref.target = '_blank';
+              ref.rel = 'noopener';
+              ref.style.fontSize = '1rem';
+              ref.style.color = '#0288d1';
+              ref.textContent = '\u2014 ' + hymnsSection.reference;
+              ref.addEventListener('click', function(e) {
+                if (!isMobile()) {
+                  e.preventDefault();
+                  var w = 600;
+                  var h = 700;
+                  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                  var left = dualScreenLeft + (width - w) / 2;
+                  var top = dualScreenTop + (height - h) / 2;
+                  window.open(hymnsSection.bible_url, '_blank', 'width='+w+',height='+h+',top='+top+',left='+left+',resizable,scrollbars');
+                }
+              });
+            } else {
+              ref = document.createElement('span');
+              ref.style.fontSize = '1rem';
+              ref.style.color = '#0288d1';
+              ref.textContent = '\u2014 ' + hymnsSection.reference;
+            }
+            if (lastInserted) {
+              lastInserted.appendChild(document.createElement('br'));
+              lastInserted.appendChild(ref);
+            } else {
+              hymnsSectionEl.appendChild(ref);
+            }
+          }
+          // Insert dynamic text
+          if (Array.isArray(hymnsSection.text)) {
+            hymnsSection.text.forEach(function (paragraph) {
+              var p = document.createElement('p');
+              p.className = 'about-text';
+              p.textContent = paragraph;
+              hymnsSectionEl.appendChild(p);
+            });
+          } else if (typeof hymnsSection.text === 'string') {
+            var p = document.createElement('p');
+            p.className = 'about-text';
+            p.textContent = hymnsSection.text;
+            hymnsSectionEl.appendChild(p);
+          }
+          // YouTube iframe is already present in the HTML after dynamic text
+        }
+      }
+    });
+});
+document.addEventListener('DOMContentLoaded', function () {
+  fetch('text/sections.json')
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      // --- Footer Logic ---
+      if (data.footer) {
+        var footer = document.querySelector('footer.footer .container');
+        if (footer) {
+          footer.innerHTML = '';
+          // Get current year
+          var year = (data.footer.year && !isNaN(data.footer.year)) ? data.footer.year : new Date().getFullYear();
+          // Replace {year} in copyright string
+          var copyright = data.footer.copyright ? data.footer.copyright.replace(/\{year\}/g, year) : '';
+          if (copyright) {
+            var p = document.createElement('p');
+            p.className = 'mb-1';
+            p.textContent = copyright;
+            footer.appendChild(p);
+          }
+          if (data.footer.subtitle) {
+            var small = document.createElement('small');
+            small.textContent = data.footer.subtitle;
+            footer.appendChild(small);
+          }
+        }
+      }
+    });
+});
