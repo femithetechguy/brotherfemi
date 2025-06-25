@@ -443,7 +443,7 @@ body {
 .fab-home {
   position: fixed;
   bottom: 92px;
-  right: 32px;
+  right: 0px;
   z-index: 1050;
   width: 56px;
   height: 56px;
@@ -479,44 +479,86 @@ body {
   line-height: 1.7;
   color: #17445e;
 }
+
+/* Responsive YouTube playlist embed */
+.youtube-playlist-embed {
+  max-width: 560px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(44, 62, 80, 0.12);
+  background: #fff;
+}
+.youtube-playlist-embed > div {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+}
+.youtube-playlist-embed iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.youtube-playlist-embed > div:last-child {
+  padding: 1.25rem 1rem 1.15rem 1rem;
+  background: linear-gradient(90deg, #f8fafc 60%, #e3f2fd 100%);
+  text-align: center;
+  min-height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.youtube-playlist-embed > div:last-child span {
+  font-weight: 600;
+  color: #0288d1;
+  font-size: 1.15rem;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.youtube-playlist-embed > div:last-child i {
+  color: #ff0000;
+  font-size: 1.3em;
+}
+
+/* Instagram embed responsive */
 .instagram-embed-responsive {
   position: relative;
   width: 100%;
-  max-width: 540px;
-  margin: 24px auto;
-  padding-bottom: 120%; /* Aspect ratio for Instagram post */
+  max-width: 400px;
+  margin: 2rem auto 0 auto;
+  padding-bottom: 120%;
   height: 0;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(2, 136, 209, 0.10);
-  background: #fff;
 }
+@media (min-width: 768px) {
+  .instagram-embed-responsive {
+    margin-bottom: 0.5rem !important;
+    padding-bottom: 41% !important;
+  }
+  #about {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+}
+
 .instagram-embed-responsive iframe {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border: none;
-}
-.about-instagram-img-wrapper {
-  width: 100%;
-  max-width: 540px;
-  margin: 24px auto;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 24px rgba(2, 136, 209, 0.10);
+  border: 0;
+  border-radius: 12px;
   background: #fff;
-  display: flex;
-  justify-content: center;
 }
-.about-instagram-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  border-radius: 16px;
-}
+
 @media (max-width: 767px) {
   .hero { padding: 40px 0 30px 0; }
   .section { padding: 18px 8px; }
@@ -575,4 +617,45 @@ body {
   font-size: 1.15rem;
   line-height: 1.7;
   color: #17445e;
+}
+
+/* Fun animation for the YouTube playlist embed wrapper */
+.playlist-animate {
+  animation: playlistBounce 2.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s 1 both, playlistGlow 3.5s ease-in-out 0.2s infinite alternate;
+  will-change: transform, box-shadow;
+}
+
+@keyframes playlistBounce {
+  0% {
+    transform: scale(0.92) rotate(-2deg);
+    box-shadow: 0 2px 16px rgba(44, 62, 80, 0.10);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.04) rotate(2deg);
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.18);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.98) rotate(-1deg);
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.14);
+  }
+  80% {
+    transform: scale(1.01) rotate(1deg);
+    box-shadow: 0 6px 28px rgba(44, 62, 80, 0.16);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    box-shadow: 0 4px 24px rgba(44, 62, 80, 0.12);
+    opacity: 1;
+  }
+}
+
+@keyframes playlistGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(2, 136, 209, 0.12), 0 4px 24px rgba(44, 62, 80, 0.12);
+  }
+  100% {
+    box-shadow: 0 0 24px 8px rgba(2, 136, 209, 0.18), 0 4px 24px rgba(44, 62, 80, 0.12);
+  }
 }
