@@ -87,3 +87,52 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 });
+function getCenteredPopupSpecs(popupWidth, popupHeight) {
+  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+  var left = dualScreenLeft + (width - popupWidth) / 2;
+  var top = dualScreenTop + (height - popupHeight) / 2;
+  return `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes,resizable=yes`;
+}
+// Handle popup behavior for About section links and Instagram embed
+function handlePopupLinks() {
+  // All links in .about-text and Instagram embed
+  var aboutLinks = document.querySelectorAll('.about-text a, .instagram-embed-responsive a');
+  aboutLinks.forEach(function(link) {
+    link.removeEventListener('click', link._popupHandler, false);
+    link._popupHandler = function(e) {
+      if (!isMobile()) {
+        e.preventDefault();
+        var url = link.getAttribute('href');
+        var specs = getCenteredPopupSpecs(600, 700);
+        window.open(url, '_blank', specs);
+      }
+    };
+    link.addEventListener('click', link._popupHandler, false);
+  });
+  // For Instagram iframe, overlay a transparent div to capture click
+  var instaIframe = document.querySelector('.instagram-embed-responsive iframe');
+  if (instaIframe && !isMobile()) {
+    var overlay = document.createElement('div');
+    overlay.style.position = 'absolute';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.cursor = 'pointer';
+    overlay.style.zIndex = 10;
+    overlay.style.background = 'transparent';
+    overlay.title = 'Open Instagram Post';
+    overlay.addEventListener('click', function(e) {
+      e.preventDefault();
+      var specs = getCenteredPopupSpecs(600, 700);
+      window.open(instaIframe.src, '_blank', specs);
+    });
+    var parent = instaIframe.parentElement;
+    parent.style.position = 'relative';
+    parent.appendChild(overlay);
+  }
+}
+document.addEventListener('DOMContentLoaded', handlePopupLinks);
