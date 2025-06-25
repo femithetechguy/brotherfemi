@@ -139,9 +139,11 @@ document.addEventListener('DOMContentLoaded', handlePopupLinks);
 // Blog iframe modal logic
 function handleBlogReadMore() {
   const modal = document.getElementById('blog-iframe-modal');
+  if (!modal) return; // Prevent error if modal is missing
   const iframe = modal.querySelector('iframe');
   const closeBtn = modal.querySelector('.blog-iframe-close');
   const backdrop = modal.querySelector('.blog-iframe-backdrop');
+  if (!iframe || !closeBtn || !backdrop) return;
   document.querySelectorAll('.read-more-btn').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
@@ -172,6 +174,12 @@ const blogModal = document.getElementById('blogModal');
 const blogModalIframe = document.getElementById('blogModalIframe');
 const blogModalClose = document.querySelector('.blog-modal-close');
 const blogModalBackdrop = document.querySelector('.blog-modal-backdrop');
+
+function closeBlogModal() {
+  blogModal.style.display = 'none';
+  blogModalIframe.src = '';
+  document.body.style.overflow = '';
+}
 
 function openBlogPopupWindow(blogFile) {
   const popupWidth = 900;
@@ -212,3 +220,88 @@ window.addEventListener('keydown', function(e) {
     closeBlogModal();
   }
 });
+document.addEventListener('DOMContentLoaded', function () {
+  // Remove allowfullscreen from all YouTube iframes (for any legacy iframes)
+  var ytIframes = document.querySelectorAll('iframe[src*="youtube.com"]');
+  ytIframes.forEach(function(iframe) {
+    iframe.removeAttribute('allowfullscreen');
+  });
+});
+
+// --- Robust YouTube one-at-a-time playback using IFrame API ---
+// Remove any previous static iframe logic for pausing
+(function() {
+  // Playlist IDs for each section
+  var ytSections = [
+    {id: 'yt-worship', playlist: 'PL9GoCpwDjkCU10rmhe9Y1Lw4ckTci4RvK'},
+    {id: 'yt-word', playlist: 'PL9GoCpwDjkCVmKkD32sPz78wI8IBvYkZ5'},
+    {id: 'yt-hymns', playlist: 'PL9GoCpwDjkCX5gXgnt6Xb0gQi0gCRfVgN'}
+  ];
+  var ytPlayers = [];
+  var currentlyPlaying = null;
+
+  // Load the YouTube IFrame API if not already present
+  if (!window.YT || !window.YT.Player) {
+    var tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    document.body.appendChild(tag);
+  }
+
+  window.onYouTubeIframeAPIReady = function() {
+    ytSections.forEach(function(section, idx) {
+      var el = document.getElementById(section.id);
+      if (!el) return;
+      ytPlayers[idx] = new YT.Player(section.id, {
+        height: '315',
+        width: '560',
+        playerVars: {
+          listType: 'playlist',
+          list: section.playlist,
+          rel: 0,
+          modestbranding: 1
+        },
+        events: {
+          'onStateChange': function(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+              currentlyPlaying = event.target;
+              ytPlayers.forEach(function(other) {
+                if (other && other !== event.target) {
+                  other.pauseVideo();
+                }
+              });
+            }
+          },
+          'onReady': function(event) {
+            var iframe = event.target.getIframe();
+            if (iframe) {
+              iframe.removeAttribute('allowfullscreen');
+              // Set accessible title attribute for screen readers
+              var titles = ['Worship & Adoration', 'The Word', 'Hymns'];
+              iframe.setAttribute('title', titles[idx] || 'YouTube Playlist');
+            }
+            // Try to overlay a div over the fullscreen button
+            setTimeout(function() {
+              try {
+                var parent = iframe.parentElement;
+                if (parent && !parent.querySelector('.ytp-fullscreen-button-cover')) {
+                  var cover = document.createElement('div');
+                  cover.className = 'ytp-fullscreen-button-cover';
+                  parent.appendChild(cover);
+                }
+              } catch (e) {}
+            }, 1000); // Wait for YouTube controls to render
+          }
+        }
+      });
+    });
+    // MutationObserver to keep removing allowfullscreen from all YouTube iframes
+    var observer = new MutationObserver(function() {
+      document.querySelectorAll('iframe[src*="youtube.com/embed/"], .ytp-fullscreen-button-cover').forEach(function(iframe) {
+        if (iframe.hasAttribute && iframe.hasAttribute('allowfullscreen')) {
+          iframe.removeAttribute('allowfullscreen');
+        }
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['allowfullscreen'] });
+  };
+})();
