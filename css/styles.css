@@ -542,19 +542,22 @@ body {
 .youtube-playlist-embed > div {
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%;
+  padding-bottom: 7%; /* Less tall: 2.5:1 aspect ratio */
   height: 0;
 }
 .youtube-playlist-embed iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
+  display: block !important;
+  max-width: 100%;
+  margin: 0 auto;
+  min-height: 170px; /* Reduce min-height for a more compact look */
+  padding: 0 !important;
+  background: #fff;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
 }
 .youtube-playlist-embed > div:last-child {
-  padding: 1.25rem 1rem 1.15rem 1rem;
+  padding: 0.5rem 1rem 2.5rem 1rem; /* Increase bottom padding for the whole label area */
   background: linear-gradient(90deg, #f8fafc 60%, #e3f2fd 100%);
   text-align: center;
   min-height: 3.2rem;
@@ -564,16 +567,32 @@ body {
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
 }
-.youtube-playlist-embed > div:last-child span {
+.youtube-playlist-label {
+  padding: 2.5rem 1rem 2.5rem 1rem;
+  background: linear-gradient(90deg, #f8fafc 60%, #e3f2fd 100%);
+  text-align: center;
+  min-height: 3.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+.youtube-playlist-label-text {
   font-weight: 600;
   color: #0288d1;
   font-size: 1.15rem;
   line-height: 1.3;
-  display: flex;
+  display: inline-block;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.5em 1em 0.5em 1em;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
-.youtube-playlist-embed > div:last-child i {
+.youtube-playlist-label-text i.bi-youtube {
   color: #ff0000;
   font-size: 1.3em;
 }
@@ -679,11 +698,11 @@ body {
   color: #17445e;
 }
 
-/* Fun animation for the YouTube playlist embed wrapper */
+/* Remove animation from YouTube playlist embed wrapper */
 .playlist-animate {
-  animation: playlistBounce 2.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s 1 both,
-    playlistGlow 3.5s ease-in-out 0.2s infinite alternate;
-  will-change: transform, box-shadow;
+  /* animation: playlistBounce 2.5s cubic-bezier(0.23, 1, 0.32, 1) 0.2s 1 both,
+    playlistGlow 3.5s ease-in-out 0.2s infinite alternate; */
+  will-change: auto;
 }
 
 @keyframes playlistBounce {
@@ -819,4 +838,33 @@ body {
 }
 .blog-modal iframe {
   display: none;
+}
+
+/* Overlay to block YouTube fullscreen button (desktop and mobile) */
+.youtube-playlist-embed .ytp-fullscreen-button-cover {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
+  z-index: 1000;
+  background: transparent;
+  pointer-events: auto;
+  cursor: not-allowed;
+}
+@media (max-width: 767px) {
+  .youtube-playlist-embed .ytp-fullscreen-button-cover {
+    right: 4px;
+    bottom: 4px;
+    width: 28px;
+    height: 28px;
+  }
+}
+/* Optionally, hide the native fullscreen button visually (extra robustness) */
+iframe[src*="youtube.com"]::-webkit-media-controls-fullscreen-button,
+iframe[src*="youtube.com"] .ytp-fullscreen-button,
+iframe[src*="youtube.com"] + div .ytp-fullscreen-button {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
 }
