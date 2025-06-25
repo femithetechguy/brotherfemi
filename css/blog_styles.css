@@ -116,6 +116,141 @@ pre, code {
   opacity: 1;
 }
 
+/* Social media button styles */
+.blog-social-bar {
+  display: flex;
+  justify-content: center;
+  gap: 2.2rem;
+  margin-bottom: 1.2rem;
+}
+.blog-social-bar button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.3em 0.6em;
+  border-radius: 50%;
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  font-size: 1.7rem;
+  position: relative;
+  color: #0288d1;
+  box-shadow: 0 2px 8px 0 rgba(2,136,209,0.07);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.blog-social-bar button:hover, .blog-social-bar button:focus {
+  background: #e3f2fd;
+  box-shadow: 0 4px 16px 0 rgba(2,136,209,0.13);
+  color: #d81b60;
+}
+.blog-social-bar .bi {
+  font-size: 1.7rem;
+  pointer-events: none;
+  transition: color 0.18s;
+}
+.blog-like-btn:hover .bi-heart {
+  color: #d81b60;
+}
+.blog-comment-btn:hover .bi-chat {
+  color: #43a047;
+}
+.blog-share-btn:hover .bi-share {
+  color: #fbc02d;
+}
+.blog-count {
+  font-size: 1.05rem;
+  color: #555;
+  margin-left: 0.38em;
+  font-weight: 500;
+  vertical-align: middle;
+  user-select: none;
+  pointer-events: none;
+  transition: color 0.18s;
+}
+.blog-like-btn:hover .blog-like-count {
+  color: #d81b60;
+}
+.blog-comment-btn:hover .blog-comment-count {
+  color: #43a047;
+}
+
+/* Animation for liked heart icon */
+.blog-like-btn.liked .bi-heart {
+  color: #d81b60 !important;
+  animation: blog-like-pop 0.35s cubic-bezier(.4,2,.6,1) 1;
+}
+.blog-like-btn.locked .bi-heart {
+  color: #d81b60 !important;
+  animation: none;
+}
+@keyframes blog-like-pop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.35); }
+  60% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* Make the like button background fill with red and the heart icon white after being clicked, for a filled effect */
+.blog-like-btn.liked,
+.blog-like-btn.locked {
+  background: #ffdbe7 !important;
+  box-shadow: 0 4px 16px 0 rgba(216,27,96,0.13);
+}
+.blog-like-btn.liked .bi-heart,
+.blog-like-btn.locked .bi-heart {
+  color: #fff !important;
+  background: #d81b60;
+  border-radius: 50%;
+  padding: 0.18em;
+  box-shadow: 0 2px 8px 0 rgba(216,27,96,0.13);
+}
+
+/* Animation for shared icon */
+.blog-share-btn.shared .bi-share {
+  color: #43a047 !important;
+  animation: blog-share-pop 0.35s cubic-bezier(.4,2,.6,1) 1;
+}
+@keyframes blog-share-pop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.25) rotate(-10deg); }
+  60% { transform: scale(0.95) rotate(7deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* Toast message for sharing */
+.blog-share-toast {
+  position: absolute;
+  left: 50%;
+  top: 110%;
+  transform: translateX(-50%) scale(0.95);
+  background: #43a047;
+  color: #fff;
+  padding: 0.45em 1.2em;
+  border-radius: 1.2em;
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1200;
+  box-shadow: 0 2px 12px 0 rgba(67,160,71,0.13);
+  transition: opacity 0.22s, transform 0.22s;
+  white-space: nowrap;
+}
+.blog-share-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+.blog-social-bar {
+  position: relative;
+}
+@media (max-width: 600px) {
+  .blog-share-toast {
+    font-size: 0.92rem;
+    padding: 0.35em 0.9em;
+  }
+}
+
 /* Responsive */
 @media (max-width: 600px) {
   .blog-container {
@@ -134,5 +269,57 @@ pre, code {
     width: 36px;
     height: 36px;
     font-size: 1.5rem;
+  }
+  .blog-social-bar {
+    gap: 1.2rem;
+    margin-bottom: 0.7rem;
+  }
+  .blog-social-bar button {
+    font-size: 1.2rem;
+    padding: 0.2em 0.4em;
+  }
+  .blog-social-bar .bi {
+    font-size: 1.2rem;
+  }
+  .blog-count {
+    font-size: 0.92rem;
+    margin-left: 0.22em;
+  }
+}
+
+/* Home button styles */
+.blog-home-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.3em 0.6em;
+  border-radius: 50%;
+  font-size: 1.7rem;
+  color: #0288d1;
+  box-shadow: 0 2px 8px 0 rgba(2,136,209,0.07);
+  margin-left: 0.1em;
+  transition: background 0.18s, box-shadow 0.18s, color 0.18s;
+  text-decoration: none;
+}
+.blog-home-btn:hover, .blog-home-btn:focus {
+  background: #e3f2fd;
+  color: #1976d2;
+  box-shadow: 0 4px 16px 0 rgba(2,136,209,0.13);
+}
+.blog-home-btn .bi-house-door {
+  font-size: 1.7rem;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .blog-home-btn {
+    font-size: 1.2rem;
+    padding: 0.2em 0.4em;
+  }
+  .blog-home-btn .bi-house-door {
+    font-size: 1.2rem;
   }
 }
