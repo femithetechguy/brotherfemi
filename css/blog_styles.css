@@ -1,6 +1,6 @@
 /* Faith-inspired, modern, readable blog styles for modal iframe */
 body {
-  font-family: 'Source Sans Pro', 'Inter', Arial, sans-serif;
+  font-family: "Source Sans Pro", "Inter", Arial, sans-serif;
   background: linear-gradient(120deg, #f8fafc 60%, #e3f2fd 100%);
   color: #222;
   margin: 0;
@@ -11,14 +11,19 @@ body {
 .blog-container {
   max-width: 700px;
   margin: 2.5rem auto 2rem auto;
-  background: rgba(255,255,255,0.98);
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 1.2rem;
-  box-shadow: 0 4px 32px 0 rgba(0,0,0,0.10);
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
   padding: 2.5rem 1.5rem 2rem 1.5rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Source Sans Pro', 'Inter', Arial, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Source Sans Pro", "Inter", Arial, sans-serif;
   color: #0288d1;
   margin-top: 1.5rem;
   margin-bottom: 1rem;
@@ -33,13 +38,15 @@ h2 {
   font-size: 1.5rem;
 }
 
-p, li {
+p,
+li {
   font-size: 1.13rem;
   line-height: 1.7;
   color: #333;
 }
 
-ul, ol {
+ul,
+ol {
   margin-left: 1.5rem;
 }
 
@@ -62,12 +69,14 @@ a:hover {
   color: #01579b;
 }
 
-img, video, iframe {
+img,
+video,
+iframe {
   max-width: 100%;
   border-radius: 0.7rem;
   display: block;
   margin: 1.5rem auto;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.07);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.07);
 }
 
 hr {
@@ -77,16 +86,17 @@ hr {
   margin: 2.5rem auto;
   background: linear-gradient(90deg, #0288d1 0%, #b3e5fc 100%);
   border-radius: 1px;
-  box-shadow: 0 1px 6px 0 rgba(2,136,209,0.08);
+  box-shadow: 0 1px 6px 0 rgba(2, 136, 209, 0.08);
 }
 
-pre, code {
+pre,
+code {
   background: #f1f8ff;
   color: #01579b;
   border-radius: 0.4rem;
   padding: 0.2em 0.5em;
   font-size: 1em;
-  font-family: 'Fira Mono', 'Consolas', monospace;
+  font-family: "Fira Mono", "Consolas", monospace;
 }
 
 /* Blog-specific styles for popup close button */
@@ -102,7 +112,7 @@ pre, code {
   border-radius: 50%;
   width: 48px;
   height: 48px;
-  box-shadow: 0 2px 8px rgba(2, 136, 209, 0.10);
+  box-shadow: 0 2px 8px rgba(2, 136, 209, 0.1);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
   display: flex;
@@ -134,14 +144,15 @@ pre, code {
   font-size: 1.7rem;
   position: relative;
   color: #0288d1;
-  box-shadow: 0 2px 8px 0 rgba(2,136,209,0.07);
+  box-shadow: 0 2px 8px 0 rgba(2, 136, 209, 0.07);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.blog-social-bar button:hover, .blog-social-bar button:focus {
+.blog-social-bar button:hover,
+.blog-social-bar button:focus {
   background: #e3f2fd;
-  box-shadow: 0 4px 16px 0 rgba(2,136,209,0.13);
+  box-shadow: 0 4px 16px 0 rgba(2, 136, 209, 0.13);
   color: #d81b60;
 }
 .blog-social-bar .bi {
@@ -178,24 +189,32 @@ pre, code {
 /* Animation for liked heart icon */
 .blog-like-btn.liked .bi-heart {
   color: #d81b60 !important;
-  animation: blog-like-pop 0.35s cubic-bezier(.4,2,.6,1) 1;
+  animation: blog-like-pop 0.35s cubic-bezier(0.4, 2, 0.6, 1) 1;
 }
 .blog-like-btn.locked .bi-heart {
   color: #d81b60 !important;
   animation: none;
 }
 @keyframes blog-like-pop {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.35); }
-  60% { transform: scale(0.92); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.35);
+  }
+  60% {
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 /* Make the like button background fill with red and the heart icon white after being clicked, for a filled effect */
 .blog-like-btn.liked,
 .blog-like-btn.locked {
   background: #ffdbe7 !important;
-  box-shadow: 0 4px 16px 0 rgba(216,27,96,0.13);
+  box-shadow: 0 4px 16px 0 rgba(216, 27, 96, 0.13);
 }
 .blog-like-btn.liked .bi-heart,
 .blog-like-btn.locked .bi-heart {
@@ -203,19 +222,27 @@ pre, code {
   background: #d81b60;
   border-radius: 50%;
   padding: 0.18em;
-  box-shadow: 0 2px 8px 0 rgba(216,27,96,0.13);
+  box-shadow: 0 2px 8px 0 rgba(216, 27, 96, 0.13);
 }
 
 /* Animation for shared icon */
 .blog-share-btn.shared .bi-share {
   color: #43a047 !important;
-  animation: blog-share-pop 0.35s cubic-bezier(.4,2,.6,1) 1;
+  animation: blog-share-pop 0.35s cubic-bezier(0.4, 2, 0.6, 1) 1;
 }
 @keyframes blog-share-pop {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.25) rotate(-10deg); }
-  60% { transform: scale(0.95) rotate(7deg); }
-  100% { transform: scale(1) rotate(0); }
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.25) rotate(-10deg);
+  }
+  60% {
+    transform: scale(0.95) rotate(7deg);
+  }
+  100% {
+    transform: scale(1) rotate(0);
+  }
 }
 
 /* Toast message for sharing */
@@ -233,7 +260,7 @@ pre, code {
   opacity: 0;
   pointer-events: none;
   z-index: 1200;
-  box-shadow: 0 2px 12px 0 rgba(67,160,71,0.13);
+  box-shadow: 0 2px 12px 0 rgba(67, 160, 71, 0.13);
   transition: opacity 0.22s, transform 0.22s;
   white-space: nowrap;
 }
@@ -300,15 +327,16 @@ pre, code {
   border-radius: 50%;
   font-size: 1.7rem;
   color: #0288d1;
-  box-shadow: 0 2px 8px 0 rgba(2,136,209,0.07);
+  box-shadow: 0 2px 8px 0 rgba(2, 136, 209, 0.07);
   margin-left: 0.1em;
   transition: background 0.18s, box-shadow 0.18s, color 0.18s;
   text-decoration: none;
 }
-.blog-home-btn:hover, .blog-home-btn:focus {
+.blog-home-btn:hover,
+.blog-home-btn:focus {
   background: #e3f2fd;
   color: #1976d2;
-  box-shadow: 0 4px 16px 0 rgba(2,136,209,0.13);
+  box-shadow: 0 4px 16px 0 rgba(2, 136, 209, 0.13);
 }
 .blog-home-btn .bi-house-door {
   font-size: 1.7rem;
@@ -321,5 +349,140 @@ pre, code {
   }
   .blog-home-btn .bi-house-door {
     font-size: 1.2rem;
+  }
+}
+
+/* Comments Section */
+.blog-comments-section {
+  margin: 2.5rem 0 0 0;
+  padding: 2rem 0 0 0;
+  border-top: 2px solid #e3f2fd;
+}
+.blog-comments-section h2 {
+  text-align: center;
+  color: #0288d1;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+.blog-comments-section .bi-chat-dots {
+  font-size: 1.3em;
+  color: #0288d1;
+  vertical-align: middle;
+}
+.comments-list {
+  margin-bottom: 1.2rem;
+}
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9em;
+  margin-bottom: 1.1em;
+  background: #f8fafc;
+  border-radius: 0.7em;
+  padding: 0.7em 1em 0.7em 0.8em;
+  box-shadow: 0 2px 8px 0 rgba(2, 136, 209, 0.04);
+}
+.comment-avatar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e3f2fd 60%, #b3e5fc 100%);
+  box-shadow: 0 1px 4px 0 rgba(2, 136, 209, 0.07);
+}
+.comment-avatar .bi-person-circle {
+  font-size: 1.7em;
+  color: #0288d1;
+}
+.comment-body {
+  flex: 1;
+}
+.comment-user {
+  font-weight: 600;
+  color: #0288d1;
+  font-size: 1.05em;
+  margin-bottom: 0.1em;
+}
+.comment-text {
+  color: #333;
+  font-size: 1.08em;
+  margin-bottom: 0.2em;
+}
+.comment-time {
+  color: #888;
+  font-size: 0.95em;
+}
+.comment-form {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-top: 0.5em;
+  background: #f1f8ff;
+  border-radius: 0.7em;
+  padding: 0.5em 0.8em;
+  box-shadow: 0 1px 4px 0 rgba(2, 136, 209, 0.04);
+}
+.comment-form-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e3f2fd 60%, #b3e5fc 100%);
+}
+.comment-form-avatar .bi-person-circle {
+  font-size: 1.3em;
+  color: #0288d1;
+}
+.comment-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.08em;
+  padding: 0.4em 0.2em;
+  color: #222;
+}
+.comment-submit-btn {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: #0288d1;
+  font-size: 1.3em;
+  border-radius: 50%;
+  padding: 0.2em 0.4em;
+  transition: background 0.18s, color 0.18s;
+}
+.comment-submit-btn:hover,
+.comment-submit-btn:focus {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+.comment-submit-btn .bi-send {
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+@media (max-width: 600px) {
+  .blog-comments-section {
+    padding: 1.2rem 0 0 0;
+  }
+  .comment-form-avatar,
+  .comment-avatar {
+    width: 1.5em;
+    height: 1.5em;
+  }
+  .comment-avatar .bi-person-circle,
+  .comment-form-avatar .bi-person-circle {
+    font-size: 1.1em;
   }
 }
