@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Midnight Encounter – Brother Femi</title>
+    <link rel="stylesheet" href="/css/blog_styles.css">
+    <style>
+      .popup-close-btn {
+        position: fixed;
+        top: 18px;
+        right: 28px;
+        z-index: 1001;
+        background: #fff;
+        border: none;
+        font-size: 2.2rem;
+        color: #0288d1;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        box-shadow: 0 2px 8px rgba(2, 136, 209, 0.10);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.85;
+      }
+      .popup-close-btn:hover {
+        background: #0288d1;
+        color: #fff;
+        opacity: 1;
+      }
+      @media (max-width: 600px) {
+        .popup-close-btn {
+          top: 8px;
+          right: 10px;
+          width: 36px;
+          height: 36px;
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('popup') === '1') {
+          // Add close button
+          const btn = document.createElement('button');
+          btn.className = 'popup-close-btn';
+          btn.title = 'Close (Esc)';
+          btn.innerHTML = '&times;';
+          btn.onclick = function() { window.close(); };
+          document.body.appendChild(btn);
+          // Support Esc key
+          window.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') window.close();
+          });
+        }
+      });
+    </script>
+</head>
+<body>
+    <div class="blog-container">
+        <h1>Midnight Encounter</h1>
+        <p style="text-align:center;"><em>By Brother Femi</em></p>
+        <hr>
+        <p>
+            It was a quiet midnight, the world around me was still, but my heart was restless. I found myself drawn to prayer, not out of routine, but by a gentle nudge I could not ignore. As I knelt beside my bed, the presence of God filled the room in a way I had never experienced before.
+        </p>
+        <blockquote>
+            "Call to Me and I will answer you, and show you great and mighty things, which you do not know."<br>
+            <span style="font-size:1rem; color:#0288d1;">— Jeremiah 33:3</span>
+        </blockquote>
+        <p>
+            In that sacred hour, the Lord spoke to my heart about surrender, trust, and the power of seeking Him in the secret place. Tears flowed as I realized how much He longed for my attention—not just my service, but my heart. That night, I made a fresh commitment to pursue Him above all else.
+        </p>
+        <p>
+            Since that midnight encounter, my walk with Christ has deepened. I have learned that God often meets us in the stillness, when we are most open to His voice. If you are longing for more, I encourage you: set aside time, even in the quiet of night, to seek Him. He is waiting to meet you there.
+        </p>
+        <hr>
+        <p style="text-align:center; color:#0288d1; font-weight:600;">May your own midnight encounters lead you closer to His heart.</p>
+    </div>
+</body>
+</html>
