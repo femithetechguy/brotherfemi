@@ -136,3 +136,79 @@ function handlePopupLinks() {
   }
 }
 document.addEventListener('DOMContentLoaded', handlePopupLinks);
+// Blog iframe modal logic
+function handleBlogReadMore() {
+  const modal = document.getElementById('blog-iframe-modal');
+  const iframe = modal.querySelector('iframe');
+  const closeBtn = modal.querySelector('.blog-iframe-close');
+  const backdrop = modal.querySelector('.blog-iframe-backdrop');
+  document.querySelectorAll('.read-more-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const blogFile = btn.getAttribute('data-blog');
+      if (blogFile) {
+        iframe.src = 'blog/' + blogFile;
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
+  function closeModal() {
+    modal.style.display = 'none';
+    iframe.src = '';
+    document.body.style.overflow = '';
+  }
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) {
+    if (modal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
+      closeModal();
+    }
+  });
+}
+document.addEventListener('DOMContentLoaded', handleBlogReadMore);
+// Blog Modal logic
+const blogModal = document.getElementById('blogModal');
+const blogModalIframe = document.getElementById('blogModalIframe');
+const blogModalClose = document.querySelector('.blog-modal-close');
+const blogModalBackdrop = document.querySelector('.blog-modal-backdrop');
+
+function openBlogPopupWindow(blogFile) {
+  const popupWidth = 900;
+  const popupHeight = 700;
+  const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+  const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+  const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+  const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+  const left = dualScreenLeft + (width - popupWidth) / 2;
+  const top = dualScreenTop + (height - popupHeight) / 2;
+  const popup = window.open(
+    `/blog/${blogFile}?popup=1`,
+    'blogPopup',
+    `width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable,scrollbars=yes`
+  );
+  if (popup) {
+    popup.focus();
+  }
+}
+
+// Open popup window on Read More click
+const readMoreBtns = document.querySelectorAll('.read-more-btn');
+readMoreBtns.forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const blogFile = this.getAttribute('data-blog');
+    openBlogPopupWindow(blogFile);
+  });
+});
+
+// Close modal on X or backdrop click
+blogModalClose.addEventListener('click', closeBlogModal);
+blogModalBackdrop.addEventListener('click', closeBlogModal);
+
+// Close modal on Escape key
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && blogModal.style.display === 'block') {
+    closeBlogModal();
+  }
+});
