@@ -1,0 +1,51 @@
+{
+  "brotherFemi": {
+    "title": "Bond Servant of Christ",
+    "details": "I am Brother Femi, a bond servant of the Lord Jesus Christ. I am constantly learning His ways from the Bible and others, and gradually working to become more like Him by the day.",
+    "vision": "To be disclosed",
+    "mission": "To be disclosed",
+    "testimony": {
+      "text": [
+        "On the 22nd of June 2025, at HOWJ Atlanta I had a life-changing encounter with the Lord Jesus Christ. It was a moment of divine personal conviction, revelation and transformation that set me on a new path of faith and purpose - I had a strong nudge in my soul to search God afresh at all cost. Since then, I have been committed to living as a bond servant of Christ, seeking to know Him more deeply and to reflect His love and grace in all aspects of my life.",
+        "This website is a faith-inspired space to share my journey, connect with fellow believers, and encourage a Christ-centered life of love, humility, and purpose.",
+        "I look forward to hearing from you, sharing insights, and growing together in faith. May the grace and peace of our Lord Jesus Christ be with you always."
+      ],
+      "url": {
+        "href": "https://howjglobal.org/",
+        "target": "_blank",
+        "rel": "noopener"
+      },
+      "iframe": {
+        "src": "https://www.instagram.com/p/DKRRpO4CCm9/embed",
+        "allowtransparency": true,
+        "allowfullscreen": true,
+        "frameborder": 0,
+        "scrolling": "no"
+      }
+    },
+    "heartCry": [
+      "Father set me free from the spirit of pride that thinks it can sustain righteous",
+      "Father, purge and purify every bit of SIN/Concupiscence out of my life",
+      "My Father, count me amongst those you will have mercy on today (Rom 9)",
+      "Give me the ability to obey you promptly without negotiations!"
+    ],
+    "coreValues": [
+      "Love & Unity",
+      "Purity/Consecration",
+      "Fear & Reverence for God",
+      "Godly Humility"
+    ],
+    "contact": [
+      { "type": "Email", "url": "mailto:contact@brotherfemi.org" },
+      {
+        "type": "Instagram",
+        "url": "https://www.instagram.com/thebrotherfemi/"
+      },
+      { "type": "Thread", "url": "https://www.threads.com/@thebrotherfemi" },
+      { "type": "Tiktok", "url": "https://www.tiktok.com/@thebrotherfemi" },
+      { "type": "Youtube", "url": "https://www.youtube.com/@thebrotherfemi" },
+      { "type": "Facebook", "url": "https://www.facebook.com/thebrotherfemi/" },
+      { "type": "Website", "url": "https://brotherfemi.org/" }
+    ]
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "sections": [
+    {
+      "id": "worship",
+      "title": "Worship & Adoration",
+      "menu": "Worship & Adoration",
+      "bibleVerse": "God is Spirit, and those who worship Him must worship in spirit and truth.",
+      "reference": "John 4:24",
+      "bible_url": "https://www.biblegateway.com/passage/?search=John+4%3A24&version=ESV",
+      "text": [
+        "True worship is a lifestyle of surrender, reverence, and love for God. Let every moment, word, and song be an offering of adoration to the King of kings."
+      ]
+    },
+    {
+      "id": "mission",
+      "title": "Mission",
+      "menu": "Mission",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    },
+    {
+      "id": "vision",
+      "title": "Vision",
+      "menu": "Vision",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    },
+    {
+      "id": "core-values",
+      "title": "Core Values",
+      "menu": "Core Values",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    },
+    {
+      "id": "heart-cry",
+      "title": "Heart-Cry",
+      "menu": "Heart-Cry",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    },
+    {
+      "id": "about",
+      "title": "My Testimony",
+      "menu": "About",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    },
+    {
+      "id": "mentors",
+      "title": "Mentors",
+      "menu": "Mentors",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    },
+    {
+      "id": "the-word",
+      "title": "The Word",
+      "menu": "The Word",
+      "bibleVerse": "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
+      "reference": "Colossians 3:16",
+      "bible_url": "https://www.biblegateway.com/passage/?search=Colossians+3%3A16&version=ESV",
+      "text": [
+        "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
+        "May the Word of God be your guide, your strength, and your joy. Stay rooted in Christ, and let His truth shape your every step."
+      ]
+    },
+    {
+      "id": "blog",
+      "title": "Blog",
+      "menu": "Blog",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": "",
+      "text": "Welcome to the Blog! Here you'll find faith-inspired blog posts, testimonies, and reflections from Brother Femi. Stay tuned for updates and new entries.",
+      "blogtitles": [
+        {
+          "title": "Midnight Encounter",
+          "short_details": "A life-changing midnight encounter with God that deepened my walk with Christ and taught me the value of seeking Him in the stillness.",
+          "read_more_url": "blog/midnight-encounter.html"
+        },
+        {
+          "title": "My Journey to Faith",
+          "short_details": "A personal testimony of how I encountered Christ and the lessons learned along the way.",
+          "read_more_url": "blog/my-journey-to-faith.html"
+        },
+        {
+          "title": "Lessons from the Valley",
+          "short_details": "Reflections on spiritual growth during difficult seasons and how God uses challenges for our good.",
+          "read_more_url": "blog/lessons-from-the-valley.html"
+        },
+        {
+          "title": "Worship as a Lifestyle",
+          "short_details": "Exploring what it means to worship God in spirit and truth every day, not just in song.",
+          "read_more_url": "blog/worship-as-a-lifestyle.html"
+        }
+      ]
+    },
+    {
+      "id": "hymns",
+      "title": "Hymns",
+      "menu": "Hymns",
+      "bibleVerse": "Sing to the Lord, all the earth; proclaim the good news of His salvation from day to day.",
+      "reference": "1 Chronicles 16:23",
+      "bible_url": "https://www.biblegateway.com/passage/?search=1+Chronicles+16%3A23&version=ESV",
+      "text": [
+        "Sing to the Lord, all the earth; proclaim the good news of His salvation from day to day.",
+        "Enjoy a curated playlist of classic and contemporary hymns to inspire your worship and devotion."
+      ]
+    },
+    {
+      "id": "contact",
+      "title": "Contact & Socials",
+      "menu": "Contact",
+      "bibleVerse": "",
+      "reference": "",
+      "bible_url": ""
+    }
+  ],
+  "footer": {
+    "year": 2025,
+    "copyright": "© {year} Brother Femi. All rights reserved.",
+    "subtitle": "Bond Servant & Steward"
+  }
+}
