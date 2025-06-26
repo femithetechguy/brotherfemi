@@ -13,7 +13,8 @@ window.addEventListener("DOMContentLoaded", function () {
     btn.innerHTML = "&times;";
     btn.onclick = function () {
       if (window.innerWidth <= 600 && document.referrer) {
-        window.location.href = document.referrer;
+        // Use native navigation so back button works
+        window.location.assign(document.referrer);
       } else {
         window.close();
       }
@@ -23,7 +24,8 @@ window.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("keydown", function (e) {
       if (e.key === "Escape") {
         if (window.innerWidth <= 600 && document.referrer) {
-          window.location.href = document.referrer;
+          // Use native navigation so back button works
+          window.location.assign(document.referrer);
         } else {
           window.close();
         }

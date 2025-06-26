@@ -49,15 +49,8 @@ function handleSocialLinks() {
             ",resizable,scrollbars"
         );
       } else {
-        // On mobile, let the link open normally, but add a history state so user can go back
-        history.pushState({ mobileSocial: true }, "", location.href);
-        // Listen for popstate to reload the page when user returns
-        window.addEventListener("popstate", function popHandler(e) {
-          if (e.state && e.state.mobileSocial) {
-            window.location.reload();
-            window.removeEventListener("popstate", popHandler);
-          }
-        });
+        // On mobile, use native navigation and allow back button to return
+        window.location.assign(url);
       }
     };
     link.addEventListener("click", link._popupHandler, false);
@@ -1514,8 +1507,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         ",resizable,scrollbars"
                     );
                   } else {
-                    // Mobile: open in same tab
-                    window.location.href = blogFile;
+                    // Mobile: use native navigation and allow back button to return
+                    window.location.assign(blogFile);
                   }
                 }
               });
