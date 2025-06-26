@@ -46,9 +46,49 @@
       "minstry_url": "https://www.nightingale.com/"
     },
     {
+      "name": "Zac Poonen",
+      "Ministry": "Christian Fellowship Church",
+      "minstry_url": "https://www.cfcindia.com/"
+    },
+    {
+      "name": "Charles Spurgeon",
+      "Ministry": "Metropolitan Tabernacle",
+      "minstry_url": "https://www.metropolitantabernacle.org/"
+    },
+    {
+      "name": "Charles Stanley",
+      "Ministry": "In Touch Ministries",
+      "minstry_url": "https://www.intouch.org/"
+    },
+    {
+      "name": "David Wilkerson",
+      "Ministry": "Times Square Church",
+      "minstry_url": "https://www.tsc.nyc/"
+    },
+    {
+      "name": "Billy Graham",
+      "Ministry": "Billy Graham Evangelistic Association",
+      "minstry_url": "https://billygraham.org/"
+    },
+    {
       "name": "Napoleon Hill",
       "Ministry": "The Napoleon Hill Foundatp",
       "minstry_url": "http://naphill.org/"
+    },
+    {
+      "name": "D. K. Olukoya",
+      "Ministry": "Mountain of Fire and Miracles Ministries",
+      "minstry_url": "https://www.mountainoffire.org/"
+    },
+    {
+      "name": "W. F. Kumuyi",
+      "Ministry": "Deeper Christian Life Ministry",
+      "minstry_url": "https://dclm.org/"
+    },
+    {
+      "name": "Victor Chuckwu",
+      "Ministry": "Peace of God Ministries",
+      "minstry_url": "https://www.pogchurch.org/"
     },
     {
       "name": "Peter Olaniran",
@@ -69,6 +109,26 @@
       "name": "Yemi Adio",
       "Ministry": "CAC Blessed Assembly",
       "minstry_url": "https://www.blessedassembly.org/"
+    },
+    {
+      "name": "Leonard Ravenhill",
+      "Ministry": "Evangelist & Author",
+      "minstry_url": "https://www.ravenhill.org/"
+    },
+    {
+      "name": "A. W. Tozer",
+      "Ministry": "Christian and Missionary Alliance",
+      "minstry_url": "https://www.cmalliance.org/"
+    },
+    {
+      "name": "Carter Conlon",
+      "Ministry": "Times Square Church",
+      "minstry_url": "https://www.tsc.nyc/"
+    },
+    {
+      "name": "David Lynn",
+      "Ministry": "Christ's Forgiveness Ministries",
+      "minstry_url": "https://christsforgivenessministries.org/"
     }
   ]
 }
