@@ -1275,3 +1275,119 @@ fetch("text/sections.json")
   .then((data) => {
     renderBlogSection(data.sections);
   });
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("text/sections.json")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      // --- Worship & Adoration Section Logic (like The Word) ---
+      var worshipSection = sections.find(function (s) {
+        return s.id === "worship";
+      });
+      if (worshipSection) {
+        var worshipSectionEl = document.getElementById("worship");
+        if (worshipSectionEl) {
+          // Remove existing static text nodes
+          var titleEl = worshipSectionEl.querySelector(".section-title");
+          var aboutTexts = worshipSectionEl.querySelectorAll(".about-text");
+          aboutTexts.forEach(function (el) {
+            el.remove();
+          });
+          // Insert bible verse in quotes first if present
+          var lastInserted = titleEl;
+          if (worshipSection.bibleVerse) {
+            var pVerse = document.createElement("p");
+            pVerse.className = "about-text";
+            pVerse.textContent = '"' + worshipSection.bibleVerse + '"';
+            if (lastInserted && lastInserted.nextSibling) {
+              worshipSectionEl.insertBefore(pVerse, lastInserted.nextSibling);
+            } else {
+              worshipSectionEl.appendChild(pVerse);
+            }
+            lastInserted = pVerse;
+          }
+          // Insert reference if present
+          if (worshipSection.reference) {
+            var ref;
+            if (worshipSection.bible_url) {
+              ref = document.createElement("a");
+              ref.href = worshipSection.bible_url;
+              ref.target = "_blank";
+              ref.rel = "noopener";
+              ref.style.fontSize = "1rem";
+              ref.style.color = "#0288d1";
+              ref.textContent = "\u2014 " + worshipSection.reference;
+              ref.addEventListener("click", function (e) {
+                if (!isMobile()) {
+                  e.preventDefault();
+                  var w = 600;
+                  var h = 700;
+                  var dualScreenLeft =
+                    window.screenLeft !== undefined
+                      ? window.screenLeft
+                      : window.screenX;
+                  var dualScreenTop =
+                    window.screenTop !== undefined
+                      ? window.screenTop
+                      : window.screenY;
+                  var width = window.innerWidth
+                    ? window.innerWidth
+                    : document.documentElement.clientWidth
+                    ? document.documentElement.clientWidth
+                    : screen.width;
+                  var height = window.innerHeight
+                    ? window.innerHeight
+                    : document.documentElement.clientHeight
+                    ? document.documentElement.clientHeight
+                    : screen.height;
+                  var left = dualScreenLeft + (width - w) / 2;
+                  var top = dualScreenTop + (height - h) / 2;
+                  window.open(
+                    worshipSection.bible_url,
+                    "_blank",
+                    "width=" +
+                      w +
+                      ",height=" +
+                      h +
+                      ",top=" +
+                      top +
+                      ",left=" +
+                      left +
+                      ",resizable,scrollbars"
+                  );
+                }
+              });
+            } else {
+              ref = document.createElement("span");
+              ref.style.fontSize = "1rem";
+              ref.style.color = "#0288d1";
+              ref.textContent = "\u2014 " + worshipSection.reference;
+            }
+            // Insert after the verse
+            if (lastInserted) {
+              lastInserted.appendChild(document.createElement("br"));
+              lastInserted.appendChild(ref);
+            } else {
+              worshipSectionEl.appendChild(ref);
+            }
+          }
+          // Insert dynamic text
+          if (Array.isArray(worshipSection.text)) {
+            worshipSection.text.forEach(function (paragraph) {
+              var p = document.createElement("p");
+              p.className = "about-text";
+              p.textContent = paragraph;
+              worshipSectionEl.appendChild(p);
+            });
+          } else if (typeof worshipSection.text === "string") {
+            var p = document.createElement("p");
+            p.className = "about-text";
+            p.textContent = worshipSection.text;
+            worshipSectionEl.appendChild(p);
+          }
+        }
+      }
+    });
+});
