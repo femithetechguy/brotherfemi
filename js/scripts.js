@@ -1104,277 +1104,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("text/sections.json")
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      var sections = Array.isArray(data.sections) ? data.sections : [];
-      // --- Worship Section Logic (already present) ---
-      // --- The Word Section Logic ---
-      var wordSection = sections.find(function (s) {
-        return s.id === "the-word";
-      });
-      if (wordSection) {
-        var wordSectionEl = document.getElementById("the-word");
-        if (wordSectionEl) {
-          // Remove existing static text nodes
-          var titleEl = wordSectionEl.querySelector(".section-title");
-          var aboutTexts = wordSectionEl.querySelectorAll(".about-text");
-          aboutTexts.forEach(function (el) {
-            el.remove();
-          });
-          // Insert bible verse in quotes first if present
-          var lastInserted = titleEl;
-          if (wordSection.bibleVerse) {
-            var pVerse = document.createElement("p");
-            pVerse.className = "about-text";
-            pVerse.textContent = '"' + wordSection.bibleVerse + '"';
-            if (lastInserted && lastInserted.nextSibling) {
-              wordSectionEl.insertBefore(pVerse, lastInserted.nextSibling);
-            } else {
-              wordSectionEl.appendChild(pVerse);
-            }
-            lastInserted = pVerse;
-          }
-          // Insert reference if present
-          if (wordSection.reference) {
-            var ref;
-            if (wordSection.bible_url) {
-              ref = document.createElement("a");
-              ref.href = wordSection.bible_url;
-              ref.target = "_blank";
-              ref.rel = "noopener";
-              ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
-              ref.textContent = "\u2014 " + wordSection.reference;
-              ref.addEventListener("click", function (e) {
-                if (!isMobile()) {
-                  e.preventDefault();
-                  var w = 600;
-                  var h = 700;
-                  var dualScreenLeft =
-                    window.screenLeft !== undefined
-                      ? window.screenLeft
-                      : window.screenX;
-                  var dualScreenTop =
-                    window.screenTop !== undefined
-                      ? window.screenTop
-                      : window.screenY;
-                  var width = window.innerWidth
-                    ? window.innerWidth
-                    : document.documentElement.clientWidth
-                    ? document.documentElement.clientWidth
-                    : screen.width;
-                  var height = window.innerHeight
-                    ? window.innerHeight
-                    : document.documentElement.clientHeight
-                    ? document.documentElement.clientHeight
-                    : screen.height;
-                  var left = dualScreenLeft + (width - w) / 2;
-                  var top = dualScreenTop + (height - h) / 2;
-                  window.open(
-                    wordSection.bible_url,
-                    "_blank",
-                    "width=" +
-                      w +
-                      ",height=" +
-                      h +
-                      ",top=" +
-                      top +
-                      ",left=" +
-                      left +
-                      ",resizable,scrollbars"
-                  );
-                }
-              });
-            } else {
-              ref = document.createElement("span");
-              ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
-              ref.textContent = "\u2014 " + wordSection.reference;
-            }
-            // Insert after the verse
-            if (lastInserted) {
-              lastInserted.appendChild(document.createElement("br"));
-              lastInserted.appendChild(ref);
-            } else {
-              wordSectionEl.appendChild(ref);
-            }
-          }
-          // Insert dynamic text
-          if (Array.isArray(wordSection.text)) {
-            wordSection.text.forEach(function (paragraph) {
-              var p = document.createElement("p");
-              p.className = "about-text";
-              p.textContent = paragraph;
-              wordSectionEl.appendChild(p);
-            });
-          } else if (typeof wordSection.text === "string") {
-            var p = document.createElement("p");
-            p.className = "about-text";
-            p.textContent = wordSection.text;
-            wordSectionEl.appendChild(p);
-          }
-          // YouTube iframe is already present in the HTML after dynamic text
-        }
-      }
-    });
-});
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("text/sections.json")
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      var sections = Array.isArray(data.sections) ? data.sections : [];
-      // --- Worship Section Logic (already present) ---
-      // --- The Word Section Logic (already present) ---
-      // --- Hymns Section Logic ---
-      var hymnsSection = sections.find(function (s) {
-        return s.id === "hymns";
-      });
-      if (hymnsSection) {
-        var hymnsSectionEl = document.getElementById("hymns");
-        if (hymnsSectionEl) {
-          // Remove existing static text nodes
-          var titleEl = hymnsSectionEl.querySelector(".section-title");
-          var aboutTexts = hymnsSectionEl.querySelectorAll(".about-text");
-          aboutTexts.forEach(function (el) {
-            el.remove();
-          });
-          // Insert bible verse in quotes first if present
-          var lastInserted = titleEl;
-          if (hymnsSection.bibleVerse) {
-            var pVerse = document.createElement("p");
-            pVerse.className = "about-text";
-            pVerse.textContent = '"' + hymnsSection.bibleVerse + '"';
-            if (lastInserted && lastInserted.nextSibling) {
-              hymnsSectionEl.insertBefore(pVerse, lastInserted.nextSibling);
-            } else {
-              hymnsSectionEl.appendChild(pVerse);
-            }
-            lastInserted = pVerse;
-          }
-          // Insert reference if present
-          if (hymnsSection.reference) {
-            var ref;
-            if (hymnsSection.bible_url) {
-              ref = document.createElement("a");
-              ref.href = hymnsSection.bible_url;
-              ref.target = "_blank";
-              ref.rel = "noopener";
-              ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
-              ref.textContent = "\u2014 " + hymnsSection.reference;
-              ref.addEventListener("click", function (e) {
-                if (!isMobile()) {
-                  e.preventDefault();
-                  var w = 600;
-                  var h = 700;
-                  var dualScreenLeft =
-                    window.screenLeft !== undefined
-                      ? window.screenLeft
-                      : window.screenX;
-                  var dualScreenTop =
-                    window.screenTop !== undefined
-                      ? window.screenTop
-                      : window.screenY;
-                  var width = window.innerWidth
-                    ? window.innerWidth
-                    : document.documentElement.clientWidth
-                    ? document.documentElement.clientWidth
-                    : screen.width;
-                  var height = window.innerHeight
-                    ? window.innerHeight
-                    : document.documentElement.clientHeight
-                    ? document.documentElement.clientHeight
-                    : screen.height;
-                  var left = dualScreenLeft + (width - w) / 2;
-                  var top = dualScreenTop + (height - h) / 2;
-                  window.open(
-                    hymnsSection.bible_url,
-                    "_blank",
-                    "width=" +
-                      w +
-                      ",height=" +
-                      h +
-                      ",top=" +
-                      top +
-                      ",left=" +
-                      left +
-                      ",resizable,scrollbars"
-                  );
-                }
-              });
-            } else {
-              ref = document.createElement("span");
-              ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
-              ref.textContent = "\u2014 " + hymnsSection.reference;
-            }
-            if (lastInserted) {
-              lastInserted.appendChild(document.createElement("br"));
-              lastInserted.appendChild(ref);
-            } else {
-              hymnsSectionEl.appendChild(ref);
-            }
-          }
-          // Insert dynamic text
-          if (Array.isArray(hymnsSection.text)) {
-            hymnsSection.text.forEach(function (paragraph) {
-              var p = document.createElement("p");
-              p.className = "about-text";
-              p.textContent = paragraph;
-              hymnsSectionEl.appendChild(p);
-            });
-          } else if (typeof hymnsSection.text === "string") {
-            var p = document.createElement("p");
-            p.className = "about-text";
-            p.textContent = hymnsSection.text;
-            hymnsSectionEl.appendChild(p);
-          }
-          // YouTube iframe is already present in the HTML after dynamic text
-        }
-      }
-    });
-});
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("text/sections.json")
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (data) {
-      // --- Footer Logic ---
-      if (data.footer) {
-        var footer = document.querySelector("footer.footer .container");
-        if (footer) {
-          footer.innerHTML = "";
-          // Get current year
-          var year =
-            data.footer.year && !isNaN(data.footer.year)
-              ? data.footer.year
-              : new Date().getFullYear();
-          // Replace {year} in copyright string
-          var copyright = data.footer.copyright
-            ? data.footer.copyright.replace(/\{year\}/g, year)
-            : "";
-          if (copyright) {
-            var p = document.createElement("p");
-            p.className = "mb-1";
-            p.textContent = copyright;
-            footer.appendChild(p);
-          }
-          if (data.footer.subtitle) {
-            var small = document.createElement("small");
-            small.textContent = data.footer.subtitle;
-            footer.appendChild(small);
-          }
-        }
-      }
-    });
-});
 // --- Blog Section Dynamic Rendering ---
 document.addEventListener("DOMContentLoaded", function () {
   fetch("text/sections.json")
@@ -1521,3 +1250,28 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
+// BLOG SECTION DYNAMIC RENDERING
+function renderBlogSection(sections) {
+  const blogSection = sections.find((sec) => sec.id === "blog");
+  if (!blogSection || !Array.isArray(blogSection.blogtitles)) return;
+  const blogContainer = document.getElementById("blog-list");
+  if (!blogContainer) return;
+  blogContainer.innerHTML = "";
+  blogSection.blogtitles.forEach((blog) => {
+    const blogCard = document.createElement("div");
+    blogCard.className = "blog-card";
+    blogCard.innerHTML = `
+      <h3 class="blog-title">${blog.title}</h3>
+      <p class="blog-short-details">${blog.short_details}</p>
+      <a class="blog-read-more cta-link" href="${blog.read_more_url}">Read More</a>
+    `;
+    blogContainer.appendChild(blogCard);
+  });
+}
+
+// Fetch and render all sections
+fetch("text/sections.json")
+  .then((response) => response.json())
+  .then((data) => {
+    renderBlogSection(data.sections);
+  });
