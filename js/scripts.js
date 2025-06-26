@@ -440,6 +440,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     left +
                     ",resizable,scrollbars"
                 );
+              } else {
+                // On mobile, use native navigation and allow back button to return home
+                window.location.assign(mentor.minstry_url);
               }
             });
             p.appendChild(a);
