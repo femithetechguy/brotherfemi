@@ -954,3 +954,40 @@ iframe[src*="youtube.com"] + div .ytp-fullscreen-button {
     bottom: 4px;
   }
 }
+
+body::before, body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 0 18px 18px 0;
+}
+body::before {
+  left: 0;
+  background: linear-gradient(180deg, #0288d1 0%, #4dd0e1 100%);
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+body::after {
+  right: 0;
+  background: linear-gradient(180deg, #4dd0e1 0%, #0288d1 100%);
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+@media (max-width: 767px) {
+  body::before, body::after {
+    width: 1.5px;
+    border-radius: 0 8px 8px 0;
+  }
+  body::before {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  body::after {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+}
