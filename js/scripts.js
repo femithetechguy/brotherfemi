@@ -290,6 +290,8 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: "yt-worship", playlist: "PL9GoCpwDjkCU10rmhe9Y1Lw4ckTci4RvK" },
     { id: "yt-word", playlist: "PL9GoCpwDjkCVmKkD32sPz78wI8IBvYkZ5" },
     { id: "yt-hymns", playlist: "PL9GoCpwDjkCX5gXgnt6Xb0gQi0gCRfVgN" },
+    // Add The Christian Life as a single video (not a playlist)
+    { id: "yt-christian-life", video: "Cej9_ueVdug" }
   ];
   var ytPlayers = [];
   var currentlyPlaying = null;
@@ -305,12 +307,10 @@ document.addEventListener("DOMContentLoaded", function () {
     ytSections.forEach(function (section, idx) {
       var el = document.getElementById(section.id);
       if (!el) return;
-      ytPlayers[idx] = new YT.Player(section.id, {
+      var playerConfig = {
         height: "315",
         width: "560",
         playerVars: {
-          listType: "playlist",
-          list: section.playlist,
           rel: 0,
           modestbranding: 1,
         },
@@ -330,8 +330,16 @@ document.addEventListener("DOMContentLoaded", function () {
             if (iframe) {
               iframe.removeAttribute("allowfullscreen");
               // Set accessible title attribute for screen readers
-              var titles = ["Worship & Adoration", "The Word", "Hymns"];
+              var titles = [
+                "Worship & Adoration",
+                "The Word",
+                "Hymns",
+                "The Christian Life"
+              ];
               iframe.setAttribute("title", titles[idx] || "YouTube Playlist");
+              iframe.style.borderRadius = "12px";
+              iframe.style.boxShadow = "0 2px 12px rgba(2,136,209,0.08)";
+              iframe.style.maxWidth = "100%";
             }
             // Try to overlay a div over the fullscreen button
             setTimeout(function () {
@@ -349,7 +357,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 1000); // Wait for YouTube controls to render
           },
         },
-      });
+      };
+      if (section.playlist) {
+        playerConfig.playerVars.listType = "playlist";
+        playerConfig.playerVars.list = section.playlist;
+      } else if (section.video) {
+        playerConfig.videoId = section.video;
+      }
+      ytPlayers[idx] = new YT.Player(section.id, playerConfig);
     });
     // MutationObserver to keep removing allowfullscreen from all YouTube iframes
     var observer = new MutationObserver(function () {
@@ -1387,6 +1402,150 @@ document.addEventListener("DOMContentLoaded", function () {
             p.textContent = worshipSection.text;
             worshipSectionEl.appendChild(p);
           }
+        }
+      }
+    });
+});
+// --- The Christian Life Section Rendering ---
+document.addEventListener("DOMContentLoaded", function () {
+  fetch("text/sections.json")
+    .then(function (response) { return response.json(); })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      var christianLife = sections.find(function (s) { return s.id === "the-christian-life"; });
+      if (christianLife) {
+        var mainContent = document.getElementById("the-christian-life-content");
+        if (mainContent) {
+          mainContent.innerHTML = "";
+          // Render bible verse and reference centered at the top if present
+          var lastInserted = null;
+          if (christianLife.bibleVerse) {
+            var verseWrapper = document.createElement("div");
+            verseWrapper.className = "about-text text-center mb-2";
+            verseWrapper.style.maxWidth = "600px";
+            verseWrapper.style.margin = "0 auto 0.5rem auto";
+            var pVerse = document.createElement("span");
+            pVerse.textContent = '"' + christianLife.bibleVerse + '"';
+            verseWrapper.appendChild(pVerse);
+            mainContent.appendChild(verseWrapper);
+            lastInserted = verseWrapper;
+          }
+          if (christianLife.reference) {
+            var refWrapper = document.createElement("div");
+            refWrapper.className = "about-text text-center mb-3";
+            refWrapper.style.maxWidth = "600px";
+            refWrapper.style.margin = "0 auto 1.2rem auto";
+            var ref;
+            if (christianLife.bible_url) {
+              ref = document.createElement("a");
+              ref.href = christianLife.bible_url;
+              ref.target = "_blank";
+              ref.rel = "noopener";
+              ref.style.fontSize = "1rem";
+              ref.style.color = "#0288d1";
+              ref.textContent = "\u2014 " + christianLife.reference;
+            } else {
+              ref = document.createElement("span");
+              ref.style.fontSize = "1rem";
+              ref.style.color = "#0288d1";
+              ref.textContent = "\u2014 " + christianLife.reference;
+            }
+            refWrapper.appendChild(ref);
+            mainContent.appendChild(refWrapper);
+          }
+          // Add YouTube embed after verse/reference, matching other sections
+          var ytDiv = document.createElement("div");
+          ytDiv.className = "youtube-playlist-embed mb-4 playlist-animate";
+          ytDiv.innerHTML =
+            '<div id="yt-christian-life"></div>' +
+            '<div class="youtube-playlist-label">' +
+              '<span class="youtube-playlist-label-text">' +
+                '<i class="bi bi-youtube" style="color: #ff0000"></i> The Christian Life' +
+              '</span>' +
+            '</div>';
+          mainContent.appendChild(ytDiv);
+          // Render the iframe for the video
+          setTimeout(function () {
+            var ytContainer = document.getElementById("yt-christian-life");
+            if (ytContainer && !ytContainer.querySelector("iframe")) {
+              var iframe = document.createElement("iframe");
+              iframe.width = "420";
+              iframe.height = "236";
+              iframe.src = "https://www.youtube.com/embed/Cej9_ueVdug?rel=0";
+              iframe.title = "The Christian Life Video";
+              iframe.frameBorder = "0";
+              iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+              iframe.allowFullscreen = true;
+              iframe.style.borderRadius = "12px";
+              iframe.style.boxShadow = "0 2px 12px rgba(2,136,209,0.08)";
+              iframe.style.maxWidth = "100%";
+              ytContainer.appendChild(iframe);
+            }
+          }, 0);
+          // Render headings for certain lines
+          (christianLife.text || []).forEach(function (txt, idx) {
+            // Render headings for certain lines
+            if (idx === 0) {
+              var h3 = document.createElement("h3");
+              h3.className = "mb-3 gradient-text";
+              h3.textContent = txt;
+              mainContent.appendChild(h3);
+            } else if (txt === "Core Beliefs:" || txt === "In Practice:" || txt === "Simply put:") {
+              var h5 = document.createElement("h5");
+              h5.className = "mt-3 mb-2 gold";
+              h5.textContent = txt;
+              mainContent.appendChild(h5);
+            } else if (txt.startsWith("• ")) {
+              // Render as list item
+              var ul = mainContent.lastElementChild && mainContent.lastElementChild.tagName === "UL" ? mainContent.lastElementChild : null;
+              if (!ul) {
+                ul = document.createElement("ul");
+                ul.style.marginBottom = "0.5rem";
+                mainContent.appendChild(ul);
+              }
+              var li = document.createElement("li");
+              li.textContent = txt.replace(/^• /, "");
+              ul.appendChild(li);
+            } else if (txt === "A Christian is a forgiven sinner, made new by Christ, and committed to following Him.") {
+              // Italicize and highlight this summary sentence
+              var p = document.createElement("p");
+              p.className = "about-text mb-2 christian-life-highlight";
+              p.innerHTML = '<em>' + txt + '</em>';
+              mainContent.appendChild(p);
+            } else {
+              var p = document.createElement("p");
+              p.className = "about-text mb-2";
+              p.textContent = txt;
+              mainContent.appendChild(p);
+            }
+          });
+        }
+        // Children sections
+        var childrenContent = document.getElementById("the-christian-life-children");
+        if (childrenContent && Array.isArray(christianLife.children)) {
+          childrenContent.innerHTML = "";
+          christianLife.children.forEach(function (child) {
+            var div = document.createElement("div");
+            div.className = "mb-4 pb-2 border-bottom";
+            var h4 = document.createElement("h4");
+            h4.className = "royal mb-2";
+            h4.textContent = child.title;
+            div.appendChild(h4);
+            (child.text || []).forEach(function (txt) {
+              if (txt.trim() === "") {
+                // Render a visible paragraph break
+                var br = document.createElement("div");
+                br.className = "paragraph-break";
+                div.appendChild(br);
+              } else {
+                var p = document.createElement("p");
+                p.className = "about-text mb-1";
+                p.innerHTML = txt;
+                div.appendChild(p);
+              }
+            });
+            childrenContent.appendChild(div);
+          });
         }
       }
     });

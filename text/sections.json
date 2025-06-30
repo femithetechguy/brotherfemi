@@ -115,6 +115,80 @@
       ]
     },
     {
+      "id": "the-christian-life",
+      "title": "The Christian Life",
+      "menu": "The Christian Life",
+      "bibleVerse": "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
+      "reference": "2 Corinthians 5:17",
+      "bible_url": "https://www.biblegateway.com/passage/?search=2+Corinthians+5%3A17&version=ESV",
+      "text": [
+        "Who is a Christian?",
+        "A Christian is someone who:",
+        "Believes in and follows Jesus Christ as Lord and Savior.",
+        "Core Beliefs:",
+        "• Jesus is the Son of God, who lived a sinless life, died for our sins, & rose again (1 Corinthians 15:3–4).",
+        "• Salvation is by grace through faith, not earned by good works (Ephesians 2:8–9).",
+        "• The Bible is God’s inspired Word, the foundation for belief and practice (2 Timothy 3:16).",
+        "• Christians strive to live like Jesus, loving God and loving others (Matthew 22:37–39).",
+        "In Practice:",
+        "• A Christian has a personal relationship with God through Jesus.",
+        "• They repent of sin, trust in Christ’s sacrifice, and walk in obedience.",
+        "• They become part of the body of Christ, the global family of believers.",
+        "Simply put:",
+        "A Christian is a forgiven sinner, made new by Christ, and committed to following Him."
+      ],
+      "children": [
+        {
+          "id": "christian",
+          "title": "Christian?",
+          "text": [
+            "What does it mean to be a Christian? Discover the essentials of faith, new birth, and walking with Jesus."
+          ]
+        },
+        {
+          "id": "acknowledgement",
+          "title": "Acknowledgement",
+          "text": [
+            "Acknowledging our need for God is the first step to true transformation."
+          ]
+        },
+        {
+          "id": "confession",
+          "title": "Confession",
+          "text": [
+            "Confession brings freedom and restoration. Learn how to walk in the light and experience God's forgiveness."
+          ]
+        },
+        {
+          "id": "altercall",
+          "title": "Alter Call",
+          "text": [
+            "Heavenly Father,",
+    
+            "I come to You today just as I am.",
+            "I confess that I am a sinner, and I need Your forgiveness.",
+            "I believe that Jesus Christ is Your Son,",
+            "That He died for my sins and rose again on the third day.",
+            "",
+            "Lord Jesus, I open the door of my heart to You.",
+            "Come into my life. Be my Lord and my Savior.",
+            "Wash me clean. Make me new.",
+            "Fill me with Your Holy Spirit and lead me every day.",
+            "",
+            "Today, I turn away from my old life,",
+            "And I choose to follow You.",
+            "Give me strength to walk in Your truth,",
+            "To love You, and to live for You all the days of my life.",
+            "",
+            "Thank You, Lord, for saving me.",
+            "Thank You for making me a child of God.",
+            "In Jesus’ name I pray,",
+            "Amen."
+          ]
+        }
+      ]
+    },
+    {
       "id": "contact",
       "title": "Contact & Socials",
       "menu": "Contact",
