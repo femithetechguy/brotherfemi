@@ -991,3 +991,23 @@ body::after {
     border-bottom-right-radius: 10px;
   }
 }
+
+/* Highlight for The Christian Life summary sentence */
+.christian-life-highlight {
+  background: linear-gradient(90deg, #fffde7 60%, #ffe082 100%);
+  border-left: 4px solid #ffd600;
+  padding: 0.5em 1em;
+  border-radius: 8px;
+  font-size: 1.13em;
+  font-style: italic;
+  color: #7c5700;
+  box-shadow: 0 2px 8px rgba(255, 214, 0, 0.08);
+  margin: 1.2em 0 1.2em 0;
+}
+
+/* Paragraph break for visible empty lines in children text */
+.paragraph-break {
+  display: block;
+  height: 1.2em;
+  content: "";
+}
