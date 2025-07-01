@@ -290,8 +290,8 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: "yt-worship", playlist: "PL9GoCpwDjkCU10rmhe9Y1Lw4ckTci4RvK" },
     { id: "yt-word", playlist: "PL9GoCpwDjkCVmKkD32sPz78wI8IBvYkZ5" },
     { id: "yt-hymns", playlist: "PL9GoCpwDjkCX5gXgnt6Xb0gQi0gCRfVgN" },
-    // Add The Christian Life as a single video (not a playlist)
-    { id: "yt-christian-life", video: "Cej9_ueVdug" }
+    // Christian Life as a playlist
+    { id: "yt-christian-life", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" }
   ];
   var ytPlayers = [];
   var currentlyPlaying = null;
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Worship & Adoration",
                 "The Word",
                 "Hymns",
-                "The Christian Life"
+                "Christian Life"
               ];
               iframe.setAttribute("title", titles[idx] || "YouTube Playlist");
               iframe.style.borderRadius = "12px";
@@ -1406,15 +1406,15 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
-// --- The Christian Life Section Rendering ---
+// --- Christian Life Section Rendering ---
 document.addEventListener("DOMContentLoaded", function () {
   fetch("text/sections.json")
     .then(function (response) { return response.json(); })
     .then(function (data) {
       var sections = Array.isArray(data.sections) ? data.sections : [];
-      var christianLife = sections.find(function (s) { return s.id === "the-christian-life"; });
+      var christianLife = sections.find(function (s) { return s.id === "christian-life"; });
       if (christianLife) {
-        var mainContent = document.getElementById("the-christian-life-content");
+        var mainContent = document.getElementById("christian-life-content");
         if (mainContent) {
           mainContent.innerHTML = "";
           // Render bible verse and reference centered at the top if present
@@ -1460,7 +1460,7 @@ document.addEventListener("DOMContentLoaded", function () {
             '<div id="yt-christian-life"></div>' +
             '<div class="youtube-playlist-label">' +
               '<span class="youtube-playlist-label-text">' +
-                '<i class="bi bi-youtube" style="color: #ff0000"></i> The Christian Life' +
+                '<i class="bi bi-youtube" style="color: #ff0000"></i> Christian Life' +
               '</span>' +
             '</div>';
           mainContent.appendChild(ytDiv);
@@ -1471,8 +1471,9 @@ document.addEventListener("DOMContentLoaded", function () {
               var iframe = document.createElement("iframe");
               iframe.width = "420";
               iframe.height = "236";
-              iframe.src = "https://www.youtube.com/embed/Cej9_ueVdug?rel=0";
-              iframe.title = "The Christian Life Video";
+              // Update to embed a playlist instead of a single video
+              iframe.src = "https://www.youtube.com/embed/videoseries?list=PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8&rel=0";
+              iframe.title = "Christian Life Playlist";
               iframe.frameBorder = "0";
               iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
               iframe.allowFullscreen = true;
@@ -1521,7 +1522,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         }
         // Children sections
-        var childrenContent = document.getElementById("the-christian-life-children");
+        var childrenContent = document.getElementById("christian-life-children");
         if (childrenContent && Array.isArray(christianLife.children)) {
           childrenContent.innerHTML = "";
           christianLife.children.forEach(function (child) {

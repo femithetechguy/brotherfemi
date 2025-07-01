@@ -115,9 +115,9 @@
       ]
     },
     {
-      "id": "the-christian-life",
-      "title": "The Christian Life",
-      "menu": "The Christian Life",
+      "id": "christian-life",
+      "title": "Christian Life",
+      "menu": "Christian Life",
       "bibleVerse": "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
       "reference": "2 Corinthians 5:17",
       "bible_url": "https://www.biblegateway.com/passage/?search=2+Corinthians+5%3A17&version=ESV",
@@ -164,7 +164,6 @@
           "title": "Alter Call",
           "text": [
             "Heavenly Father,",
-    
             "I come to You today just as I am.",
             "I confess that I am a sinner, and I need Your forgiveness.",
             "I believe that Jesus Christ is Your Son,",
@@ -184,6 +183,59 @@
             "Thank You for making me a child of God.",
             "In Jesus’ name I pray,",
             "Amen."
+          ]
+        },
+        {
+          "id": "serenity-prayer",
+          "title": "Serenity Prayer",
+          "text": [
+            "God, grant me the serenity to accept the things I cannot change,",
+            "Courage to change the things I can,",
+            "And wisdom to know the difference.",
+            "",
+            "Living one day at a time, enjoying one moment at a time;",
+            "Accepting hardship as a pathway to peace;",
+            "Taking, as Jesus did, this sinful world as it is, not as I would have it;",
+            "Trusting that You will make all things right if I surrender to Your will;",
+            "So that I may be reasonably happy in this life and supremely happy with You forever in the next.",
+            "Amen."
+          ]
+        },
+        {
+          "id": "early-morning-declaration",
+          "title": "Early Morning Declaration",
+          "text": [
+            "Dear Lord,",
+            "1. Thank you for the breath in my lungs this morning",
+            "2. Thank you for waking me up & giving me another chance at life",
+            "3. Thank you for this morning fluid (coffee/water), and the roof over my head",
+            "4. I’m sorry God for any and everything that I take for granted on a daily basis",
+            "5. Please posture my heart to see all the good, the grace, and purposes of today’s events",
+            "6. Protect me today; replacing anxiety with peace and worry with your joy, flesh with spirit, indiscipline with discipline",
+            "7. Blanket me in your strength as you fight my battles for me today",
+            "8. Blood of Jesus, redeem my destiny and separate me from all ancestral yokes",
+            "9. Wherever I go, whomever I speak to, let your favor cover me and speak for me always"
+          ]
+        },
+        {
+          "id": "life-principles",
+          "title": "Life Principles To Live By",
+          "text": [
+            "1. Our intimacy with God—His highest priority for our lives—determines the impact of our lives.",
+            "2. Obey God and leave all the consequences to Him.",
+            "3. God’s Word is an immovable anchor in times of storm.",
+            "4. The awareness of God’s presence energizes us for our work.",
+            "5. God does not require us to understand His will, just obey it, even if it seems unreasonable.",
+            "6. You reap what you sow, more than you sow, and later than you sow.",
+            "7. The dark moments of our life will last only so long as is necessary for God to accomplish His purpose in us.",
+            "8. Fight all your battles on your knees and you win every time.",
+            "9. Trusting God means looking beyond what we can see to what God sees.",
+            "10. If necessary, God will move heaven and earth to show us His will.",
+            "11. God assumes full responsibility for our needs when we obey Him.",
+            "12. Peace with God is the fruit of oneness with God.",
+            "13. Listening to God is essential to walking with God.",
+            "14. God acts on behalf of those who wait for Him.",
+            "15. Brokenness is God’s requirement for maximum usefulness."
           ]
         }
       ]
