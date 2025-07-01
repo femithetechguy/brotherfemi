@@ -1020,6 +1020,62 @@ body::after {
   content: "";
 }
 
+/* --- Bible Reference Retractable Quote Styles --- */
+.bible-quote-retract {
+  display: none;
+  position: relative;
+  background: linear-gradient(90deg, #e3f2fd 60%, #fffde7 100%);
+  border: 2px solid #0288d1;
+  border-radius: 12px;
+  margin: 0.7em auto 1.2em auto;
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  max-width: 480px;
+  box-shadow: 0 2px 16px rgba(2,136,209,0.08);
+  z-index: 10;
+  animation: fadeInUp 0.5s;
+}
+.bible-quote-retract.active {
+  display: block;
+}
+.bible-quote-retract .bible-quote-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: #0288d1;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(2,136,209,0.12);
+  transition: background 0.2s, color 0.2s;
+  z-index: 2;
+}
+.bible-quote-retract .bible-quote-close:hover {
+  background: #b71c1c;
+  color: #fff;
+}
+.bible-quote-retract iframe {
+  width: 100%;
+  min-height: 320px;
+  border: none;
+  border-radius: 8px;
+  background: #fff;
+  margin-top: 0.5em;
+}
+@media (max-width: 767px) {
+  .bible-quote-retract {
+    max-height: 80vh;
+    max-width: 90vw;
+    margin: 1rem auto;
+  }
+  
+  .bible-quote-retract iframe {
+    height: calc(80vh - 40px);
+  }
+}
 @keyframes fadeInOut {
   0% { opacity: 0; }
   10% { opacity: 1; }

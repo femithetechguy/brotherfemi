@@ -1,6 +1,21 @@
 function isMobile() {
   return window.innerWidth < 768;
 }
+
+// Helper function to determine if a URL is a Bible reference link (Bible.com)
+function isBibleComLink(url) {
+  if (!url) return false;
+  try {
+    // Handle both string URLs and URL objects
+    const urlString = typeof url === 'string' ? url : url.toString();
+    // Check for Bible.com links instead of BibleGateway
+    return urlString.toLowerCase().includes('bible.com/bible');
+  } catch (e) {
+    // In case of malformed URLs
+    return typeof url === 'string' && url.toLowerCase().includes('bible.com/bible');
+  }
+}
+
 // Apply logic to all social/contact icons in both hero and contact sections
 function handleSocialLinks() {
   // Select all links in .social-icons and .social-list
@@ -140,6 +155,12 @@ function handlePopupLinks() {
     ".about-text a, .instagram-embed-responsive a"
   );
   aboutLinks.forEach(function (link) {
+    // Skip Bible.com links - they're handled by our dedicated handler
+    const href = link.getAttribute("href") || link.href;
+    if (isBibleComLink(href)) {
+      return;
+    }
+    
     link.removeEventListener("click", link._popupHandler, false);
     link._popupHandler = function (e) {
       if (!isMobile()) {
@@ -176,7 +197,10 @@ function handlePopupLinks() {
     parent.appendChild(overlay);
   }
 }
-document.addEventListener("DOMContentLoaded", handlePopupLinks);
+document.addEventListener("DOMContentLoaded", function() {
+  // Handle popup links, but avoid Bible.com links
+  handlePopupLinks();
+});
 // Blog iframe modal logic
 function handleBlogReadMore() {
   const modal = document.getElementById("blog-iframe-modal");
@@ -1252,7 +1276,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         top +
                         ",left=" +
                         left +
-                        ",resizable,scrollbars"
+                        ",resizable,scrollbars=yes"
                     );
                   } else {
                     // Mobile: use native navigation and allow back button to return
@@ -1543,7 +1567,7 @@ document.addEventListener("DOMContentLoaded", function () {
           // Render spiritualWarfare sub-section if present
           if (warfare.spiritualWarfare && Array.isArray(warfare.spiritualWarfare.text)) {
             var swSection = document.createElement("section");
-            swSection.className = "mt-4 mb-4 p-3 rounded bg-light border";
+            swSection.className = "mt-4 mb-4 p-3 rounded bg-light border spiritual-warfare-section";
             swSection.id = "spiritual-warfare-section";
             var swTitle = document.createElement("h4");
             swTitle.className = "royal mb-2";
@@ -1563,33 +1587,70 @@ document.addEventListener("DOMContentLoaded", function () {
                 refsDiv.style.marginBottom = "1.5rem";
                 warfare.spiritualWarfare.bibleReferences.forEach(function (refObj, i) {
                   var a = document.createElement("a");
-                  a.href = refObj.url || "#";
-                  a.target = "_blank";
+                  a.href = "javascript:void(0);"; // Use javascript:void(0) to prevent default navigation
+                  a.setAttribute('data-bible-url', refObj.url || "#"); // Store the actual URL as data attribute
                   a.rel = "noopener";
                   a.style.fontSize = "1rem";
                   a.style.color = "#0288d1";
                   // Remove bold fontWeight
                   // a.style.fontWeight = "bold";
                   a.textContent = refObj.reference;
-                  a.addEventListener("click", function (e) {
-                    if (!isMobile()) {
-                      e.preventDefault();
-                      var w = 600;
-                      var h = 700;
-                      var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-                      var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-                      var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-                      var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-                      var left = dualScreenLeft + (width - w) / 2;
-                      var top = dualScreenTop + (height - h) / 2;
-                      window.open(
-                        a.href,
-                        "_blank",
-                        "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",resizable,scrollbars"
-                      );
-                    }
-                  });
+                  // We'll add our own click handler
+                  a.setAttribute('data-ref-type', 'warfare-bible-ref');
                   refsDiv.appendChild(a);
+                  // Add retractable quote container after each link
+                  var quoteDiv = document.createElement("div");
+                  quoteDiv.className = "bible-quote-retract";
+                  quoteDiv.setAttribute("data-ref", refObj.reference);
+                  quoteDiv.setAttribute("data-href", refObj.url);
+                  // Close button
+                  var closeBtn = document.createElement("button");
+                  closeBtn.className = "bible-quote-close";
+                  closeBtn.innerHTML = "&times;";
+                  closeBtn.title = "Close";
+                  closeBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    quoteDiv.classList.remove("active");
+                  };
+                  quoteDiv.appendChild(closeBtn);
+                  // Iframe for Bible passage
+                  var iframe = document.createElement("iframe");
+                  iframe.src = refObj.url;
+                  iframe.title = refObj.reference + " (Bible.com)";
+                  iframe.setAttribute("loading", "lazy");
+                  quoteDiv.appendChild(iframe);
+                  // Store the URL for easy reference
+                  quoteDiv.setAttribute('data-bible-url', refObj.url);
+                  refsDiv.appendChild(quoteDiv);
+                  
+                  // Add click handler to show the retractable quote
+                  a.onclick = function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Close any other open quotes
+                    document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+                      openQuote.classList.remove('active');
+                    });
+                    // Open this one
+                    quoteDiv.classList.add('active');
+                    // Scroll into view
+                    setTimeout(function() {
+                      quoteDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
+                    }, 100);
+                    return false;
+                  };
+                  // Store the handler for potential reference
+                  a._retractHandler = a.onclick;
+                  
+                  // Make sure this link doesn't trigger the default browser behavior
+                  a.setAttribute("target", "");
+                  a.setAttribute("data-original-url", a.href);
+                  // Remove any default browser behaviors
+                  a.removeAttribute("target");
+                  
+                  // Mark links as already having retractable quotes and ensure they're processed
+                  a.setAttribute('data-has-retractable', 'true');
+                  a.setAttribute('data-bible-warfare-ref', 'true');
                   if (i < warfare.spiritualWarfare.bibleReferences.length - 1) {
                     refsDiv.appendChild(document.createTextNode(" | "));
                   }
@@ -1629,54 +1690,352 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
-// Render 'Below are some key scriptures...' intro and all spiritualWarfare.bibleReferences under the main Warfare text, before spiritualWarfare section
-          if (warfare.spiritualWarfare && Array.isArray(warfare.spiritualWarfare.bibleReferences) && warfare.spiritualWarfare.bibleReferences.length > 0 && typeof warfare.spiritualWarfare.bibleReferences[0] === 'object') {
-            var intro = warfare.spiritualWarfare.text && warfare.spiritualWarfare.text.find(function(t) {
-              return t.toLowerCase().includes('key scriptures');
+// --- Prevent global popup logic from affecting Bible.com links ---
+document.addEventListener("DOMContentLoaded", function () {
+  function removePopupFromBibleComLinks() {
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      if (isBibleComLink(a.getAttribute('href') || a.href)) {
+        // Remove any existing popup handler
+        if (a._popupHandler) {
+          a.removeEventListener('click', a._popupHandler, false);
+          a._popupHandler = null;
+        }
+        
+        // Remove any other click handlers that might interfere
+        const newLink = a.cloneNode(true);
+        newLink.addEventListener = a.addEventListener;
+        newLink.removeEventListener = a.removeEventListener;
+        newLink._retractHandler = a._retractHandler;
+        a.parentNode.replaceChild(newLink, a);
+      }
+    });
+  }
+  // Run after all dynamic content is rendered but before our retractable quotes are applied
+  removePopupFromBibleComLinks();
+  setTimeout(removePopupFromBibleComLinks, 800);
+  setTimeout(removePopupFromBibleComLinks, 1500);
+});
+// Handle Bible.com links with retractable quotes globally
+function handleBibleComLinks() {
+  // First, specifically handle Spiritual Warfare Bible references
+  const spiritualWarfareSection = document.querySelector('.spiritual-warfare-section');
+  if (spiritualWarfareSection) {
+    const warfareLinks = spiritualWarfareSection.querySelectorAll('a[href]');
+    warfareLinks.forEach(function(link) {
+      const href = link.getAttribute('href') || link.href;
+      if (isBibleComLink(href)) {
+        // Remove target="_blank" to prevent opening in a new tab
+        link.removeAttribute('target');
+        
+        // Make sure the retractable quotes work properly
+        const quoteDiv = Array.from(spiritualWarfareSection.querySelectorAll('.bible-quote-retract')).find(
+          div => div.getAttribute('data-ref') === href || div.getAttribute('data-bible-url') === href || div.getAttribute('data-href') === href
+        );
+        
+        if (quoteDiv && !link._retractHandler) {
+          link._retractHandler = function(e) {
+            e.preventDefault();
+            // Close any other open quotes
+            document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+              openQuote.classList.remove('active');
             });
-            if (intro) {
-              var introP = document.createElement("p");
-              introP.className = "about-text mb-2";
-              introP.textContent = intro;
-              mainContent.appendChild(introP);
-            }
-            var refsDiv = document.createElement("div");
-            refsDiv.className = "mb-3";
-            refsDiv.style.textAlign = "center";
-            refsDiv.style.marginTop = "-0.5rem";
-            refsDiv.style.marginBottom = "1.5rem";
-            warfare.spiritualWarfare.bibleReferences.forEach(function (refObj, i) {
-              var a = document.createElement("a");
-              a.href = refObj.url || "#";
-              a.target = "_blank";
-              a.rel = "noopener";
-              a.style.fontSize = "1rem";
-              a.style.color = "#0288d1";
-              // Remove bold fontWeight
-              // a.style.fontWeight = "bold";
-              a.textContent = refObj.reference;
-              a.addEventListener("click", function (e) {
-                if (!isMobile()) {
-                  e.preventDefault();
-                  var w = 600;
-                  var h = 700;
-                  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-                  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
-                  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-                  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-                  var left = dualScreenLeft + (width - w) / 2;
-                  var top = dualScreenTop + (height - h) / 2;
-                  window.open(
-                    a.href,
-                    "_blank",
-                    "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",resizable,scrollbars"
-                  );
-                }
-              });
-              refsDiv.appendChild(a);
-              if (i < warfare.spiritualWarfare.bibleReferences.length - 1) {
-                refsDiv.appendChild(document.createTextNode(" | "));
-              }
-            });
-            mainContent.appendChild(refsDiv);
+            // Open this one
+            quoteDiv.classList.add('active');
+            // Scroll into view
+            setTimeout(function() {
+              quoteDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }, 100);
+          };
+          
+          // Remove existing listeners first to avoid duplicates
+          if (link._oldRetractHandler) {
+            link.removeEventListener('click', link._oldRetractHandler);
           }
+          link._oldRetractHandler = link._retractHandler;
+          link.addEventListener('click', link._retractHandler);
+          link.setAttribute('data-has-retractable', 'true');
+        }
+      }
+    });
+  }
+  
+  // Then handle all other Bible.com links
+  const links = document.querySelectorAll('a[href]');
+  
+  links.forEach(function(link) {
+    const href = link.getAttribute('href') || link.href;
+    
+    if (isBibleComLink(href)) {
+      // Mark this link so we know it's been processed
+      link.setAttribute('data-bible-com-link', 'true');
+      
+      // Skip links that already have retractable quotes
+      if (link.getAttribute('data-has-retractable') === 'true') {
+        return;
+      }
+      
+      // Remove any existing popup handlers
+      if (link._popupHandler) {
+        link.removeEventListener('click', link._popupHandler, false);
+        link._popupHandler = null;
+      }
+      
+      // Remove any existing retractable handlers to avoid duplicates
+      if (link._retractHandler) {
+        link.removeEventListener('click', link._retractHandler, false);
+      }
+      
+      // Check if this link already has a retractable quote
+      const existingQuote = document.querySelector(`.bible-quote-retract[data-href="${href}"]`);
+      if (existingQuote) {
+        // If it exists, just update the click handler
+        link._retractHandler = function(e) {
+          e.preventDefault();
+          // Close any other open quotes
+          document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+            openQuote.classList.remove('active');
+          });
+          // Open this one
+          existingQuote.classList.add('active');
+          // Scroll into view
+          setTimeout(function() {
+            existingQuote.scrollIntoView({behavior: 'smooth', block: 'center'});
+          }, 100);
+        };
+        link.addEventListener('click', link._retractHandler);
+        return;
+      }
+      
+      // Create a new retractable quote container
+      const quoteContainer = document.createElement('div');
+      quoteContainer.className = 'bible-quote-retract';
+      quoteContainer.setAttribute('data-href', href);
+      quoteContainer.setAttribute('data-ref', link.textContent || 'Bible Verse');
+      
+      // Add close button
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'bible-quote-close';
+      closeBtn.innerHTML = '&times;';
+      closeBtn.title = 'Close';
+      closeBtn.onclick = function(e) {
+        e.stopPropagation();
+        quoteContainer.classList.remove('active');
+      };
+      quoteContainer.appendChild(closeBtn);
+      
+      // Add iframe for Bible passage
+      const iframe = document.createElement('iframe');
+      iframe.src = href;
+      iframe.title = (link.textContent || 'Bible Verse') + ' (Bible.com)';
+      iframe.setAttribute('loading', 'lazy');
+      quoteContainer.appendChild(iframe);
+      
+      // Insert the quote container after the link's parent paragraph or div
+      let targetElement = link.parentElement;
+      while (targetElement && 
+             !['P', 'DIV', 'LI', 'TD', 'SECTION'].includes(targetElement.nodeName)) {
+        targetElement = targetElement.parentElement;
+      }
+      
+      if (targetElement) {
+        targetElement.parentNode.insertBefore(quoteContainer, targetElement.nextSibling);
+      } else {
+        // Fallback: insert after the link itself
+        link.parentNode.insertBefore(quoteContainer, link.nextSibling);
+      }
+      
+      // Add click handler to link
+      link._retractHandler = function(e) {
+        e.preventDefault();
+        // Close any other open quotes
+        document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+          openQuote.classList.remove('active');
+        });
+        // Open this one
+        quoteContainer.classList.add('active');
+        // Scroll into view
+        setTimeout(function() {
+          quoteContainer.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
+      };
+      
+      link.addEventListener('click', link._retractHandler);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Initial handling - run immediately and again after a delay to catch all dynamic content
+  handleBibleComLinks();
+  setTimeout(handleBibleComLinks, 500);
+  setTimeout(handleBibleComLinks, 1000);
+  
+  // Set up a mutation observer to handle dynamically added links
+  const observer = new MutationObserver(function(mutations) {
+    let shouldProcess = false;
+    
+    mutations.forEach(function(mutation) {
+      // Check for attribute changes that might add href to links
+      if (mutation.type === 'attributes' && 
+          mutation.attributeName === 'href' && 
+          mutation.target.tagName === 'A') {
+        const href = mutation.target.getAttribute('href') || mutation.target.href;
+        if (isBibleComLink(href) && !mutation.target.getAttribute('data-has-retractable')) {
+          shouldProcess = true;
+        }
+      }
+      
+      // Check for new nodes added
+      if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+        for (let i = 0; i < mutation.addedNodes.length; i++) {
+          const node = mutation.addedNodes[i];
+          if (node.nodeType === 1) { // Element node
+            if (node.tagName === 'A') {
+              if (!node.getAttribute('data-has-retractable') && isBibleComLink(node.href)) {
+                shouldProcess = true;
+              }
+            } else {
+              const links = node.querySelectorAll('a:not([data-has-retractable])');
+              if (links.length > 0) {
+                links.forEach(link => {
+                  if (isBibleComLink(link.href)) {
+                    shouldProcess = true;
+                  }
+                });
+              }
+            }
+          }
+        }
+      }
+    });
+    
+    if (shouldProcess) {
+      handleBibleComLinks();
+      removePopupFromBibleComLinks();
+    }
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['href']
+  });
+});
+// Function to specifically handle the Spiritual Warfare Bible references
+function fixWarfareReferences() {
+  // Target the specific section
+  const warfareSection = document.querySelector('#spiritual-warfare-section');
+  if (!warfareSection) return;
+  
+  // Find all Bible references (including those with javascript:void(0) as href)
+  const bibleLinks = warfareSection.querySelectorAll('a[data-ref-type="warfare-bible-ref"]');
+  
+  bibleLinks.forEach(function(link) {
+    // Remove any default browser behaviors that might cause navigation
+    link.removeAttribute('target');
+    
+    // Get the corresponding quote div
+    const ref = link.textContent;
+    const href = link.getAttribute('data-bible-url') || link.getAttribute('href');
+    const quoteDiv = Array.from(warfareSection.querySelectorAll('.bible-quote-retract')).find(
+      div => div.getAttribute('data-ref') === ref || div.getAttribute('data-bible-url') === href || div.getAttribute('data-href') === href
+    );
+    
+    if (quoteDiv) {
+      // Replace the click handler completely
+      link.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Close any other open quotes
+        document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+          openQuote.classList.remove('active');
+        });
+        
+        // Open this one
+        quoteDiv.classList.add('active');
+        
+        // Scroll into view
+        setTimeout(function() {
+          quoteDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
+        
+        return false; // Ensure the browser doesn't follow the link
+      };
+    }
+  });
+}
+
+// Call our fix function after the content is loaded and after a delay to ensure it runs after dynamic content is rendered
+document.addEventListener("DOMContentLoaded", function() {
+  setTimeout(fixWarfareReferences, 1000);
+  setTimeout(fixWarfareReferences, 2000);
+});
+
+// Also add a mutation observer specifically for the Spiritual Warfare section
+document.addEventListener("DOMContentLoaded", function() {
+  const observer = new MutationObserver(function(mutations) {
+    if (document.querySelector('#spiritual-warfare-section')) {
+      fixWarfareReferences();
+    }
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+});
+// Add a global click event handler to catch any Bible references that still might open in a new tab
+document.addEventListener('click', function(e) {
+  // Check if we're inside the spiritual warfare section
+  const warfareSection = document.getElementById('spiritual-warfare-section');
+  if (!warfareSection) return;
+  
+  // Check if the click is inside this section
+  if (!warfareSection.contains(e.target)) return;
+  
+  // Check if we clicked on a link or inside one
+  let link = e.target;
+  while (link && link.tagName !== 'A' && link !== warfareSection) {
+    link = link.parentElement;
+  }
+  
+  // If this is a Bible reference link
+  if (link && link.tagName === 'A') {
+    const href = link.getAttribute('href');
+    const dataBibleUrl = link.getAttribute('data-bible-url');
+    
+    // If this is a Bible.com link or has data-bible-url attribute
+    if ((href && href.includes('bible.com')) || dataBibleUrl) {
+      // Find the corresponding quote div
+      const ref = link.textContent;
+      const bibleUrl = dataBibleUrl || href;
+      const quoteDiv = Array.from(warfareSection.querySelectorAll('.bible-quote-retract')).find(
+        div => div.getAttribute('data-ref') === ref || 
+               div.getAttribute('data-href') === bibleUrl || 
+               div.getAttribute('data-bible-url') === bibleUrl
+      );
+      
+      if (quoteDiv) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // Close any other open quotes
+        document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+          openQuote.classList.remove('active');
+        });
+        
+        // Open this one
+        quoteDiv.classList.add('active');
+        
+        // Scroll into view
+        setTimeout(function() {
+          quoteDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
+        
+        return false;
+      }
+    }
+  }
+}, true); // Use capturing to intercept the event before it reaches the link
