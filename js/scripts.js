@@ -291,7 +291,8 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: "yt-word", playlist: "PL9GoCpwDjkCVmKkD32sPz78wI8IBvYkZ5" },
     { id: "yt-hymns", playlist: "PL9GoCpwDjkCX5gXgnt6Xb0gQi0gCRfVgN" },
     // Christian Life as a playlist
-    { id: "yt-christian-life", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" }
+    { id: "yt-christian-life", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" },
+    { id: "yt-warfare", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" },
   ];
   var ytPlayers = [];
   var currentlyPlaying = null;
@@ -334,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Worship & Adoration",
                 "The Word",
                 "Hymns",
-                "Christian Life"
+                "Christian Life",
               ];
               iframe.setAttribute("title", titles[idx] || "YouTube Playlist");
               iframe.style.borderRadius = "12px";
@@ -1332,7 +1333,7 @@ document.addEventListener("DOMContentLoaded", function () {
               ref.target = "_blank";
               ref.rel = "noopener";
               ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
+              ref.style.color = "#02888d1";
               ref.textContent = "\u2014 " + worshipSection.reference;
               ref.addEventListener("click", function (e) {
                 if (!isMobile()) {
@@ -1377,7 +1378,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
               ref = document.createElement("span");
               ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
+              ref.style.color = "#02888d1";
               ref.textContent = "\u2014 " + worshipSection.reference;
             }
             // Insert after the verse
@@ -1406,49 +1407,53 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
-// --- Christian Life Section Rendering ---
+// --- Warfare Section Rendering ---
 document.addEventListener("DOMContentLoaded", function () {
   fetch("text/sections.json")
-    .then(function (response) { return response.json(); })
+    .then(function (response) {
+      return response.json();
+    })
     .then(function (data) {
       var sections = Array.isArray(data.sections) ? data.sections : [];
-      var christianLife = sections.find(function (s) { return s.id === "christian-life"; });
-      if (christianLife) {
-        var mainContent = document.getElementById("christian-life-content");
+      var warfare = sections.find(function (s) {
+        return s.id === "warfare";
+      });
+      if (warfare) {
+        var mainContent = document.getElementById("warfare-content");
         if (mainContent) {
           mainContent.innerHTML = "";
           // Render bible verse and reference centered at the top if present
           var lastInserted = null;
-          if (christianLife.bibleVerse) {
+          if (warfare.bibleVerse) {
             var verseWrapper = document.createElement("div");
             verseWrapper.className = "about-text text-center mb-2";
             verseWrapper.style.maxWidth = "600px";
             verseWrapper.style.margin = "0 auto 0.5rem auto";
             var pVerse = document.createElement("span");
-            pVerse.textContent = '"' + christianLife.bibleVerse + '"';
+            pVerse.textContent = '"' + warfare.bibleVerse + '"';
             verseWrapper.appendChild(pVerse);
             mainContent.appendChild(verseWrapper);
             lastInserted = verseWrapper;
           }
-          if (christianLife.reference) {
+          if (warfare.reference) {
             var refWrapper = document.createElement("div");
             refWrapper.className = "about-text text-center mb-3";
             refWrapper.style.maxWidth = "600px";
             refWrapper.style.margin = "0 auto 1.2rem auto";
             var ref;
-            if (christianLife.bible_url) {
+            if (warfare.bible_url) {
               ref = document.createElement("a");
-              ref.href = christianLife.bible_url;
+              ref.href = warfare.bible_url;
               ref.target = "_blank";
               ref.rel = "noopener";
               ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
-              ref.textContent = "\u2014 " + christianLife.reference;
+              ref.style.color = "#02888d1";
+              ref.textContent = "\u2014 " + warfare.reference;
             } else {
               ref = document.createElement("span");
               ref.style.fontSize = "1rem";
-              ref.style.color = "#0288d1";
-              ref.textContent = "\u2014 " + christianLife.reference;
+              ref.style.color = "#02888d1";
+              ref.textContent = "\u2014 " + warfare.reference;
             }
             refWrapper.appendChild(ref);
             mainContent.appendChild(refWrapper);
@@ -1457,25 +1462,27 @@ document.addEventListener("DOMContentLoaded", function () {
           var ytDiv = document.createElement("div");
           ytDiv.className = "youtube-playlist-embed mb-4 playlist-animate";
           ytDiv.innerHTML =
-            '<div id="yt-christian-life"></div>' +
+            '<div id="yt-warfare"></div>' +
             '<div class="youtube-playlist-label">' +
-              '<span class="youtube-playlist-label-text">' +
-                '<i class="bi bi-youtube" style="color: #ff0000"></i> Christian Life' +
-              '</span>' +
-            '</div>';
+            '<span class="youtube-playlist-label-text">' +
+            '<i class="bi bi-youtube" style="color: #ff0000"></i> Warfare' +
+            "</span>" +
+            "</div>";
           mainContent.appendChild(ytDiv);
           // Render the iframe for the video
           setTimeout(function () {
-            var ytContainer = document.getElementById("yt-christian-life");
+            var ytContainer = document.getElementById("yt-warfare");
             if (ytContainer && !ytContainer.querySelector("iframe")) {
               var iframe = document.createElement("iframe");
               iframe.width = "420";
               iframe.height = "236";
-              // Update to embed a playlist instead of a single video
-              iframe.src = "https://www.youtube.com/embed/videoseries?list=PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8&rel=0";
-              iframe.title = "Christian Life Playlist";
+              // Embed the playlist
+              iframe.src =
+                "https://www.youtube.com/embed/videoseries?list=PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8&rel=0";
+              iframe.title = "Warfare Playlist";
               iframe.frameBorder = "0";
-              iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+              iframe.allow =
+                "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
               iframe.allowFullscreen = true;
               iframe.style.borderRadius = "12px";
               iframe.style.boxShadow = "0 2px 12px rgba(2,136,209,0.08)";
@@ -1484,8 +1491,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }, 0);
           // Render headings for certain lines
-          (christianLife.text || []).forEach(function (txt, idx) {
-            // Render headings for certain lines
+          (warfare.text || []).forEach(function (txt, idx) {
             if (idx === 0) {
               var h3 = document.createElement("h3");
               h3.className = "mb-3 gradient-text";
@@ -1497,7 +1503,6 @@ document.addEventListener("DOMContentLoaded", function () {
               h5.textContent = txt;
               mainContent.appendChild(h5);
             } else if (txt.startsWith("• ")) {
-              // Render as list item
               var ul = mainContent.lastElementChild && mainContent.lastElementChild.tagName === "UL" ? mainContent.lastElementChild : null;
               if (!ul) {
                 ul = document.createElement("ul");
@@ -1508,10 +1513,25 @@ document.addEventListener("DOMContentLoaded", function () {
               li.textContent = txt.replace(/^• /, "");
               ul.appendChild(li);
             } else if (txt === "A Christian is a forgiven sinner, made new by Christ, and committed to following Him.") {
-              // Italicize and highlight this summary sentence
               var p = document.createElement("p");
-              p.className = "about-text mb-2 christian-life-highlight";
+              p.className = "about-text mb-2 warfare-highlight";
               p.innerHTML = '<em>' + txt + '</em>';
+              p.style.background = "#fffbe6";
+              p.style.border = "1.5px solid #ffe066";
+              p.style.borderRadius = "8px";
+              p.style.padding = "0.75rem 1rem";
+              p.style.fontWeight = "bold";
+              p.style.opacity = "0";
+              mainContent.appendChild(p);
+              setTimeout(function() {
+                p.style.opacity = "1";
+                p.style.animation = "fadeInOut 6s ease-in-out 1";
+              }, 100);
+            } else if (txt.includes("spiritual warfare")) {
+              var p = document.createElement("p");
+              p.className = "about-text mb-2";
+              // Make 'spiritual warfare' bold, italic, and an anchor link to the spiritualWarfare sub-section
+              p.innerHTML = txt.replace(/spiritual warfare/gi, '<a href="#spiritual-warfare-section" class="fw-bold fst-italic text-decoration-underline">spiritual warfare</a>');
               mainContent.appendChild(p);
             } else {
               var p = document.createElement("p");
@@ -1520,12 +1540,71 @@ document.addEventListener("DOMContentLoaded", function () {
               mainContent.appendChild(p);
             }
           });
+          // Render spiritualWarfare sub-section if present
+          if (warfare.spiritualWarfare && Array.isArray(warfare.spiritualWarfare.text)) {
+            var swSection = document.createElement("section");
+            swSection.className = "mt-4 mb-4 p-3 rounded bg-light border";
+            swSection.id = "spiritual-warfare-section";
+            var swTitle = document.createElement("h4");
+            swTitle.className = "royal mb-2";
+            swTitle.textContent = "Spiritual Warfare";
+            swSection.appendChild(swTitle);
+            // Render each text line, and if it's the 'key scriptures' line, insert the bible references right after
+            (warfare.spiritualWarfare.text || []).forEach(function (txt) {
+              var p = document.createElement("p");
+              p.className = "about-text mb-2";
+              p.textContent = txt;
+              swSection.appendChild(p);
+              if (txt.toLowerCase().includes("key scriptures") && Array.isArray(warfare.spiritualWarfare.bibleReferences) && warfare.spiritualWarfare.bibleReferences.length > 0 && typeof warfare.spiritualWarfare.bibleReferences[0] === "object") {
+                var refsDiv = document.createElement("div");
+                refsDiv.className = "mb-3";
+                refsDiv.style.textAlign = "center";
+                refsDiv.style.marginTop = "-0.5rem";
+                refsDiv.style.marginBottom = "1.5rem";
+                warfare.spiritualWarfare.bibleReferences.forEach(function (refObj, i) {
+                  var a = document.createElement("a");
+                  a.href = refObj.url || "#";
+                  a.target = "_blank";
+                  a.rel = "noopener";
+                  a.style.fontSize = "1rem";
+                  a.style.color = "#0288d1";
+                  // Remove bold fontWeight
+                  // a.style.fontWeight = "bold";
+                  a.textContent = refObj.reference;
+                  a.addEventListener("click", function (e) {
+                    if (!isMobile()) {
+                      e.preventDefault();
+                      var w = 600;
+                      var h = 700;
+                      var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                      var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                      var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                      var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                      var left = dualScreenLeft + (width - w) / 2;
+                      var top = dualScreenTop + (height - h) / 2;
+                      window.open(
+                        a.href,
+                        "_blank",
+                        "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",resizable,scrollbars"
+                      );
+                    }
+                  });
+                  refsDiv.appendChild(a);
+                  if (i < warfare.spiritualWarfare.bibleReferences.length - 1) {
+                    refsDiv.appendChild(document.createTextNode(" | "));
+                  }
+                });
+                swSection.appendChild(refsDiv);
+              }
+            });
+            mainContent.appendChild(swSection);
+          }
         }
         // Children sections
-        var childrenContent = document.getElementById("christian-life-children");
-        if (childrenContent && Array.isArray(christianLife.children)) {
+        var childrenContent = document.getElementById("warfare-children");
+        if (childrenContent && Array.isArray(warfare.children)) {
           childrenContent.innerHTML = "";
-          christianLife.children.forEach(function (child) {
+          warfare.children.forEach(function (child) {
             var div = document.createElement("div");
             div.className = "mb-4 pb-2 border-bottom";
             var h4 = document.createElement("h4");
@@ -1534,14 +1613,13 @@ document.addEventListener("DOMContentLoaded", function () {
             div.appendChild(h4);
             (child.text || []).forEach(function (txt) {
               if (txt.trim() === "") {
-                // Render a visible paragraph break
                 var br = document.createElement("div");
                 br.className = "paragraph-break";
                 div.appendChild(br);
               } else {
                 var p = document.createElement("p");
-                p.className = "about-text mb-1";
-                p.innerHTML = txt;
+                p.className = "about-text mb-2";
+                p.textContent = txt;
                 div.appendChild(p);
               }
             });
@@ -1551,3 +1629,54 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
+// Render 'Below are some key scriptures...' intro and all spiritualWarfare.bibleReferences under the main Warfare text, before spiritualWarfare section
+          if (warfare.spiritualWarfare && Array.isArray(warfare.spiritualWarfare.bibleReferences) && warfare.spiritualWarfare.bibleReferences.length > 0 && typeof warfare.spiritualWarfare.bibleReferences[0] === 'object') {
+            var intro = warfare.spiritualWarfare.text && warfare.spiritualWarfare.text.find(function(t) {
+              return t.toLowerCase().includes('key scriptures');
+            });
+            if (intro) {
+              var introP = document.createElement("p");
+              introP.className = "about-text mb-2";
+              introP.textContent = intro;
+              mainContent.appendChild(introP);
+            }
+            var refsDiv = document.createElement("div");
+            refsDiv.className = "mb-3";
+            refsDiv.style.textAlign = "center";
+            refsDiv.style.marginTop = "-0.5rem";
+            refsDiv.style.marginBottom = "1.5rem";
+            warfare.spiritualWarfare.bibleReferences.forEach(function (refObj, i) {
+              var a = document.createElement("a");
+              a.href = refObj.url || "#";
+              a.target = "_blank";
+              a.rel = "noopener";
+              a.style.fontSize = "1rem";
+              a.style.color = "#0288d1";
+              // Remove bold fontWeight
+              // a.style.fontWeight = "bold";
+              a.textContent = refObj.reference;
+              a.addEventListener("click", function (e) {
+                if (!isMobile()) {
+                  e.preventDefault();
+                  var w = 600;
+                  var h = 700;
+                  var dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+                  var dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+                  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+                  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+                  var left = dualScreenLeft + (width - w) / 2;
+                  var top = dualScreenTop + (height - h) / 2;
+                  window.open(
+                    a.href,
+                    "_blank",
+                    "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left + ",resizable,scrollbars"
+                  );
+                }
+              });
+              refsDiv.appendChild(a);
+              if (i < warfare.spiritualWarfare.bibleReferences.length - 1) {
+                refsDiv.appendChild(document.createTextNode(" | "));
+              }
+            });
+            mainContent.appendChild(refsDiv);
+          }

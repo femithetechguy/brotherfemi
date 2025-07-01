@@ -6,7 +6,7 @@
       "menu": "Worship & Adoration",
       "bibleVerse": "God is Spirit, and those who worship Him must worship in spirit and truth.",
       "reference": "John 4:24",
-      "bible_url": "https://www.biblegateway.com/passage/?search=John+4%3A24&version=ESV",
+      "bible_url": "https://www.biblegateway.com/passage/?search=John+4%3A24&version=NKJV",
       "text": [
         "True worship is a lifestyle of surrender, reverence, and love for God. Let every moment, word, and song be an offering of adoration to the King of kings."
       ]
@@ -65,7 +65,7 @@
       "menu": "The Word",
       "bibleVerse": "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
       "reference": "Colossians 3:16",
-      "bible_url": "https://www.biblegateway.com/passage/?search=Colossians+3%3A16&version=ESV",
+      "bible_url": "https://www.biblegateway.com/passage/?search=Colossians+3%3A16&version=NKJV",
       "text": [
         "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
         "May the Word of God be your guide, your strength, and your joy. Stay rooted in Christ, and let His truth shape your every step."
@@ -108,19 +108,19 @@
       "menu": "Hymns",
       "bibleVerse": "Sing to the Lord, all the earth; proclaim the good news of His salvation from day to day.",
       "reference": "1 Chronicles 16:23",
-      "bible_url": "https://www.biblegateway.com/passage/?search=1+Chronicles+16%3A23&version=ESV",
+      "bible_url": "https://www.biblegateway.com/passage/?search=1+Chronicles+16%3A23&version=NKJV",
       "text": [
         "Sing to the Lord, all the earth; proclaim the good news of His salvation from day to day.",
         "Enjoy a curated playlist of classic and contemporary hymns to inspire your worship and devotion."
       ]
     },
     {
-      "id": "christian-life",
-      "title": "Christian Life",
-      "menu": "Christian Life",
+      "id": "warfare",
+      "title": "Warfare",
+      "menu": "Warfare",
       "bibleVerse": "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
       "reference": "2 Corinthians 5:17",
-      "bible_url": "https://www.biblegateway.com/passage/?search=2+Corinthians+5%3A17&version=ESV",
+      "bible_url": "https://www.biblegateway.com/passage/?search=2+Corinthians+5%3A17&version=NKJV",
       "text": [
         "Who is a Christian?",
         "A Christian is someone who:",
@@ -135,8 +135,61 @@
         "• They repent of sin, trust in Christ’s sacrifice, and walk in obedience.",
         "• They become part of the body of Christ, the global family of believers.",
         "Simply put:",
-        "A Christian is a forgiven sinner, made new by Christ, and committed to following Him."
+        "A Christian is a forgiven sinner, made new by Christ, and committed to following Him.",
+        "The Christian life involves spiritual warfare, as believers stand firm against spiritual opposition and rely on God's strength for victory."
       ],
+      "spiritualWarfare": {
+        "text": [
+          "Spiritual warfare is the ongoing battle between good and evil, light and darkness, in the life of every believer.",
+          "It is not fought with physical weapons, but with faith, prayer, and the Word of God (Ephesians 6:10–18).",
+          "Believers are called to stand firm, put on the full armor of God, and resist the schemes of the enemy.",
+          "Victory is found in Christ, who has already overcome the world (John 16:33).",
+          "Stay alert, pray continually, and trust in God’s power to protect and deliver you.",
+          "Below are some key scriptures to meditate on regarding spiritual warfare:"
+        ],
+        "bibleReferences": [
+          {
+            "reference": "1 Timothy 6:12",
+            "url": "https://www.biblegateway.com/passage/?search=1+Timothy+6%3A12&version=NKJV"
+          },
+          {
+            "reference": "2 Timothy 4:7",
+            "url": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A7&version=NKJV"
+          },
+          {
+            "reference": "Ephesians 6:11-12",
+            "url": "https://www.biblegateway.com/passage/?search=Ephesians+6%3A11-12&version=NKJV"
+          },
+          {
+            "reference": "1 Corinthians 9:26–27",
+            "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+9%3A26-27&version=NKJV"
+          },
+          {
+            "reference": "James 1:12",
+            "url": "https://www.biblegateway.com/passage/?search=James+1%3A12&version=NKJV"
+          },
+          {
+            "reference": "Hebrews 12:1",
+            "url": "https://www.biblegateway.com/passage/?search=Hebrews+12%3A1&version=NKJV"
+          },
+          {
+            "reference": "Romans 8:37",
+            "url": "https://www.biblegateway.com/passage/?search=Romans+8%3A37&version=NKJV"
+          },
+          {
+            "reference": "1 Peter 5:8–9",
+            "url": "https://www.biblegateway.com/passage/?search=1+Peter+5%3A8-9&version=NKJV"
+          },
+          {
+            "reference": "Philippians 3:14",
+            "url": "https://www.biblegateway.com/passage/?search=Philippians+3%3A14&version=NKJV"
+          },
+          {
+            "reference": "Galatians 6:9",
+            "url": "https://www.biblegateway.com/passage/?search=Galatians+6%3A9&version=NKJV"
+          }
+        ]
+      },
       "children": [
         {
           "id": "christian",
