@@ -1,3 +1,106 @@
+// SEO enhancements are moved to inline scripts in the HTML head for reliability
+
+// SEO Enhancement: Breadcrumb navigation
+function updateBreadcrumbs(sectionId) {
+  const breadcrumbContainer = document.getElementById('breadcrumb-container');
+  const breadcrumbList = document.getElementById('breadcrumb-list');
+  const breadcrumbSchema = document.getElementById('breadcrumb-schema');
+  
+  if (!breadcrumbContainer || !breadcrumbList || !sectionId) return;
+  
+  // Find the current section name
+  const sectionElement = document.getElementById(sectionId);
+  if (!sectionElement) return;
+  
+  const sectionTitle = sectionElement.querySelector('h2')?.textContent || 
+                      sectionElement.querySelector('h3')?.textContent || 
+                      sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+  
+  // Update the visible breadcrumb
+  breadcrumbList.innerHTML = `
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">${sectionTitle}</li>
+  `;
+  
+  // Update the structured data
+  if (breadcrumbSchema) {
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://brotherfemi.org"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": sectionTitle,
+          "item": `https://brotherfemi.org/#${sectionId}`
+        }
+      ]
+    };
+    
+    breadcrumbSchema.textContent = JSON.stringify(schemaData);
+    breadcrumbContainer.classList.remove('d-none');
+  }
+}
+
+// Enhance navigation links with proper attributes for SEO and analytics
+function enhanceNavigationLinks() {
+  // Add proper attributes to internal navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    if (!link.hasAttribute('data-nav')) {
+      link.setAttribute('data-nav', 'internal');
+      
+      // Add descriptive titles for section links
+      const sectionId = link.getAttribute('href').substring(1);
+      if (sectionId) {
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const sectionTitle = section.querySelector('h2')?.textContent || 
+                              section.querySelector('h3')?.textContent ||
+                              sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+          if (!link.hasAttribute('title')) {
+            link.setAttribute('title', `Navigate to ${sectionTitle} section`);
+          }
+        }
+      }
+    }
+  });
+  
+  // Add proper attributes to external links
+  document.querySelectorAll('a[href^="http"]').forEach(link => {
+    // Don't change Bible.com links as they have special handling
+    if (link.href.includes('bible.com')) return;
+    
+    // External links should open in new tab with proper security
+    if (!link.hasAttribute('target')) {
+      link.setAttribute('target', '_blank');
+      link.setAttribute('rel', 'noopener noreferrer');
+    }
+    
+    // Add descriptive title if not present
+    if (!link.hasAttribute('title')) {
+      link.setAttribute('title', `Visit ${link.textContent.trim() || 'external site'} (opens in new window)`);
+    }
+  });
+}
+
+// Initialize lazy loading for images
+function initLazyLoading() {
+  if ('loading' in HTMLImageElement.prototype) {
+    // Browser supports native lazy loading
+    document.querySelectorAll('img').forEach(img => {
+      if (!img.hasAttribute('loading') && !img.classList.contains('no-lazy')) {
+        img.setAttribute('loading', 'lazy');
+      }
+    });
+  }
+}
+
 function isMobile() {
   return window.innerWidth < 768;
 }
@@ -2039,3 +2142,26 @@ document.addEventListener('click', function(e) {
     }
   }
 }, true); // Use capturing to intercept the event before it reaches the link
+
+// Initialize SEO features when DOM content is loaded
+document.addEventListener('DOMContentLoaded', function() {
+  // Apply SEO enhancements
+  enhanceNavigationLinks();
+  initLazyLoading();
+  
+  // Handle section navigation for updating breadcrumbs
+  window.addEventListener('hashchange', function() {
+    const sectionId = window.location.hash.substring(1);
+    if (sectionId) {
+      updateBreadcrumbs(sectionId);
+    }
+  });
+  
+  // Check if there's an initial hash
+  if (window.location.hash) {
+    const sectionId = window.location.hash.substring(1);
+    updateBreadcrumbs(sectionId);
+  }
+
+  // The rest of your initialization code will continue below...
+});
