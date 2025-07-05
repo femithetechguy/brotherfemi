@@ -138,6 +138,24 @@
         "A Christian is a forgiven sinner, made new by Christ, and committed to following Him.",
         "The Christian life involves spiritual warfare, as believers stand firm against spiritual opposition and rely on God's strength for victory."
       ],
+      "core_beliefs_reference": [
+        {
+          "reference": "1 Corinthians 15:3–4",
+          "bible_url": "https://www.bible.com/bible/114/1CO.15.3-4.NKJV"
+        },
+        {
+          "reference": "Ephesians 2:8–9",
+          "bible_url": "https://www.bible.com/bible/114/EPH.2.8-9.NKJV"
+        },
+        {
+          "reference": "2 Timothy 3:16",
+          "bible_url": "https://www.bible.com/bible/114/2TI.3.16.NKJV"
+        },
+        {
+          "reference": "Matthew 22:37–39",
+          "bible_url": "https://www.bible.com/bible/114/MAT.22.37-39.NKJV"
+        }
+      ],
       "spiritualWarfare": {
         "text": [
           "Spiritual warfare is the ongoing battle between good and evil, light and darkness, in the life of every believer.",
@@ -147,6 +165,16 @@
           "Stay alert, pray continually, and trust in God’s power to protect and deliver you.",
           "Below are some key scriptures to meditate on regarding spiritual warfare:"
         ],
+          "spiritual_warfare_text_reference": [
+        {
+          "reference": "Ephesians 6:10–18",
+          "bible_url": "https://www.bible.com/bible/114/EPH.6.10-18.NKJV"
+        },
+        {
+          "reference": "John 16:33",
+          "bible_url": "https://www.bible.com/bible/114/JHN.16.33.NKJV"
+        }
+      ],
         "bibleReferences": [
           {
             "reference": "1 Timothy 6:12",

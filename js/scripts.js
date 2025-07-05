@@ -1637,7 +1637,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 mainContent.appendChild(ul);
               }
               var li = document.createElement("li");
-              li.textContent = txt.replace(/^• /, "");
+              
+              // Process Bible references in core beliefs
+              var processedText = txt.replace(/^• /, "");
+              if (warfare.core_beliefs_reference && Array.isArray(warfare.core_beliefs_reference)) {
+                warfare.core_beliefs_reference.forEach(function(refObj) {
+                  var refPattern = new RegExp('\\(' + refObj.reference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\)', 'g');
+                  processedText = processedText.replace(refPattern, function(match) {
+                    return '<a href="javascript:void(0);" class="bible-reference-link core-beliefs-ref" data-bible-url="' + refObj.bible_url + '" data-reference="' + refObj.reference + '" style="color: #0288d1; text-decoration: none;">' + match + '</a>';
+                  });
+                });
+              }
+              
+              li.innerHTML = processedText;
               ul.appendChild(li);
             } else if (txt === "A Christian is a forgiven sinner, made new by Christ, and committed to following Him.") {
               var p = document.createElement("p");
@@ -1667,6 +1679,71 @@ document.addEventListener("DOMContentLoaded", function () {
               mainContent.appendChild(p);
             }
           });
+          // Add retractable popups for core beliefs references
+          if (warfare.core_beliefs_reference && Array.isArray(warfare.core_beliefs_reference)) {
+            warfare.core_beliefs_reference.forEach(function(refObj) {
+              var quoteDiv = document.createElement("div");
+              quoteDiv.className = "bible-quote-retract";
+              quoteDiv.setAttribute("data-ref", refObj.reference);
+              quoteDiv.setAttribute("data-href", refObj.bible_url);
+              
+              // Close button
+              var closeBtn = document.createElement("button");
+              closeBtn.className = "bible-quote-close";
+              closeBtn.innerHTML = "&times;";
+              closeBtn.title = "Close";
+              closeBtn.onclick = function(e) {
+                e.stopPropagation();
+                quoteDiv.classList.remove("active");
+              };
+              quoteDiv.appendChild(closeBtn);
+              
+              // Iframe for Bible passage
+              var iframe = document.createElement("iframe");
+              iframe.src = refObj.bible_url;
+              iframe.title = refObj.reference + " (Bible.com)";
+              iframe.setAttribute("loading", "lazy");
+              quoteDiv.appendChild(iframe);
+              
+              // Store the URL for easy reference
+              quoteDiv.setAttribute('data-bible-url', refObj.bible_url);
+              mainContent.appendChild(quoteDiv);
+            });
+          }
+          
+          // Initialize click handlers for core beliefs references
+          setTimeout(function() {
+            document.querySelectorAll('.core-beliefs-ref').forEach(function(link) {
+              if (link.hasAttribute('data-initialized')) return;
+              link.setAttribute('data-initialized', 'true');
+              
+              var reference = link.getAttribute('data-reference');
+              var quoteDiv = document.querySelector('.bible-quote-retract[data-ref="' + reference + '"]');
+              
+              if (quoteDiv) {
+                link.onclick = function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  
+                  // Close any other open quotes
+                  document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+                    openQuote.classList.remove('active');
+                  });
+                  
+                  // Open this one
+                  quoteDiv.classList.add('active');
+                  
+                  // Scroll into view
+                  setTimeout(function() {
+                    quoteDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
+                  }, 100);
+                  
+                  return false;
+                };
+              }
+            });
+          }, 100);
+          
           // Render spiritualWarfare sub-section if present
           if (warfare.spiritualWarfare && Array.isArray(warfare.spiritualWarfare.text)) {
             var swSection = document.createElement("section");
@@ -1680,7 +1757,19 @@ document.addEventListener("DOMContentLoaded", function () {
             (warfare.spiritualWarfare.text || []).forEach(function (txt) {
               var p = document.createElement("p");
               p.className = "about-text mb-2";
-              p.textContent = txt;
+              
+              // Process spiritual warfare text references
+              var processedText = txt;
+              if (warfare.spiritualWarfare.spiritual_warfare_text_reference && Array.isArray(warfare.spiritualWarfare.spiritual_warfare_text_reference)) {
+                warfare.spiritualWarfare.spiritual_warfare_text_reference.forEach(function(refObj) {
+                  var refPattern = new RegExp('\\(' + refObj.reference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\)', 'g');
+                  processedText = processedText.replace(refPattern, function(match) {
+                    return '<a href="javascript:void(0);" class="bible-reference-link spiritual-warfare-ref" data-bible-url="' + refObj.bible_url + '" data-reference="' + refObj.reference + '" style="color: #0288d1; text-decoration: none;">' + match + '</a>';
+                  });
+                });
+              }
+              
+              p.innerHTML = processedText;
               swSection.appendChild(p);
               if (txt.toLowerCase().includes("key scriptures") && Array.isArray(warfare.spiritualWarfare.bibleReferences) && warfare.spiritualWarfare.bibleReferences.length > 0 && typeof warfare.spiritualWarfare.bibleReferences[0] === "object") {
                 var refsDiv = document.createElement("div");
@@ -1762,7 +1851,74 @@ document.addEventListener("DOMContentLoaded", function () {
               }
             });
             mainContent.appendChild(swSection);
+            
+            // Add retractable popups for spiritual warfare text references
+            if (warfare.spiritualWarfare.spiritual_warfare_text_reference && Array.isArray(warfare.spiritualWarfare.spiritual_warfare_text_reference)) {
+              warfare.spiritualWarfare.spiritual_warfare_text_reference.forEach(function(refObj) {
+                var quoteDiv = document.createElement("div");
+                quoteDiv.className = "bible-quote-retract";
+                quoteDiv.setAttribute("data-ref", refObj.reference);
+                quoteDiv.setAttribute("data-href", refObj.bible_url);
+                
+                // Close button
+                var closeBtn = document.createElement("button");
+                closeBtn.className = "bible-quote-close";
+                closeBtn.innerHTML = "&times;";
+                closeBtn.title = "Close";
+                closeBtn.onclick = function(e) {
+                  e.stopPropagation();
+                  quoteDiv.classList.remove("active");
+                };
+                quoteDiv.appendChild(closeBtn);
+                
+                // Iframe for Bible passage
+                var iframe = document.createElement("iframe");
+                iframe.src = refObj.bible_url;
+                iframe.title = refObj.reference + " (Bible.com)";
+                iframe.setAttribute("loading", "lazy");
+                quoteDiv.appendChild(iframe);
+                
+                // Store the URL for easy reference
+                quoteDiv.setAttribute('data-bible-url', refObj.bible_url);
+                mainContent.appendChild(quoteDiv);
+              });
+            }
           }
+          
+          // Initialize click handlers for spiritual warfare text references
+          setTimeout(function() {
+            document.querySelectorAll('.spiritual-warfare-ref').forEach(function(link) {
+              if (link.hasAttribute('data-initialized')) return;
+              link.setAttribute('data-initialized', 'true');
+              
+              var reference = link.getAttribute('data-reference');
+              var quoteDiv = document.querySelector('.bible-quote-retract[data-ref="' + reference + '"]');
+              
+              if (quoteDiv) {
+                link.onclick = function(e) {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  
+                  // Close any other open quotes
+                  document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+                    openQuote.classList.remove('active');
+                  });
+                  
+                  // Open this one
+                  quoteDiv.classList.add('active');
+                  
+                  // Scroll into view
+                  setTimeout(function() {
+                    quoteDiv.scrollIntoView({behavior: 'smooth', block: 'center'});
+                  }, 100);
+                  
+                  return false;
+                };
+              }
+            });
+          }, 150);
+          
+          // ...existing code...
         }
         // Children sections
         var childrenContent = document.getElementById("warfare-children");
