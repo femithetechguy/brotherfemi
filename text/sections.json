@@ -183,12 +183,20 @@
           {
             "reference": "Philippians 3:14",
             "url": "https://www.bible.com/bible/114/PHP.3.14.NKJV"
-          },
-          {
+            },
+            {
             "reference": "Galatians 6:9",
             "url": "https://www.bible.com/bible/114/GAL.6.9.NKJV"
-          }
-        ]
+            },
+            {
+            "reference": "2 Corinthians 4:17",
+            "url": "https://www.bible.com/bible/114/2CO.4.17.NKJV"
+            },
+            {
+            "reference": "Romans 8:18",
+            "url": "https://www.bible.com/bible/114/ROM.8.18.NKJV"
+            }
+          ]
       },
       "children": [
         {
