@@ -165,16 +165,16 @@
           "Stay alert, pray continually, and trust in God’s power to protect and deliver you.",
           "Below are some key scriptures to meditate on regarding spiritual warfare:"
         ],
-          "spiritual_warfare_text_reference": [
-        {
-          "reference": "Ephesians 6:10–18",
-          "bible_url": "https://www.bible.com/bible/114/EPH.6.10-18.NKJV"
-        },
-        {
-          "reference": "John 16:33",
-          "bible_url": "https://www.bible.com/bible/114/JHN.16.33.NKJV"
-        }
-      ],
+        "spiritual_warfare_text_reference": [
+          {
+            "reference": "Ephesians 6:10–18",
+            "bible_url": "https://www.bible.com/bible/114/EPH.6.10-18.NKJV"
+          },
+          {
+            "reference": "John 16:33",
+            "bible_url": "https://www.bible.com/bible/114/JHN.16.33.NKJV"
+          }
+        ],
         "bibleReferences": [
           {
             "reference": "1 Timothy 6:12",
@@ -211,20 +211,20 @@
           {
             "reference": "Philippians 3:14",
             "url": "https://www.bible.com/bible/114/PHP.3.14.NKJV"
-            },
-            {
+          },
+          {
             "reference": "Galatians 6:9",
             "url": "https://www.bible.com/bible/114/GAL.6.9.NKJV"
-            },
-            {
+          },
+          {
             "reference": "2 Corinthians 4:17",
             "url": "https://www.bible.com/bible/114/2CO.4.17.NKJV"
-            },
-            {
+          },
+          {
             "reference": "Romans 8:18",
             "url": "https://www.bible.com/bible/114/ROM.8.18.NKJV"
-            }
-          ]
+          }
+        ]
       },
       "children": [
         {
@@ -333,9 +333,9 @@
       "id": "contact",
       "title": "Contact & Socials",
       "menu": "Contact",
-      "bibleVerse": "",
-      "reference": "",
-      "bible_url": ""
+      "reference": "Romans 15:33",
+      "bibleVerse": "Now the God of peace be with you all. Amen.",
+      "bible_url": "https://www.bible.com/bible/114/ROM.15.33.NKJV"
     }
   ],
   "footer": {

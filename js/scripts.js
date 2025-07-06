@@ -780,8 +780,194 @@ document.addEventListener("DOMContentLoaded", function () {
         li.appendChild(a);
         container.appendChild(li);
       });
+      
+      // Add Bible verse after social media icons
+      addContactBibleVerse();
     });
 });
+
+// Function to add Bible verse after contact social media icons
+function addContactBibleVerse() {
+  fetch("text/sections.json")
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      var sections = Array.isArray(data.sections) ? data.sections : [];
+      var contactSection = sections.find(function (s) {
+        return s.id === "contact";
+      });
+      
+      if (contactSection && contactSection.bibleVerse) {
+        var container = document.getElementById("contact-social-list");
+        if (!container) return;
+        
+        // Create a wrapper div for the Bible verse
+        var bibleVerseWrapper = document.createElement("div");
+        bibleVerseWrapper.className = "contact-bible-verse-wrapper";
+        bibleVerseWrapper.style.textAlign = "center";
+        bibleVerseWrapper.style.marginTop = "1.5rem";
+        bibleVerseWrapper.style.padding = "1rem";
+        
+        // Create the Bible verse text
+        var verseText = document.createElement("p");
+        verseText.className = "contact-bible-verse";
+        verseText.textContent = '"' + contactSection.bibleVerse + '"';
+        verseText.style.fontSize = "1rem";
+        verseText.style.fontStyle = "italic";
+        verseText.style.color = "#0288d1";
+        verseText.style.marginBottom = "0.5rem";
+        
+        // Create the reference link
+        var referenceLink = document.createElement("a");
+        referenceLink.href = "javascript:void(0);";
+        referenceLink.textContent = "— " + contactSection.reference;
+        referenceLink.style.fontSize = "0.9rem";
+        referenceLink.style.color = "#0288d1";
+        referenceLink.style.textDecoration = "underline";
+        referenceLink.style.cursor = "pointer";
+        referenceLink.title = "Click to read full verse";
+        referenceLink.setAttribute('data-has-retractable', 'true'); // Mark as having custom handler
+        
+        // Add click handler for retractable popup
+        referenceLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          var url = contactSection.bible_url;
+          
+          // Check if this link already has a retractable quote
+          var existingQuote = document.querySelector('.bible-quote-retract[data-href="' + url + '"]');
+          if (existingQuote) {
+            // If it exists, just activate it
+            // Close any other open quotes
+            document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+              openQuote.classList.remove('active');
+            });
+            document.querySelectorAll('.mentor-popup-retract.active').forEach(function(openPopup) {
+              openPopup.classList.remove('active');
+            });
+            // Open this one
+            existingQuote.classList.add('active');
+            // Scroll into view
+            setTimeout(function() {
+              existingQuote.scrollIntoView({behavior: 'smooth', block: 'center'});
+            }, 100);
+            return;
+          }
+          
+          // Create a new retractable quote container
+          var quoteContainer = document.createElement('div');
+          quoteContainer.className = 'bible-quote-retract';
+          quoteContainer.setAttribute('data-href', url);
+          quoteContainer.setAttribute('data-ref', contactSection.reference);
+          
+          // Add close button
+          var closeBtn = document.createElement('button');
+          closeBtn.className = 'bible-quote-close';
+          closeBtn.innerHTML = '&times;';
+          closeBtn.title = 'Close';
+          closeBtn.onclick = function(e) {
+            e.stopPropagation();
+            quoteContainer.classList.remove('active');
+          };
+          quoteContainer.appendChild(closeBtn);
+          
+          // Add "Back to Page" button
+          var backToPageLink = document.createElement('a');
+          backToPageLink.href = 'javascript:void(0);';
+          backToPageLink.className = 'bible-back-to-page';
+          backToPageLink.textContent = '← Back to Page';
+          backToPageLink.onclick = function(e) {
+            e.stopPropagation();
+            quoteContainer.classList.remove('active');
+          };
+          quoteContainer.appendChild(backToPageLink);
+          
+          // Add iframe for Bible content
+          var iframe = document.createElement('iframe');
+          iframe.src = url;
+          iframe.title = contactSection.reference + ' - Brother Femi';
+          iframe.setAttribute('loading', 'lazy');
+          
+          // Create fallback message for iframe loading failures
+          var fallbackMessage = document.createElement('div');
+          fallbackMessage.className = 'iframe-fallback-message';
+          fallbackMessage.style.display = 'none';
+          fallbackMessage.innerHTML = 
+            '<div class="fallback-content">' +
+              '<h3>Content Cannot Be Displayed</h3>' +
+              '<p>This content cannot be displayed in a popup due to security restrictions.</p>' +
+              '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="fallback-link">' +
+                '<i class="fa fa-external-link"></i> Open in New Tab' +
+              '</a>' +
+            '</div>';
+          
+          // Add error handling for iframe loading
+          iframe.addEventListener('error', function() {
+            showFallbackMessage();
+          });
+          
+          // Also handle cases where iframe loads but is restricted
+          iframe.addEventListener('load', function() {
+            // Check if the iframe is actually blocked by X-Frame-Options
+            setTimeout(function() {
+              try {
+                // Try to access the iframe's content - this will fail if blocked
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (!iframeDoc || iframeDoc.body.innerHTML === '') {
+                  showFallbackMessage();
+                }
+              } catch (e) {
+                // X-Frame-Options blocking detected
+                showFallbackMessage();
+              }
+            }, 2000); // Wait 2 seconds for content to load
+          });
+          
+          function showFallbackMessage() {
+            iframe.style.display = 'none';
+            fallbackMessage.style.display = 'block';
+          }
+          
+          quoteContainer.appendChild(iframe);
+          quoteContainer.appendChild(fallbackMessage);
+          
+          // Insert the quote container after the contact section
+          var contactSection = document.getElementById('contact');
+          if (contactSection) {
+            contactSection.parentNode.insertBefore(quoteContainer, contactSection.nextSibling);
+          } else {
+            // Fallback: insert after the container
+            container.parentNode.insertBefore(quoteContainer, container.nextSibling);
+          }
+          
+          // Close any other open quotes and activate this one
+          document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+            openQuote.classList.remove('active');
+          });
+          document.querySelectorAll('.mentor-popup-retract.active').forEach(function(openPopup) {
+            openPopup.classList.remove('active');
+          });
+          quoteContainer.classList.add('active');
+          
+          // Scroll into view
+          setTimeout(function() {
+            quoteContainer.scrollIntoView({behavior: 'smooth', block: 'center'});
+          }, 100);
+        });
+        
+        bibleVerseWrapper.appendChild(verseText);
+        bibleVerseWrapper.appendChild(referenceLink);
+        
+        // Insert the Bible verse after the social media icons
+        container.parentNode.insertBefore(bibleVerseWrapper, container.nextSibling);
+      }
+    })
+    .catch(function (error) {
+      console.log("Could not load contact Bible verse:", error);
+    });
+}
 document.addEventListener("DOMContentLoaded", function () {
   fetch("text/brotherfemi.json")
     .then(function (response) {
@@ -2158,6 +2344,12 @@ function handleBibleComLinks() {
       
       // Skip links that already have retractable quotes
       if (link.getAttribute('data-has-retractable') === 'true') {
+        return;
+      }
+      
+      // Skip contact Bible verse link - it has its own handler
+      const parentWrapper = link.closest('.contact-bible-verse-wrapper');
+      if (parentWrapper) {
         return;
       }
       
