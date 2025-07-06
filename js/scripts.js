@@ -124,54 +124,21 @@ function handleSocialLinks() {
   // Select all links in .social-icons and .social-list
   var links = document.querySelectorAll(".social-icons a, .social-list a");
   links.forEach(function (link) {
-    // Prevent duplicate listeners
+    // Remove any existing popup handlers
     link.removeEventListener("click", link._popupHandler, false);
-    link._popupHandler = function (e) {
-      var url = link.getAttribute("data-url") || link.getAttribute("href");
-      // Do not open popup for email links
-      if (url && url.startsWith("mailto:")) {
-        return;
-      }
-      if (!isMobile()) {
-        e.preventDefault();
-        // Open popup window for desktop, centered relative to current window
-        var w = 600;
-        var h = 700;
-        var dualScreenLeft =
-          window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-        var dualScreenTop =
-          window.screenTop !== undefined ? window.screenTop : window.screenY;
-        var width = window.innerWidth
-          ? window.innerWidth
-          : document.documentElement.clientWidth
-          ? document.documentElement.clientWidth
-          : screen.width;
-        var height = window.innerHeight
-          ? window.innerHeight
-          : document.documentElement.clientHeight
-          ? document.documentElement.clientHeight
-          : screen.height;
-        var left = dualScreenLeft + (width - w) / 2;
-        var top = dualScreenTop + (height - h) / 2;
-        window.open(
-          url,
-          "_blank",
-          "width=" +
-            w +
-            ",height=" +
-            h +
-            ",top=" +
-            top +
-            ",left=" +
-            left +
-            ",resizable,scrollbars"
-        );
-      } else {
-        // On mobile, use native navigation and allow back button to return
-        window.location.assign(url);
-      }
-    };
-    link.addEventListener("click", link._popupHandler, false);
+    
+    var url = link.getAttribute("data-url") || link.getAttribute("href");
+    // For email links, leave default behavior
+    if (url && url.startsWith("mailto:")) {
+      return;
+    }
+    
+    // For all other social links, open in new tab
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer");
+    
+    // Remove any popup handlers
+    link._popupHandler = null;
   });
 }
 
@@ -204,32 +171,11 @@ document.addEventListener("DOMContentLoaded", function () {
     'a[href="https://www.instagram.com/howj_global"]'
   );
   if (howjLink) {
-    howjLink.addEventListener("click", function (e) {
-      e.preventDefault();
-      const popupWidth = 600;
-      const popupHeight = 700;
-      const dualScreenLeft =
-        window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-      const dualScreenTop =
-        window.screenTop !== undefined ? window.screenTop : window.screenY;
-      const width = window.innerWidth
-        ? window.innerWidth
-        : document.documentElement.clientWidth
-        ? document.documentElement.clientWidth
-        : screen.width;
-      const height = window.innerHeight
-        ? window.innerHeight
-        : document.documentElement.clientHeight
-        ? document.documentElement.clientHeight
-        : screen.height;
-      const left = dualScreenLeft + (width - popupWidth) / 2;
-      const top = dualScreenTop + (height - popupHeight) / 2;
-      window.open(
-        "https://www.instagram.com/howj_global",
-        "howjPopup",
-        `width=${popupWidth},height=${popupHeight},top=${top},left=${left},scrollbars=yes,resizable=yes`
-      );
-    });
+    // Remove any existing popup handlers and make it open in new tab
+    howjLink.removeEventListener("click", howjLink._popupHandler);
+    howjLink.setAttribute("target", "_blank");
+    howjLink.setAttribute("rel", "noopener noreferrer");
+    howjLink._popupHandler = null;
   }
 });
 function getCenteredPopupSpecs(popupWidth, popupHeight) {
@@ -264,22 +210,21 @@ function handlePopupLinks() {
       return;
     }
     
+    // Remove any existing popup handlers
     link.removeEventListener("click", link._popupHandler, false);
-    link._popupHandler = function (e) {
-      if (!isMobile()) {
-        e.preventDefault();
-        var url = link.getAttribute("href");
-        var specs = getCenteredPopupSpecs(600, 700);
-        window.open(url, "_blank", specs);
-      }
-    };
-    link.addEventListener("click", link._popupHandler, false);
+    
+    // For all other links, open in new tab
+    link.setAttribute("target", "_blank");
+    link.setAttribute("rel", "noopener noreferrer");
+    
+    // Remove any popup handlers
+    link._popupHandler = null;
   });
   // For Instagram iframe, overlay a transparent div to capture click
   var instaIframe = document.querySelector(
     ".instagram-embed-responsive iframe"
   );
-  if (instaIframe && !isMobile()) {
+  if (instaIframe) {
     var overlay = document.createElement("div");
     overlay.style.position = "absolute";
     overlay.style.top = 0;
@@ -292,8 +237,118 @@ function handlePopupLinks() {
     overlay.title = "Open Instagram Post";
     overlay.addEventListener("click", function (e) {
       e.preventDefault();
-      var specs = getCenteredPopupSpecs(600, 700);
-      window.open(instaIframe.src, "_blank", specs);
+      e.stopPropagation();
+      
+      var url = instaIframe.src;
+      
+      // Check if this link already has a retractable quote
+      const existingQuote = document.querySelector(`.bible-quote-retract[data-href="${url}"]`);
+      if (existingQuote) {
+        // If it exists, just activate it
+        // Close any other open quotes
+        document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+          openQuote.classList.remove('active');
+        });
+        // Open this one
+        existingQuote.classList.add('active');
+        // Scroll into view
+        setTimeout(function() {
+          existingQuote.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
+        return;
+      }
+      
+      // Create a new retractable quote container
+      const quoteContainer = document.createElement('div');
+      quoteContainer.className = 'bible-quote-retract';
+      quoteContainer.setAttribute('data-href', url);
+      quoteContainer.setAttribute('data-ref', 'Instagram Post');
+      
+      // Add close button
+      const closeBtn = document.createElement('button');
+      closeBtn.className = 'bible-quote-close';
+      closeBtn.innerHTML = '&times;';
+      closeBtn.title = 'Close';
+      closeBtn.onclick = function(e) {
+        e.stopPropagation();
+        quoteContainer.classList.remove('active');
+      };
+      quoteContainer.appendChild(closeBtn);
+      
+      // Add iframe for social content
+      const iframe = document.createElement('iframe');
+      iframe.src = url;
+      iframe.title = 'Instagram Post - Brother Femi';
+      iframe.setAttribute('loading', 'lazy');
+      
+      // Create fallback message for iframe loading failures
+      const fallbackMessage = document.createElement('div');
+      fallbackMessage.className = 'iframe-fallback-message';
+      fallbackMessage.style.display = 'none';
+      fallbackMessage.innerHTML = `
+        <div class="fallback-content">
+          <h3>Content Cannot Be Displayed</h3>
+          <p>This content cannot be displayed in a popup due to security restrictions.</p>
+          <a href="${url}" target="_blank" rel="noopener noreferrer" class="fallback-link">
+            <i class="fa fa-external-link"></i> Open in New Tab
+          </a>
+        </div>
+      `;
+      
+      // Add error handling for iframe loading
+      iframe.addEventListener('error', function() {
+        showFallbackMessage();
+      });
+      
+      // Also handle cases where iframe loads but is restricted
+      iframe.addEventListener('load', function() {
+        // Check if the iframe is actually blocked by X-Frame-Options
+        setTimeout(function() {
+          try {
+            // Try to access the iframe's content - this will fail if blocked
+            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            if (!iframeDoc || iframeDoc.body.innerHTML === '') {
+              showFallbackMessage();
+            }
+          } catch (e) {
+            // X-Frame-Options blocking detected
+            showFallbackMessage();
+          }
+        }, 2000); // Wait 2 seconds for content to load
+      });
+      
+      function showFallbackMessage() {
+        iframe.style.display = 'none';
+        fallbackMessage.style.display = 'block';
+      }
+      
+      quoteContainer.appendChild(iframe);
+      quoteContainer.appendChild(fallbackMessage);
+      
+      // Insert the quote container after the Instagram embed
+      let targetElement = instaIframe.parentElement;
+      while (targetElement && 
+             !['P', 'DIV', 'LI', 'TD', 'SECTION'].includes(targetElement.nodeName)) {
+        targetElement = targetElement.parentElement;
+      }
+      
+      if (targetElement) {
+        targetElement.parentNode.insertBefore(quoteContainer, targetElement.nextSibling);
+      } else {
+        // Fallback: insert after the iframe itself
+        instaIframe.parentNode.insertBefore(quoteContainer, instaIframe.nextSibling);
+      }
+      
+      // Close any other open quotes and activate this one
+      document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+        openQuote.classList.remove('active');
+      });
+      quoteContainer.classList.add('active');
+      
+      // Scroll into view
+      setTimeout(function() {
+        quoteContainer.scrollIntoView({behavior: 'smooth', block: 'center'});
+      }, 100);
     });
     var parent = instaIframe.parentElement;
     parent.style.position = "relative";
@@ -582,8 +637,50 @@ document.addEventListener("DOMContentLoaded", function () {
                 iframe.title = mentor.name + " Ministry";
                 iframe.setAttribute("loading", "lazy");
                 
+                // Create fallback message for iframe loading failures
+                var fallbackMessage = document.createElement("div");
+                fallbackMessage.className = "iframe-fallback-message";
+                fallbackMessage.style.display = "none";
+                fallbackMessage.innerHTML = `
+                  <div class="fallback-content">
+                    <h3>Content Cannot Be Displayed</h3>
+                    <p>This content cannot be displayed in a popup due to security restrictions.</p>
+                    <a href="${mentor.minstry_url}" target="_blank" rel="noopener noreferrer" class="fallback-link">
+                      <i class="fa fa-external-link"></i> Open in New Tab
+                    </a>
+                  </div>
+                `;
+                
+                // Add error handling for iframe loading
+                iframe.addEventListener('error', function() {
+                  showFallbackMessage();
+                });
+                
+                // Also handle cases where iframe loads but is restricted
+                iframe.addEventListener('load', function() {
+                  // Check if the iframe is actually blocked by X-Frame-Options
+                  setTimeout(function() {
+                    try {
+                      // Try to access the iframe's content - this will fail if blocked
+                      var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                      if (!iframeDoc || iframeDoc.body.innerHTML === '') {
+                        showFallbackMessage();
+                      }
+                    } catch (e) {
+                      // X-Frame-Options blocking detected
+                      showFallbackMessage();
+                    }
+                  }, 2000); // Wait 2 seconds for content to load
+                });
+                
+                function showFallbackMessage() {
+                  iframe.style.display = "none";
+                  fallbackMessage.style.display = "block";
+                }
+                
                 popupContent.appendChild(closeBtn);
                 popupContent.appendChild(iframe);
+                popupContent.appendChild(fallbackMessage);
                 popup.appendChild(popupContent);
                 
                 // Close popup when clicking outside
@@ -679,49 +776,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var i = document.createElement("i");
         i.className = "bi " + (iconMap[item.type] || "bi-link");
         a.appendChild(i);
-        // Popup logic for all except Email
-        if (item.type !== "Email") {
-          a.addEventListener("click", function (e) {
-            if (!isMobile()) {
-              e.preventDefault();
-              var w = 600;
-              var h = 700;
-              var dualScreenLeft =
-                window.screenLeft !== undefined
-                  ? window.screenLeft
-                  : window.screenX;
-              var dualScreenTop =
-                window.screenTop !== undefined
-                  ? window.screenTop
-                  : window.screenY;
-              var width = window.innerWidth
-                ? window.innerWidth
-                : document.documentElement.clientWidth
-                ? document.documentElement.clientWidth
-                : screen.width;
-              var height = window.innerHeight
-                ? window.innerHeight
-                : document.documentElement.clientHeight
-                ? document.documentElement.clientHeight
-                : screen.height;
-              var left = dualScreenLeft + (width - w) / 2;
-              var top = dualScreenTop + (height - h) / 2;
-              window.open(
-                item.url,
-                "_blank",
-                "width=" +
-                  w +
-                  ",height=" +
-                  h +
-                  ",top=" +
-                  top +
-                  ",left=" +
-                  left +
-                  ",resizable,scrollbars"
-              );
-            }
-          });
-        }
+        // All links except Email open in new tab (no popup)
         li.appendChild(a);
         container.appendChild(li);
       });
@@ -836,50 +891,11 @@ document.addEventListener("DOMContentLoaded", function () {
               p.append(document.createTextNode(before));
               var a = document.createElement("a");
               a.href = urlObj.href;
-              a.target = urlObj.target || "_blank";
-              a.rel = urlObj.rel || "noopener";
+              a.target = "_blank";
+              a.rel = "noopener noreferrer";
               a.textContent = "HOWJ Atlanta";
               a.style.wordBreak = "break-word";
-              a.addEventListener("click", function (e) {
-                if (!isMobile()) {
-                  e.preventDefault();
-                  var w = 600;
-                  var h = 700;
-                  var dualScreenLeft =
-                    window.screenLeft !== undefined
-                      ? window.screenLeft
-                      : window.screenX;
-                  var dualScreenTop =
-                    window.screenTop !== undefined
-                      ? window.screenTop
-                      : window.screenY;
-                  var width = window.innerWidth
-                    ? window.innerWidth
-                    : document.documentElement.clientWidth
-                    ? document.documentElement.clientWidth
-                    : screen.width;
-                  var height = window.innerHeight
-                    ? window.innerHeight
-                    : document.documentElement.clientHeight
-                    ? document.documentElement.clientHeight
-                    : screen.height;
-                  var left = dualScreenLeft + (width - w) / 2;
-                  var top = dualScreenTop + (height - h) / 2;
-                  window.open(
-                    urlObj.href,
-                    "_blank",
-                    "width=" +
-                      w +
-                      ",height=" +
-                      h +
-                      ",top=" +
-                      top +
-                      ",left=" +
-                      left +
-                      ",resizable,scrollbars"
-                  );
-                }
-              });
+              // No popup logic - link opens in new tab naturally via target="_blank"
               p.append(a);
               p.append(document.createTextNode(after));
             } else {
@@ -928,37 +944,118 @@ function addInstagramPopupOverlay() {
       overlay.title = "Open Instagram Post";
       overlay.addEventListener("click", function (e) {
         e.preventDefault();
-        var w = 600;
-        var h = 700;
-        var dualScreenLeft =
-          window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-        var dualScreenTop =
-          window.screenTop !== undefined ? window.screenTop : window.screenY;
-        var width = window.innerWidth
-          ? window.innerWidth
-          : document.documentElement.clientWidth
-          ? document.documentElement.clientWidth
-          : screen.width;
-        var height = window.innerHeight
-          ? window.innerHeight
-          : document.documentElement.clientHeight
-          ? document.documentElement.clientHeight
-          : screen.height;
-        var left = dualScreenLeft + (width - w) / 2;
-        var top = dualScreenTop + (height - h) / 2;
-        window.open(
-          iframe.src,
-          "_blank",
-          "width=" +
-            w +
-            ",height=" +
-            h +
-            ",top=" +
-            top +
-            ",left=" +
-            left +
-            ",resizable,scrollbars"
-        );
+        e.stopPropagation();
+        
+        var url = iframe.src;
+        
+        // Check if this link already has a retractable quote
+        const existingQuote = document.querySelector(`.bible-quote-retract[data-href="${url}"]`);
+        if (existingQuote) {
+          // If it exists, just activate it
+          // Close any other open quotes
+          document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+            openQuote.classList.remove('active');
+          });
+          // Open this one
+          existingQuote.classList.add('active');
+          // Scroll into view
+          setTimeout(function() {
+            existingQuote.scrollIntoView({behavior: 'smooth', block: 'center'});
+          }, 100);
+          return;
+        }
+        
+        // Create a new retractable quote container
+        const quoteContainer = document.createElement('div');
+        quoteContainer.className = 'bible-quote-retract';
+        quoteContainer.setAttribute('data-href', url);
+        quoteContainer.setAttribute('data-ref', 'Testimony Instagram Post');
+        
+        // Add close button
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'bible-quote-close';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.title = 'Close';
+        closeBtn.onclick = function(e) {
+          e.stopPropagation();
+          quoteContainer.classList.remove('active');
+        };
+        quoteContainer.appendChild(closeBtn);
+        
+        // Add iframe for social content
+        const iframePopup = document.createElement('iframe');
+        iframePopup.src = url;
+        iframePopup.title = 'Testimony Instagram Post - Brother Femi';
+        iframePopup.setAttribute('loading', 'lazy');
+        
+        // Create fallback message for iframe loading failures
+        const fallbackMessage = document.createElement('div');
+        fallbackMessage.className = 'iframe-fallback-message';
+        fallbackMessage.style.display = 'none';
+        fallbackMessage.innerHTML = `
+          <div class="fallback-content">
+            <h3>Content Cannot Be Displayed</h3>
+            <p>This content cannot be displayed in a popup due to security restrictions.</p>
+            <a href="${url}" target="_blank" rel="noopener noreferrer" class="fallback-link">
+              <i class="fa fa-external-link"></i> Open in New Tab
+            </a>
+          </div>
+        `;
+        
+        // Add error handling for iframe loading
+        iframePopup.addEventListener('error', function() {
+          showFallbackMessage();
+        });
+        
+        // Also handle cases where iframe loads but is restricted
+        iframePopup.addEventListener('load', function() {
+          // Check if the iframe is actually blocked by X-Frame-Options
+          setTimeout(function() {
+            try {
+              // Try to access the iframe's content - this will fail if blocked
+              var iframeDoc = iframePopup.contentDocument || iframePopup.contentWindow.document;
+              if (!iframeDoc || iframeDoc.body.innerHTML === '') {
+                showFallbackMessage();
+              }
+            } catch (e) {
+              // X-Frame-Options blocking detected
+              showFallbackMessage();
+            }
+          }, 2000); // Wait 2 seconds for content to load
+        });
+        
+        function showFallbackMessage() {
+          iframePopup.style.display = 'none';
+          fallbackMessage.style.display = 'block';
+        }
+        
+        quoteContainer.appendChild(iframePopup);
+        quoteContainer.appendChild(fallbackMessage);
+        
+        // Insert the quote container after the Instagram embed
+        let targetElement = igIframeContainer;
+        while (targetElement && 
+               !['P', 'DIV', 'LI', 'TD', 'SECTION'].includes(targetElement.nodeName)) {
+          targetElement = targetElement.parentElement;
+        }
+        
+        if (targetElement) {
+          targetElement.parentNode.insertBefore(quoteContainer, targetElement.nextSibling);
+        } else {
+          // Fallback: insert after the iframe container itself
+          igIframeContainer.parentNode.insertBefore(quoteContainer, igIframeContainer.nextSibling);
+        }
+        
+        // Close any other open quotes and activate this one
+        document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+          openQuote.classList.remove('active');
+        });
+        quoteContainer.classList.add('active');
+        
+        // Scroll into view
+        setTimeout(function() {
+          quoteContainer.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }, 100);
       });
       igIframeContainer.appendChild(overlay);
     }
@@ -2112,6 +2209,19 @@ function handleBibleComLinks() {
         quoteContainer.classList.remove('active');
       };
       quoteContainer.appendChild(closeBtn);
+      
+      // Add "Back to Page" link
+      const backToPageLink = document.createElement('a');
+      backToPageLink.href = '#';
+      backToPageLink.className = 'bible-back-to-page';
+      backToPageLink.innerHTML = '← Back to Page';
+      backToPageLink.title = 'Close Bible reference and return to page';
+      backToPageLink.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        quoteContainer.classList.remove('active');
+      };
+      quoteContainer.appendChild(backToPageLink);
       
       // Add iframe for Bible passage
       const iframe = document.createElement('iframe');
