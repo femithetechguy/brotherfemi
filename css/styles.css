@@ -1320,3 +1320,49 @@ body::after {
     font-size: 0.9rem;
   }
 }
+
+/* Contact Bible Verse Styles */
+.contact-bible-verse-wrapper {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(2,136,209,0.1);
+  border: 1px solid #e3f2fd;
+  transition: all 0.3s ease;
+}
+
+.contact-bible-verse-wrapper:hover {
+  box-shadow: 0 4px 16px rgba(2,136,209,0.15);
+  transform: translateY(-2px);
+}
+
+.contact-bible-verse {
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.contact-bible-verse-wrapper a {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.contact-bible-verse-wrapper a:hover {
+  color: #01579b !important;
+  text-decoration: none !important;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 767px) {
+  .contact-bible-verse-wrapper {
+    margin-top: 1rem;
+    padding: 0.8rem;
+  }
+  
+  .contact-bible-verse {
+    font-size: 0.9rem;
+  }
+  
+  .contact-bible-verse-wrapper a {
+    font-size: 0.85rem;
+  }
+}
