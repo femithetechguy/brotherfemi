@@ -1057,6 +1057,29 @@ body::after {
   background: #b71c1c;
   color: #fff;
 }
+.bible-quote-retract .bible-back-to-page {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  background: #fffde7;
+  color: #0288d1;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid #0288d1;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(2,136,209,0.12);
+  transition: all 0.2s;
+  z-index: 2;
+}
+.bible-quote-retract .bible-back-to-page:hover {
+  background: #0288d1;
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
 .bible-quote-retract iframe {
   width: 100%;
   min-height: 320px;
@@ -1074,6 +1097,38 @@ body::after {
   
   .bible-quote-retract iframe {
     height: calc(80vh - 40px);
+  }
+  
+  /* Enhanced mobile styles for Back to Page button */
+  .bible-quote-retract .bible-back-to-page {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: #fffde7;
+    color: #0288d1;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 2px solid #0288d1;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(2,136,209,0.15);
+    transition: all 0.2s;
+    z-index: 3;
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .bible-quote-retract .bible-back-to-page:hover,
+  .bible-quote-retract .bible-back-to-page:active {
+    background: #0288d1;
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-1px);
   }
 }
 @keyframes fadeInOut {
@@ -1169,7 +1224,6 @@ body::after {
   }
 }
 
-/* Additional mobile optimizations */
 @media (max-width: 480px) {
   .mentor-popup-retract {
     padding: 5px;
@@ -1191,7 +1245,6 @@ body::after {
     width: 28px;
     height: 28px;
     font-size: 14px;
-  }
 }
 
 /* Ensure popups don't interfere with existing Bible quote popups */
@@ -1201,4 +1254,69 @@ body::after {
 
 .mentor-popup-retract.active ~ .bible-quote-retract.active {
   z-index: 9999; /* Ensure mentor popups are on top */
+}
+
+/* Iframe fallback message styles */
+.iframe-fallback-message {
+  padding: 20px;
+  text-align: center;
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  margin: 10px 0;
+  color: #495057;
+}
+
+.iframe-fallback-message .fallback-content {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.iframe-fallback-message h3 {
+  color: #343a40;
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+}
+
+.iframe-fallback-message p {
+  margin-bottom: 20px;
+  line-height: 1.5;
+  color: #6c757d;
+}
+
+.iframe-fallback-message .fallback-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white !important;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.iframe-fallback-message .fallback-link:hover {
+  background: #0056b3;
+  text-decoration: none;
+}
+
+.iframe-fallback-message .fallback-link i {
+  margin-right: 5px;
+}
+
+/* Mobile responsive adjustments for fallback message */
+@media (max-width: 768px) {
+  .iframe-fallback-message {
+    padding: 15px;
+    margin: 8px 0;
+  }
+  
+  .iframe-fallback-message h3 {
+    font-size: 1rem;
+  }
+  
+  .iframe-fallback-message .fallback-link {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
 }
