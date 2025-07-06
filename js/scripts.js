@@ -540,54 +540,82 @@ document.addEventListener("DOMContentLoaded", function () {
             var p = document.createElement("p");
             p.className = "mentor-detail";
             var a = document.createElement("a");
-            a.href = mentor.minstry_url;
+            a.href = "javascript:void(0);";
             a.textContent = mentor.Ministry;
-            a.target = "_blank";
-            a.rel = "noopener";
+            a.setAttribute('data-mentor-url', mentor.minstry_url);
+            a.setAttribute('data-mentor-name', mentor.name || 'Mentor');
+            a.className = "mentor-link";
             a.style.wordBreak = "break-word";
+            a.style.color = "#0288d1";
+            a.style.textDecoration = "underline";
+            a.style.cursor = "pointer";
+            
+            // Add click handler for retractable popup
             a.addEventListener("click", function (e) {
-              if (!isMobile()) {
-                e.preventDefault();
-                var w = 600;
-                var h = 700;
-                var dualScreenLeft =
-                  window.screenLeft !== undefined
-                    ? window.screenLeft
-                    : window.screenX;
-                var dualScreenTop =
-                  window.screenTop !== undefined
-                    ? window.screenTop
-                    : window.screenY;
-                var width = window.innerWidth
-                  ? window.innerWidth
-                  : document.documentElement.clientWidth
-                  ? document.documentElement.clientWidth
-                  : screen.width;
-                var height = window.innerHeight
-                  ? window.innerHeight
-                  : document.documentElement.clientHeight
-                  ? document.documentElement.clientHeight
-                  : screen.height;
-                var left = dualScreenLeft + (width - w) / 2;
-                var top = dualScreenTop + (height - h) / 2;
-                window.open(
-                  mentor.minstry_url,
-                  "_blank",
-                  "width=" +
-                    w +
-                    ",height=" +
-                    h +
-                    ",top=" +
-                    top +
-                    ",left=" +
-                    left +
-                    ",resizable,scrollbars"
-                );
-              } else {
-                // On mobile, use native navigation and allow back button to return home
-                window.location.assign(mentor.minstry_url);
+              e.preventDefault();
+              e.stopPropagation();
+              
+              // Create or get the popup
+              var popupId = 'mentor-popup-' + mentor.name.replace(/\s+/g, '-').toLowerCase();
+              var existingPopup = document.getElementById(popupId);
+              
+              if (!existingPopup) {
+                // Create new popup
+                var popup = document.createElement("div");
+                popup.id = popupId;
+                popup.className = "mentor-popup-retract";
+                
+                var popupContent = document.createElement("div");
+                popupContent.className = "mentor-popup-content";
+                
+                var closeBtn = document.createElement("button");
+                closeBtn.className = "mentor-popup-close";
+                closeBtn.innerHTML = "&times;";
+                closeBtn.title = "Close";
+                closeBtn.onclick = function(e) {
+                  e.stopPropagation();
+                  popup.classList.remove("active");
+                };
+                
+                var iframe = document.createElement("iframe");
+                iframe.src = mentor.minstry_url;
+                iframe.title = mentor.name + " Ministry";
+                iframe.setAttribute("loading", "lazy");
+                
+                popupContent.appendChild(closeBtn);
+                popupContent.appendChild(iframe);
+                popup.appendChild(popupContent);
+                
+                // Close popup when clicking outside
+                popup.addEventListener('click', function(e) {
+                  if (e.target === popup) {
+                    popup.classList.remove("active");
+                  }
+                });
+                
+                // Close popup with Escape key
+                document.addEventListener('keydown', function(e) {
+                  if (e.key === 'Escape' && popup.classList.contains('active')) {
+                    popup.classList.remove("active");
+                  }
+                });
+                
+                document.body.appendChild(popup);
+                existingPopup = popup;
               }
+              
+              // Close any other open popups (including Bible quote popups)
+              document.querySelectorAll('.mentor-popup-retract.active').forEach(function(openPopup) {
+                openPopup.classList.remove('active');
+              });
+              document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
+                openQuote.classList.remove('active');
+              });
+              
+              // Open this popup
+              existingPopup.classList.add('active');
             });
+            
             p.appendChild(a);
             card.appendChild(p);
           }
@@ -1819,9 +1847,12 @@ document.addEventListener("DOMContentLoaded", function () {
                   a.onclick = function(e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    // Close any other open quotes
+                    // Close any other open quotes and mentor popups
                     document.querySelectorAll('.bible-quote-retract.active').forEach(function(openQuote) {
                       openQuote.classList.remove('active');
+                    });
+                    document.querySelectorAll('.mentor-popup-retract.active').forEach(function(openPopup) {
+                      openPopup.classList.remove('active');
                     });
                     // Open this one
                     quoteDiv.classList.add('active');
@@ -2320,4 +2351,38 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // The rest of your initialization code will continue below...
+});
+
+// Global cleanup function for mentor popups
+function closeMentorPopups() {
+  document.querySelectorAll('.mentor-popup-retract.active').forEach(function(popup) {
+    popup.classList.remove('active');
+  });
+}
+
+// Global cleanup function for all popups
+function closeAllPopups() {
+  document.querySelectorAll('.mentor-popup-retract.active').forEach(function(popup) {
+    popup.classList.remove('active');
+  });
+  document.querySelectorAll('.bible-quote-retract.active').forEach(function(quote) {
+    quote.classList.remove('active');
+  });
+}
+
+// Add global event listener for Escape key to close all popups
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeAllPopups();
+  }
+});
+
+// Ensure popups don't interfere with other site functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Close all popups when navigating to other sections
+  document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      setTimeout(closeAllPopups, 100);
+    });
+  });
 });
