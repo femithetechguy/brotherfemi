@@ -115,9 +115,9 @@
       ]
     },
     {
-      "id": "warfare",
-      "title": "Warfare",
-      "menu": "Warfare",
+      "id": "newlife",
+      "title": "New Life",
+      "menu": "New Life",
       "bibleVerse": "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
       "reference": "2 Corinthians 5:17",
       "bible_url": "https://www.bible.com/bible/114/2CO.5.17.NKJV",
@@ -156,7 +156,7 @@
           "bible_url": "https://www.bible.com/bible/114/MAT.22.37-39.NKJV"
         }
       ],
-      "spiritualWarfare": {
+      "spiritualNewlife": {
         "text": [
           "Spiritual warfare is the ongoing battle between good and evil, light and darkness, in the life of every believer.",
           "It is not fought with physical weapons, but with faith, prayer, and the Word of God (Ephesians 6:10–18).",
@@ -165,7 +165,7 @@
           "Stay alert, pray continually, and trust in God’s power to protect and deliver you.",
           "Below are some key scriptures to meditate on regarding spiritual warfare:"
         ],
-        "spiritual_warfare_text_reference": [
+        "spiritual_newlife_text_reference": [
           {
             "reference": "Ephesians 6:10–18",
             "bible_url": "https://www.bible.com/bible/114/EPH.6.10-18.NKJV"

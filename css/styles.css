@@ -993,7 +993,7 @@ body::after {
 }
 
 /* Highlight for The Christian Life summary sentence */
-.christian-life-highlight, .warfare-highlight {
+.christian-life-highlight, .newlife-highlight {
   background: linear-gradient(90deg, #fffde7 60%, #ffe082 100%);
   border-left: 4px solid #ffd600;
   padding: 0.5em 1em;
@@ -1007,7 +1007,7 @@ body::after {
   animation: fadeInUp 1.2s, fadeInOut 2.5s 0.2s 1 both;
 }
 @media (max-width: 767px) {
-  .warfare-highlight, .christian-life-highlight {
+  .newlife-highlight, .christian-life-highlight {
     font-size: 1rem;
     padding: 0.5rem 0.7rem;
   }
