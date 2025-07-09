@@ -474,7 +474,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: "yt-hymns", playlist: "PL9GoCpwDjkCX5gXgnt6Xb0gQi0gCRfVgN" },
     // Christian Life as a playlist
     { id: "yt-christian-life", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" },
-    { id: "yt-warfare", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" },
+    { id: "yt-newlife", playlist: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8" },
   ];
   var ytPlayers = [];
   var currentlyPlaying = null;
@@ -1845,7 +1845,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 });
-// --- Warfare Section Rendering ---
+// --- New Life Section Rendering ---
 document.addEventListener("DOMContentLoaded", function () {
   fetch("text/sections.json")
     .then(function (response) {
@@ -1853,45 +1853,45 @@ document.addEventListener("DOMContentLoaded", function () {
     })
     .then(function (data) {
       var sections = Array.isArray(data.sections) ? data.sections : [];
-      var warfare = sections.find(function (s) {
-        return s.id === "warfare";
+      var newlife = sections.find(function (s) {
+        return s.id === "newlife";
       });
-      if (warfare) {
-        var mainContent = document.getElementById("warfare-content");
+      if (newlife) {
+        var mainContent = document.getElementById("newlife-content");
         if (mainContent) {
           mainContent.innerHTML = "";
           // Render bible verse and reference centered at the top if present
           var lastInserted = null;
-          if (warfare.bibleVerse) {
+          if (newlife.bibleVerse) {
             var verseWrapper = document.createElement("div");
             verseWrapper.className = "about-text text-center mb-2";
             verseWrapper.style.maxWidth = "600px";
             verseWrapper.style.margin = "0 auto 0.5rem auto";
             var pVerse = document.createElement("span");
-            pVerse.textContent = '"' + warfare.bibleVerse + '"';
+            pVerse.textContent = '"' + newlife.bibleVerse + '"';
             verseWrapper.appendChild(pVerse);
             mainContent.appendChild(verseWrapper);
             lastInserted = verseWrapper;
           }
-          if (warfare.reference) {
+          if (newlife.reference) {
             var refWrapper = document.createElement("div");
             refWrapper.className = "about-text text-center mb-3";
             refWrapper.style.maxWidth = "600px";
             refWrapper.style.margin = "0 auto 1.2rem auto";
             var ref;
-            if (warfare.bible_url) {
+            if (newlife.bible_url) {
               ref = document.createElement("a");
-              ref.href = warfare.bible_url;
+              ref.href = newlife.bible_url;
               ref.target = "_blank";
               ref.rel = "noopener";
               ref.style.fontSize = "1rem";
               ref.style.color = "#02888d1";
-              ref.textContent = "\u2014 " + warfare.reference;
+              ref.textContent = "\u2014 " + newlife.reference;
             } else {
               ref = document.createElement("span");
               ref.style.fontSize = "1rem";
               ref.style.color = "#02888d1";
-              ref.textContent = "\u2014 " + warfare.reference;
+              ref.textContent = "\u2014 " + newlife.reference;
             }
             refWrapper.appendChild(ref);
             mainContent.appendChild(refWrapper);
@@ -1900,16 +1900,16 @@ document.addEventListener("DOMContentLoaded", function () {
           var ytDiv = document.createElement("div");
           ytDiv.className = "youtube-playlist-embed mb-4 playlist-animate";
           ytDiv.innerHTML =
-            '<div id="yt-warfare"></div>' +
+            '<div id="yt-newlife"></div>' +
             '<div class="youtube-playlist-label">' +
             '<span class="youtube-playlist-label-text">' +
-            '<i class="bi bi-youtube" style="color: #ff0000"></i> Warfare' +
+            '<i class="bi bi-youtube" style="color: #ff0000"></i> New Life' +
             "</span>" +
             "</div>";
           mainContent.appendChild(ytDiv);
           // Render the iframe for the video
           setTimeout(function () {
-            var ytContainer = document.getElementById("yt-warfare");
+            var ytContainer = document.getElementById("yt-newlife");
             if (ytContainer && !ytContainer.querySelector("iframe")) {
               var iframe = document.createElement("iframe");
               iframe.width = "420";
@@ -1917,7 +1917,7 @@ document.addEventListener("DOMContentLoaded", function () {
               // Embed the playlist
               iframe.src =
                 "https://www.youtube.com/embed/videoseries?list=PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8&rel=0";
-              iframe.title = "Warfare Playlist";
+              iframe.title = "New Life Playlist";
               iframe.frameBorder = "0";
               iframe.allow =
                 "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
@@ -1929,7 +1929,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }, 0);
           // Render headings for certain lines
-          (warfare.text || []).forEach(function (txt, idx) {
+          (newlife.text || []).forEach(function (txt, idx) {
             if (idx === 0) {
               var h3 = document.createElement("h3");
               h3.className = "mb-3 gradient-text";
@@ -1951,8 +1951,8 @@ document.addEventListener("DOMContentLoaded", function () {
               
               // Process Bible references in core beliefs
               var processedText = txt.replace(/^• /, "");
-              if (warfare.core_beliefs_reference && Array.isArray(warfare.core_beliefs_reference)) {
-                warfare.core_beliefs_reference.forEach(function(refObj) {
+              if (newlife.core_beliefs_reference && Array.isArray(newlife.core_beliefs_reference)) {
+                newlife.core_beliefs_reference.forEach(function(refObj) {
                   var refPattern = new RegExp('\\(' + refObj.reference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\)', 'g');
                   processedText = processedText.replace(refPattern, function(match) {
                     return '<a href="javascript:void(0);" class="bible-reference-link core-beliefs-ref" data-bible-url="' + refObj.bible_url + '" data-reference="' + refObj.reference + '" style="color: #0288d1; text-decoration: none;">' + match + '</a>';
@@ -1964,7 +1964,7 @@ document.addEventListener("DOMContentLoaded", function () {
               ul.appendChild(li);
             } else if (txt === "A Christian is a forgiven sinner, made new by Christ, and committed to following Him.") {
               var p = document.createElement("p");
-              p.className = "about-text mb-2 warfare-highlight";
+              p.className = "about-text mb-2 newlife-highlight";
               p.innerHTML = '<em>' + txt + '</em>';
               p.style.background = "#fffbe6";
               p.style.border = "1.5px solid #ffe066";
@@ -1977,11 +1977,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 p.style.opacity = "1";
                 p.style.animation = "fadeInOut 6s ease-in-out 1";
               }, 100);
-            } else if (txt.includes("spiritual warfare")) {
+            } else if (txt.includes("spiritual newlife")) {
               var p = document.createElement("p");
               p.className = "about-text mb-2";
-              // Make 'spiritual warfare' bold, italic, and an anchor link to the spiritualWarfare sub-section
-              p.innerHTML = txt.replace(/spiritual warfare/gi, '<a href="#spiritual-warfare-section" class="fw-bold fst-italic text-decoration-underline">spiritual warfare</a>');
+              // Make 'spiritual newlife' bold, italic, and an anchor link to the spiritualNewlife sub-section
+              p.innerHTML = txt.replace(/spiritual newlife/gi, '<a href="#spiritual-newlife-section" class="fw-bold fst-italic text-decoration-underline">spiritual newlife</a>');
               mainContent.appendChild(p);
             } else {
               var p = document.createElement("p");
@@ -1991,8 +1991,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           });
           // Add retractable popups for core beliefs references
-          if (warfare.core_beliefs_reference && Array.isArray(warfare.core_beliefs_reference)) {
-            warfare.core_beliefs_reference.forEach(function(refObj) {
+          if (newlife.core_beliefs_reference && Array.isArray(newlife.core_beliefs_reference)) {
+            newlife.core_beliefs_reference.forEach(function(refObj) {
               var quoteDiv = document.createElement("div");
               quoteDiv.className = "bible-quote-retract";
               quoteDiv.setAttribute("data-ref", refObj.reference);
@@ -2055,40 +2055,40 @@ document.addEventListener("DOMContentLoaded", function () {
             });
           }, 100);
           
-          // Render spiritualWarfare sub-section if present
-          if (warfare.spiritualWarfare && Array.isArray(warfare.spiritualWarfare.text)) {
+          // Render spiritualNewlife sub-section if present
+          if (newlife.spiritualNewlife && Array.isArray(newlife.spiritualNewlife.text)) {
             var swSection = document.createElement("section");
-            swSection.className = "mt-4 mb-4 p-3 rounded bg-light border spiritual-warfare-section";
-            swSection.id = "spiritual-warfare-section";
+            swSection.className = "mt-4 mb-4 p-3 rounded bg-light border spiritual-newlife-section";
+            swSection.id = "spiritual-newlife-section";
             var swTitle = document.createElement("h4");
             swTitle.className = "royal mb-2";
-            swTitle.textContent = "Spiritual Warfare";
+            swTitle.textContent = "Spiritual New Life";
             swSection.appendChild(swTitle);
             // Render each text line, and if it's the 'key scriptures' line, insert the bible references right after
-            (warfare.spiritualWarfare.text || []).forEach(function (txt) {
+            (newlife.spiritualNewlife.text || []).forEach(function (txt) {
               var p = document.createElement("p");
               p.className = "about-text mb-2";
               
-              // Process spiritual warfare text references
+              // Process spiritual newlife text references
               var processedText = txt;
-              if (warfare.spiritualWarfare.spiritual_warfare_text_reference && Array.isArray(warfare.spiritualWarfare.spiritual_warfare_text_reference)) {
-                warfare.spiritualWarfare.spiritual_warfare_text_reference.forEach(function(refObj) {
+              if (newlife.spiritualNewlife.spiritual_newlife_text_reference && Array.isArray(newlife.spiritualNewlife.spiritual_newlife_text_reference)) {
+                newlife.spiritualNewlife.spiritual_newlife_text_reference.forEach(function(refObj) {
                   var refPattern = new RegExp('\\(' + refObj.reference.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\)', 'g');
                   processedText = processedText.replace(refPattern, function(match) {
-                    return '<a href="javascript:void(0);" class="bible-reference-link spiritual-warfare-ref" data-bible-url="' + refObj.bible_url + '" data-reference="' + refObj.reference + '" style="color: #0288d1; text-decoration: none;">' + match + '</a>';
+                    return '<a href="javascript:void(0);" class="bible-reference-link spiritual-newlife-ref" data-bible-url="' + refObj.bible_url + '" data-reference="' + refObj.reference + '" style="color: #0288d1; text-decoration: none;">' + match + '</a>';
                   });
                 });
               }
               
               p.innerHTML = processedText;
               swSection.appendChild(p);
-              if (txt.toLowerCase().includes("key scriptures") && Array.isArray(warfare.spiritualWarfare.bibleReferences) && warfare.spiritualWarfare.bibleReferences.length > 0 && typeof warfare.spiritualWarfare.bibleReferences[0] === "object") {
+              if (txt.toLowerCase().includes("key scriptures") && Array.isArray(newlife.spiritualNewlife.bibleReferences) && newlife.spiritualNewlife.bibleReferences.length > 0 && typeof newlife.spiritualNewlife.bibleReferences[0] === "object") {
                 var refsDiv = document.createElement("div");
                 refsDiv.className = "mb-3";
                 refsDiv.style.textAlign = "center";
                 refsDiv.style.marginTop = "-0.5rem";
                 refsDiv.style.marginBottom = "1.5rem";
-                warfare.spiritualWarfare.bibleReferences.forEach(function (refObj, i) {
+                newlife.spiritualNewlife.bibleReferences.forEach(function (refObj, i) {
                   var a = document.createElement("a");
                   a.href = "javascript:void(0);"; // Use javascript:void(0) to prevent default navigation
                   a.setAttribute('data-bible-url', refObj.url || "#"); // Store the actual URL as data attribute
@@ -2099,7 +2099,7 @@ document.addEventListener("DOMContentLoaded", function () {
                   // a.style.fontWeight = "bold";
                   a.textContent = refObj.reference;
                   // We'll add our own click handler
-                  a.setAttribute('data-ref-type', 'warfare-bible-ref');
+                  a.setAttribute('data-ref-type', 'newlife-bible-ref');
                   refsDiv.appendChild(a);
                   // Add retractable quote container after each link
                   var quoteDiv = document.createElement("div");
@@ -2156,8 +2156,8 @@ document.addEventListener("DOMContentLoaded", function () {
                   
                   // Mark links as already having retractable quotes and ensure they're processed
                   a.setAttribute('data-has-retractable', 'true');
-                  a.setAttribute('data-bible-warfare-ref', 'true');
-                  if (i < warfare.spiritualWarfare.bibleReferences.length - 1) {
+                  a.setAttribute('data-bible-newlife-ref', 'true');
+                  if (i < newlife.spiritualNewlife.bibleReferences.length - 1) {
                     refsDiv.appendChild(document.createTextNode(" | "));
                   }
                 });
@@ -2166,9 +2166,9 @@ document.addEventListener("DOMContentLoaded", function () {
             });
             mainContent.appendChild(swSection);
             
-            // Add retractable popups for spiritual warfare text references
-            if (warfare.spiritualWarfare.spiritual_warfare_text_reference && Array.isArray(warfare.spiritualWarfare.spiritual_warfare_text_reference)) {
-              warfare.spiritualWarfare.spiritual_warfare_text_reference.forEach(function(refObj) {
+            // Add retractable popups for spiritual newlife text references
+            if (newlife.spiritualNewlife.spiritual_newlife_text_reference && Array.isArray(newlife.spiritualNewlife.spiritual_newlife_text_reference)) {
+              newlife.spiritualNewlife.spiritual_newlife_text_reference.forEach(function(refObj) {
                 var quoteDiv = document.createElement("div");
                 quoteDiv.className = "bible-quote-retract";
                 quoteDiv.setAttribute("data-ref", refObj.reference);
@@ -2199,9 +2199,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           }
           
-          // Initialize click handlers for spiritual warfare text references
+          // Initialize click handlers for spiritual newlife text references
           setTimeout(function() {
-            document.querySelectorAll('.spiritual-warfare-ref').forEach(function(link) {
+            document.querySelectorAll('.spiritual-newlife-ref').forEach(function(link) {
               if (link.hasAttribute('data-initialized')) return;
               link.setAttribute('data-initialized', 'true');
               
@@ -2235,10 +2235,10 @@ document.addEventListener("DOMContentLoaded", function () {
           // ...existing code...
         }
         // Children sections
-        var childrenContent = document.getElementById("warfare-children");
-        if (childrenContent && Array.isArray(warfare.children)) {
+        var childrenContent = document.getElementById("newlife-children");
+        if (childrenContent && Array.isArray(newlife.children)) {
           childrenContent.innerHTML = "";
-          warfare.children.forEach(function (child) {
+          newlife.children.forEach(function (child) {
             var div = document.createElement("div");
             div.className = "mb-4 pb-2 border-bottom";
             var h4 = document.createElement("h4");
@@ -2290,18 +2290,18 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 // Handle Bible.com links with retractable quotes globally
 function handleBibleComLinks() {
-  // First, specifically handle Spiritual Warfare Bible references
-  const spiritualWarfareSection = document.querySelector('.spiritual-warfare-section');
-  if (spiritualWarfareSection) {
-    const warfareLinks = spiritualWarfareSection.querySelectorAll('a[href]');
-    warfareLinks.forEach(function(link) {
+  // First, specifically handle Spiritual New Life Bible references
+  const spiritualNewlifeSection = document.querySelector('.spiritual-newlife-section');
+  if (spiritualNewlifeSection) {
+    const newlifeLinks = spiritualNewlifeSection.querySelectorAll('a[href]');
+    newlifeLinks.forEach(function(link) {
       const href = link.getAttribute('href') || link.href;
       if (isBibleComLink(href)) {
         // Remove target="_blank" to prevent opening in a new tab
         link.removeAttribute('target');
         
         // Make sure the retractable quotes work properly
-        const quoteDiv = Array.from(spiritualWarfareSection.querySelectorAll('.bible-quote-retract')).find(
+        const quoteDiv = Array.from(spiritualNewlifeSection.querySelectorAll('.bible-quote-retract')).find(
           div => div.getAttribute('data-ref') === href || div.getAttribute('data-bible-url') === href || div.getAttribute('data-href') === href
         );
         
@@ -2514,14 +2514,14 @@ document.addEventListener("DOMContentLoaded", function() {
     attributeFilter: ['href']
   });
 });
-// Function to specifically handle the Spiritual Warfare Bible references
-function fixWarfareReferences() {
+// Function to specifically handle the Spiritual Newlife Bible references
+function fixNewlifeReferences() {
   // Target the specific section
-  const warfareSection = document.querySelector('#spiritual-warfare-section');
-  if (!warfareSection) return;
+  const newlifeSection = document.querySelector('#spiritual-newlife-section');
+  if (!newlifeSection) return;
   
   // Find all Bible references (including those with javascript:void(0) as href)
-  const bibleLinks = warfareSection.querySelectorAll('a[data-ref-type="warfare-bible-ref"]');
+  const bibleLinks = newlifeSection.querySelectorAll('a[data-ref-type="newlife-bible-ref"]');
   
   bibleLinks.forEach(function(link) {
     // Remove any default browser behaviors that might cause navigation
@@ -2530,7 +2530,7 @@ function fixWarfareReferences() {
     // Get the corresponding quote div
     const ref = link.textContent;
     const href = link.getAttribute('data-bible-url') || link.getAttribute('href');
-    const quoteDiv = Array.from(warfareSection.querySelectorAll('.bible-quote-retract')).find(
+    const quoteDiv = Array.from(newlifeSection.querySelectorAll('.bible-quote-retract')).find(
       div => div.getAttribute('data-ref') === ref || div.getAttribute('data-bible-url') === href || div.getAttribute('data-href') === href
     );
     
@@ -2561,15 +2561,15 @@ function fixWarfareReferences() {
 
 // Call our fix function after the content is loaded and after a delay to ensure it runs after dynamic content is rendered
 document.addEventListener("DOMContentLoaded", function() {
-  setTimeout(fixWarfareReferences, 1000);
-  setTimeout(fixWarfareReferences, 2000);
+  setTimeout(fixNewlifeReferences, 1000);
+  setTimeout(fixNewlifeReferences, 2000);
 });
 
-// Also add a mutation observer specifically for the Spiritual Warfare section
+// Also add a mutation observer specifically for the Spiritual Newlife section
 document.addEventListener("DOMContentLoaded", function() {
   const observer = new MutationObserver(function(mutations) {
-    if (document.querySelector('#spiritual-warfare-section')) {
-      fixWarfareReferences();
+    if (document.querySelector('#spiritual-newlife-section')) {
+      fixNewlifeReferences();
     }
   });
   
@@ -2580,16 +2580,16 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 // Add a global click event handler to catch any Bible references that still might open in a new tab
 document.addEventListener('click', function(e) {
-  // Check if we're inside the spiritual warfare section
-  const warfareSection = document.getElementById('spiritual-warfare-section');
-  if (!warfareSection) return;
+  // Check if we're inside the spiritual newlife section
+  const newlifeSection = document.getElementById('spiritual-newlife-section');
+  if (!newlifeSection) return;
   
   // Check if the click is inside this section
-  if (!warfareSection.contains(e.target)) return;
+  if (!newlifeSection.contains(e.target)) return;
   
   // Check if we clicked on a link or inside one
   let link = e.target;
-  while (link && link.tagName !== 'A' && link !== warfareSection) {
+  while (link && link.tagName !== 'A' && link !== newlifeSection) {
     link = link.parentElement;
   }
   
@@ -2603,7 +2603,7 @@ document.addEventListener('click', function(e) {
       // Find the corresponding quote div
       const ref = link.textContent;
       const bibleUrl = dataBibleUrl || href;
-      const quoteDiv = Array.from(warfareSection.querySelectorAll('.bible-quote-retract')).find(
+      const quoteDiv = Array.from(newlifeSection.querySelectorAll('.bible-quote-retract')).find(
         div => div.getAttribute('data-ref') === ref || 
                div.getAttribute('data-href') === bibleUrl || 
                div.getAttribute('data-bible-url') === bibleUrl
