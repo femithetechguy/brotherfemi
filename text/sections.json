@@ -293,7 +293,7 @@
         {
           "id": "early-morning-declaration",
           "title": "Early Morning Declaration & Prayers",
-            "text": [
+          "text": [
             "Dear Lord,",
             "1. Thank You O God for a new day and the breath in my lungs this morning",
             "2. Thank you for waking me up & giving me another chance at life",
@@ -335,7 +335,7 @@
             "38. Father, grant me the grace to pray throughout the day in Jesus name",
             "39. SONG: Victory, yes we are victorious - glory be to God who has given us victory...",
             "40. SONG: What manner of man is Jesus? - Hallelujah. He made the blind to see - Hallelujah, He made the cripple walk - Hallelujah..."
-            ]
+          ]
         },
         {
           "id": "life-principles",
@@ -356,6 +356,72 @@
             "13. Listening to God is essential to walking with God.",
             "14. God acts on behalf of those who wait for Him.",
             "15. Brokenness is God’s requirement for maximum usefulness."
+          ]
+        },
+        {
+          "id": "five-finger-prayer",
+          "title": "Five Finger Prayer",
+          "text": [
+            "The Five Finger Prayer is a simple way to remember to pray for different groups of people using each finger as a guide."
+          ],
+          "fiveFingerPrayer": [
+            {
+              "finger": "Thumb",
+              "meaning": "Those Closest to You",
+              "prayFor": ["Family", "Friends", "Loved Ones"],
+              "prayerFocus": "Ask God to bless and protect them."
+            },
+            {
+              "finger": "Index Finger",
+              "meaning": "Those Who Teach and Guide",
+              "prayFor": [
+                "Teachers",
+                "Pastors",
+                "Mentors",
+                "Spiritual Leaders"
+              ],
+              "prayerFocus": "Ask for wisdom and guidance in their leadership."
+            },
+            {
+              "finger": "Middle Finger",
+              "meaning": "Those in Authority",
+              "prayFor": [
+                "Government Officials",
+                "Police",
+                "Business Leaders",
+                "Boss"
+              ],
+              "prayerFocus": "Ask for integrity, justice, and discernment."
+            },
+            {
+              "finger": "Ring Finger",
+              "meaning": "The Weak and Vulnerable",
+              "prayFor": ["Sick", "Poor", "Elderly", "Hurting", "Oppressed"],
+              "prayerFocus": "Ask for healing, comfort, and provision."
+            },
+            {
+              "finger": "Little Finger",
+              "meaning": "Yourself",
+              "prayFor": [
+                "Your Own Needs",
+                "Guidance",
+                "Strength",
+                "Spiritual Growth"
+              ],
+              "prayerFocus": "Ask God to help you walk faithfully."
+            }
+          ],
+          "scriptureReferences": [
+            {
+              "reference": "1 Timothy 2:1",
+              "text": "I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men.",
+              "version": "KJV"
+            },
+            {
+              "reference": "Galatians 6:2",
+              "text": "Bear ye one another's burdens, and so fulfil the law of Christ.",
+              "version": "KJV"
+            }
           ]
         }
       ]
