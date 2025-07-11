@@ -1109,6 +1109,34 @@ document.addEventListener("DOMContentLoaded", function () {
         if ("scrolling" in iframeObj) iframe.scrolling = iframeObj.scrolling;
         iframeContainer.appendChild(iframe);
       }
+      
+      // Render anchor scripture
+      var anchor = data && data.brotherFemi && data.brotherFemi.anchor ? data.brotherFemi.anchor : {};
+      var anchorContainer = document.getElementById("anchor-scripture");
+      if (anchorContainer && anchor.bibleVerse) {
+        anchorContainer.innerHTML = "";
+        
+        // Create verse paragraph
+        var versePara = document.createElement("p");
+        versePara.className = "about-text";
+        versePara.style.fontStyle = "italic";
+        versePara.style.fontSize = "1.1rem";
+        versePara.style.color = "#0288d1";
+        versePara.style.marginBottom = "0.5rem";
+        versePara.textContent = '"' + anchor.bibleVerse + '"';
+        anchorContainer.appendChild(versePara);
+        
+        // Create reference paragraph
+        if (anchor.reference) {
+          var refPara = document.createElement("p");
+          refPara.className = "about-text";
+          refPara.style.fontSize = "1rem";
+          refPara.style.color = "#0288d1";
+          refPara.style.fontWeight = "bold";
+          refPara.textContent = "— " + anchor.reference;
+          anchorContainer.appendChild(refPara);
+        }
+      }
     });
 });
 function addInstagramPopupOverlay() {
