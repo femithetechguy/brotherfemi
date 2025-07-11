@@ -35,6 +35,14 @@
       "Fear & Reverence for God",
       "Godly Humility"
     ],
+    "anchor": {
+      "id": "anchor",
+      "title": "Acts 5:41-42 KJV",
+      "menu": "Anchor",
+      "bibleVerse": "And they departed from the presence of the council, rejoicing that they were counted worthy to suffer shame for his name. And daily in the temple, and in every house, they ceased not to teach and preach Jesus Christ.",
+      "reference": "Acts 5:41-42 KJV",
+      "bible_url": "https://www.biblegateway.com/passage/?search=Acts+5%3A41-42&version=KJV"
+    },
     "contact": [
       { "type": "Email", "url": "mailto:contact@brotherfemi.org" },
       {
