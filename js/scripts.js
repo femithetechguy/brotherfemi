@@ -2273,18 +2273,67 @@ document.addEventListener("DOMContentLoaded", function () {
             h4.className = "royal mb-2";
             h4.textContent = child.title;
             div.appendChild(h4);
-            (child.text || []).forEach(function (txt) {
-              if (txt.trim() === "") {
-                var br = document.createElement("div");
-                br.className = "paragraph-break";
-                div.appendChild(br);
-              } else {
+            
+            // Handle Five Finger Prayer specially as a simple numbered list
+            if (child.id === "five-finger-prayer" && child.fiveFingerPrayer && Array.isArray(child.fiveFingerPrayer)) {
+              // Add introductory text
+              (child.text || []).forEach(function (txt) {
                 var p = document.createElement("p");
-                p.className = "about-text mb-2";
+                p.className = "about-text mb-3";
                 p.textContent = txt;
                 div.appendChild(p);
-              }
-            });
+              });
+              
+              // Create simple numbered list
+              var ol = document.createElement("ol");
+              ol.className = "five-finger-prayer-list";
+              ol.style.paddingLeft = "1.5rem";
+              ol.style.marginBottom = "1rem";
+              
+              child.fiveFingerPrayer.forEach(function(fingerData, index) {
+                var li = document.createElement("li");
+                li.className = "mb-2";
+                li.style.marginBottom = "0.75rem";
+                
+                // Define icons for each finger
+                var fingerIcons = {
+                  'Thumb': 'bi-hand-thumbs-up',
+                  'Index Finger': 'bi-arrow-up-circle',
+                  'Middle Finger': 'bi-shield-check',
+                  'Ring Finger': 'bi-heart',
+                  'Little Finger': 'bi-person'
+                };
+                
+                var iconClass = fingerIcons[fingerData.finger] || 'bi-circle';
+                
+                var content = document.createElement("div");
+                content.innerHTML = 
+                  '<i class="' + iconClass + '" style="color: #0288d1; margin-right: 8px; font-size: 1.1rem;"></i>' +
+                  '<span><strong>' + fingerData.finger + ' (' + fingerData.meaning + '):</strong> ' +
+                  'Pray for ' + fingerData.prayFor.join(', ').toLowerCase() + '. ' +
+                  fingerData.prayerFocus + '</span>';
+                
+                li.appendChild(content);
+                ol.appendChild(li);
+              });
+              
+              div.appendChild(ol);
+            } else {
+              // Regular text rendering for other sections
+              (child.text || []).forEach(function (txt) {
+                if (txt.trim() === "") {
+                  var br = document.createElement("div");
+                  br.className = "paragraph-break";
+                  div.appendChild(br);
+                } else {
+                  var p = document.createElement("p");
+                  p.className = "about-text mb-2";
+                  p.textContent = txt;
+                  div.appendChild(p);
+                }
+              });
+            }
+            
             childrenContent.appendChild(div);
           });
         }
