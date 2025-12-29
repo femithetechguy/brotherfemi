@@ -458,7 +458,9 @@ export default function Navbar({ onNavigate, onSetAboutTab, onSetResourcesTab, o
               BF
             </div>
             <div>
-              <h1 className="text-lg font-bold tracking-wide">BROTHER FEMI</h1>
+              <a href="/" className="text-lg font-bold tracking-wide hover:text-red-400 transition-colors">
+                BROTHER FEMI
+              </a>
             </div>
           </motion.div>
 
