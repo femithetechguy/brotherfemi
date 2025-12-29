@@ -1,0 +1,1253 @@
+{
+  "app": {
+    "name": "Brother Femi",
+    "tagline": "Bond Servant & Steward",
+    "description": "A faith-inspired platform sharing spiritual insights, biblical wisdom, and personal testimony",
+    "version": "1.0.0"
+  },
+  "design": {
+    "colors": {
+      "primary": "#2C5282",
+      "secondary": "#D69E2E",
+      "accent": "#38A169",
+      "background": "#FFFFFF",
+      "text_dark": "#1A202C",
+      "text_light": "#F7FAFC",
+      "highlight": "#EDF2F7",
+      "border": "#E2E8F0",
+      "variables": {
+        "--brand-primary": "#2C5282",
+        "--brand-secondary": "#D69E2E",
+        "--brand-accent": "#38A169",
+        "--brand-dark": "#1A202C",
+        "--brand-light": "#F7FAFC"
+      }
+    },
+    "fonts": {
+      "primary": "Crimson Text",
+      "secondary": "Open Sans"
+    },
+    "style": [
+      {
+        "primary": "Headers, main CTAs, spiritual emphasis"
+      },
+      {
+        "secondary": "Body text, navigation, general content"
+      },
+      {
+        "accent": "Bible verses, key highlights, callouts"
+      }
+    ]
+  },
+  "page_templates": {
+    "home": {
+      "template_type": "lifeCoach_template",
+      "design_system": "modern_coaching_platform",
+      "features": {
+        "hero_with_profile_image": true,
+        "newsletter_signup": true,
+        "three_card_sections": true,
+        "grid_content_showcase": true,
+        "featured_blog_section": true,
+        "full_width_cta_banners": true,
+        "gradient_overlays": true
+      }
+    }
+  },
+  "features": {
+    "contact_form": true,
+    "newsletter": false,
+    "dark_mode": true,
+    "prayer_tools": true,
+    "bible_links": true,
+    "social_integration": true
+  },
+  "global_components": {
+    "header": {
+      "logo": "Brother Femi",
+      "tagline": "Bond Servant of Christ",
+      "background_color": "#2C5282",
+      "text_color": "#F7FAFC",
+      "cta_enabled": true,
+      "cta_text": "Get In Touch",
+      "cta_url": "/contact",
+      "search_icon": false,
+      "menu": [
+        {
+          "label": "Home",
+          "url": "/",
+          "icon": "home"
+        },
+        {
+          "label": "About",
+          "url": "/about",
+          "icon": "user",
+          "submenu": [
+            { "label": "My Testimony", "url": "/testimony" },
+            { "label": "Vision & Mission", "url": "/vision-mission" },
+            { "label": "Core Values", "url": "/core-values" },
+            { "label": "Heart Cry", "url": "/heart-cry" }
+          ]
+        },
+        {
+          "label": "Spiritual Resources",
+          "url": "/spiritual-resources",
+          "icon": "book",
+          "submenu": [
+            { "label": "The Word (Bible Study)", "url": "/the-word" },
+            { "label": "Prayers & Declarations", "url": "/prayers" },
+            { "label": "Hymns", "url": "/hymns" }
+          ]
+        },
+        {
+          "label": "Discipleship",
+          "url": "/discipleship",
+          "icon": "compass",
+          "submenu": [
+            { "label": "New Life in Christ", "url": "/newlife" },
+            { "label": "Mentors & Teachers", "url": "/mentors" },
+            { "label": "Life Principles", "url": "/life-principles" }
+          ]
+        },
+        {
+          "label": "Worship",
+          "url": "/worship",
+          "icon": "music"
+        },
+        {
+          "label": "Blog & Reflections",
+          "url": "/blog",
+          "icon": "pen"
+        },
+        {
+          "label": "Contact",
+          "url": "/contact",
+          "icon": "phone"
+        }
+      ]
+    },
+    "footer": {
+      "tagline": "Walking in faith, serving in humility",
+      "copyright": "© 2025 Brother Femi. All rights reserved.",
+      "anchor_verse": {
+        "reference": "Acts 5:41-42 KJV",
+        "text": "And they departed from the presence of the council, rejoicing that they were counted worthy to suffer shame for his name. And daily in the temple, and in every house, they ceased not to teach and preach Jesus Christ.",
+        "url": "https://www.biblegateway.com/passage/?search=Acts+5%3A41-42&version=KJV"
+      },
+      "main_navigation": [
+        { "label": "Home", "url": "/", "icon": "home" },
+        { "label": "About", "url": "/about", "icon": "user" },
+        { "label": "Spiritual Resources", "url": "/spiritual-resources", "icon": "book" },
+        { "label": "Discipleship", "url": "/discipleship", "icon": "compass" },
+        { "label": "Blog & Reflections", "url": "/blog", "icon": "pen" },
+        { "label": "Contact", "url": "/contact", "icon": "phone" }
+      ],
+      "quick_links": [
+        { "label": "Home", "url": "/" },
+        { "label": "Testimony", "url": "/testimony" },
+        { "label": "Blog", "url": "/blog" }
+      ],
+      "company_links": [
+        { "label": "About", "url": "/about" },
+        { "label": "Contact", "url": "/contact" }
+      ],
+      "resource_links": [
+        { "label": "Worship & Adoration", "url": "/worship" },
+        { "label": "The Word (Bible Study)", "url": "/the-word" },
+        { "label": "Prayers & Declarations", "url": "/prayers" },
+        { "label": "Hymns", "url": "/hymns" },
+        { "label": "New Life in Christ", "url": "/newlife" },
+        { "label": "Mentors & Teachers", "url": "/mentors" },
+        { "label": "Life Principles", "url": "/life-principles" }
+      ],
+      "social": [
+        {
+          "icon": "bi-instagram",
+          "label": "Instagram",
+          "url": "https://www.instagram.com/thebrotherfemi/"
+        },
+        {
+          "icon": "bi-threads",
+          "label": "Threads",
+          "url": "https://www.threads.com/@thebrotherfemi"
+        },
+        {
+          "icon": "bi-tiktok",
+          "label": "TikTok",
+          "url": "https://www.tiktok.com/@thebrotherfemi"
+        },
+        {
+          "icon": "bi-youtube",
+          "label": "YouTube",
+          "url": "https://www.youtube.com/@thebrotherfemi"
+        },
+        {
+          "icon": "bi-facebook",
+          "label": "Facebook",
+          "url": "https://www.facebook.com/thebrotherfemi/"
+        }
+      ],
+      "contact_info": {
+        "email": "contact@brotherfemi.org",
+        "email_link": "mailto:contact@brotherfemi.org"
+      },
+      "designer_credit": {
+        "text": "✨ Designed and Developed By",
+        "company": "FTTG Solutions",
+        "url": "https://fttgsolutions.com"
+      },
+      "subtitle": "Bond Servant & Steward"
+    }
+  },
+  "navigation": {
+    "main_sections": [
+      {
+        "id": "home",
+        "title": "Home",
+        "order": 1
+      },
+      {
+        "id": "about-section",
+        "title": "About",
+        "order": 2,
+        "subsections": [
+          "testimony",
+          "vision-mission",
+          "core-values",
+          "heart-cry"
+        ]
+      },
+      {
+        "id": "spiritual-resources",
+        "title": "Spiritual Resources",
+        "order": 3,
+        "subsections": [
+          "worship",
+          "the-word",
+          "hymns",
+          "prayers"
+        ]
+      },
+      {
+        "id": "discipleship",
+        "title": "Discipleship",
+        "order": 4,
+        "subsections": [
+          "newlife",
+          "mentors",
+          "life-principles"
+        ]
+      },
+      {
+        "id": "blog",
+        "title": "Blog & Reflections",
+        "order": 5
+      },
+      {
+        "id": "contact",
+        "title": "Contact & Socials",
+        "order": 6
+      }
+    ]
+  },
+  "pages": {
+    "home": {
+      "seo": {
+        "title": "Brother Femi - Bond Servant of Christ",
+        "description": "Explore spiritual insights, biblical wisdom, and a personal testimony of faith. Connect with mentors, resources, and a community dedicated to walking with Christ."
+      },
+      "hero": {
+        "layout": "full_width_with_image",
+        "title": "HEY I'M\nBROTHER FEMI",
+        "title_highlight": "FEMI",
+        "subtitle": "Bond Servant of Christ",
+        "description": "A faith-inspired space sharing spiritual insights, biblical wisdom, and personal testimony as I grow in my relationship with Jesus Christ.",
+        "image": "/images/hero-profile.jpg",
+        "image_position": "right",
+        "background": {
+          "type": "gradient",
+          "color_start": "#2C5282",
+          "color_end": "#1A202C",
+          "overlay_opacity": 0.6
+        },
+        "buttons": [
+          {
+            "text": "Subscribe to My Newsletter",
+            "url": "/subscribe",
+            "style": "primary",
+            "icon": "envelope"
+          },
+          {
+            "text": "Read More",
+            "url": "/about",
+            "style": "secondary"
+          }
+        ],
+        "cta_section": {
+          "enabled": true,
+          "title": "Join My Spiritual Community",
+          "subtitle": "Get updates on teachings, resources, and faith insights"
+        }
+      },
+      "sections": {
+        "featured_cards": {
+          "layout": "three_column_cards",
+          "title": "Featured Content Areas",
+          "background": "#F9FAFB",
+          "cards": [
+            {
+              "id": "worship-section",
+              "title": "Worship & Adoration",
+              "icon": "music",
+              "background_color": "#D69E2E",
+              "text_color": "#FFFFFF",
+              "description": "Explore spiritual worship resources",
+              "url": "/worship",
+              "image": "/images/sections/worship-banner.jpg"
+            },
+            {
+              "id": "teachings",
+              "title": "Biblical Teachings",
+              "icon": "book-open",
+              "background_color": "#2C5282",
+              "text_color": "#FFFFFF",
+              "description": "Deep Scripture study resources",
+              "url": "/the-word",
+              "image": "/images/sections/teachings-banner.jpg"
+            },
+            {
+              "id": "resources",
+              "title": "Prayer Resources",
+              "icon": "heart",
+              "background_color": "#38A169",
+              "text_color": "#FFFFFF",
+              "description": "Daily prayers and declarations",
+              "url": "/prayers",
+              "image": "/images/sections/prayers-banner.jpg"
+            }
+          ]
+        },
+        "content_grid": {
+          "layout": "grid_3x3",
+          "title": "Explore More Content",
+          "subtitle": "Featured teachings, prayers, and resources",
+          "items": [
+            {
+              "title": "New Life in Christ",
+              "category": "Discipleship",
+              "image": "/images/content/newlife-01.jpg",
+              "url": "/newlife",
+              "icon": "sparkles"
+            },
+            {
+              "title": "Mentors & Teachers",
+              "category": "Community",
+              "image": "/images/content/mentors-01.jpg",
+              "url": "/mentors",
+              "icon": "users"
+            },
+            {
+              "title": "Life Principles",
+              "category": "Growth",
+              "image": "/images/content/principles-01.jpg",
+              "url": "/life-principles",
+              "icon": "lightbulb"
+            },
+            {
+              "title": "Prayer Declarations",
+              "category": "Spiritual Practice",
+              "image": "/images/content/prayers-01.jpg",
+              "url": "/prayers",
+              "icon": "heart"
+            },
+            {
+              "title": "Bible Study",
+              "category": "Scripture",
+              "image": "/images/content/word-01.jpg",
+              "url": "/the-word",
+              "icon": "book"
+            },
+            {
+              "title": "Hymns & Worship",
+              "category": "Adoration",
+              "image": "/images/content/hymns-01.jpg",
+              "url": "/hymns",
+              "icon": "music"
+            },
+            {
+              "title": "Blog Reflections",
+              "category": "Insights",
+              "image": "/images/content/blog-01.jpg",
+              "url": "/blog",
+              "icon": "pen"
+            },
+            {
+              "title": "Testimonies",
+              "category": "Stories",
+              "image": "/images/content/testimony-01.jpg",
+              "url": "/testimony",
+              "icon": "chat"
+            },
+            {
+              "title": "Contact & Connect",
+              "category": "Community",
+              "image": "/images/content/contact-01.jpg",
+              "url": "/contact",
+              "icon": "phone"
+            }
+          ]
+        },
+        "feature_showcase": {
+          "layout": "grid_4_columns",
+          "title": "Key Features",
+          "subtitle": "Everything you need for spiritual growth",
+          "background": "#FFFFFF",
+          "items": [
+            {
+              "icon": "book-open",
+              "title": "Bible Study Resources",
+              "description": "Comprehensive biblical teachings"
+            },
+            {
+              "icon": "users",
+              "title": "30+ Mentors",
+              "description": "Learn from spiritual leaders worldwide"
+            },
+            {
+              "icon": "heart",
+              "title": "Prayer Tools",
+              "description": "5 types of daily prayers"
+            },
+            {
+              "icon": "music",
+              "title": "Worship Library",
+              "description": "Hymns and worship resources"
+            }
+          ]
+        },
+        "cta_banner": {
+          "layout": "full_width_image",
+          "background_image": "/images/cta-background.jpg",
+          "overlay_color": "#2C5282",
+          "overlay_opacity": 0.7,
+          "title": "Ready to Begin Your Spiritual Journey?",
+          "subtitle": "Connect with resources, mentors, and a community dedicated to growth in Christ",
+          "button_text": "Get Started Today",
+          "button_url": "/about",
+          "button_style": "secondary",
+          "text_color": "#FFFFFF",
+          "text_alignment": "center"
+        },
+        "blog_section": {
+          "layout": "three_column_cards",
+          "title": "Latest Blog Posts",
+          "subtitle": "Spiritual insights and reflections",
+          "background": "#F9FAFB",
+          "cards": [
+            {
+              "title": "Midnight Encounter",
+              "image": "/images/blog/midnight-01.jpg",
+              "excerpt": "A life-changing encounter with God that deepened my walk with Christ",
+              "category": "Testimony",
+              "date": "Recent",
+              "url": "/blog/midnight-encounter",
+              "read_time": "5 min read"
+            },
+            {
+              "title": "Journey to Faith",
+              "image": "/images/blog/journey-01.jpg",
+              "excerpt": "How I encountered Christ and the lessons learned along the way",
+              "category": "Testimony",
+              "date": "Recent",
+              "url": "/blog/my-journey-to-faith",
+              "read_time": "8 min read"
+            },
+            {
+              "title": "Lessons from the Valley",
+              "image": "/images/blog/valley-01.jpg",
+              "excerpt": "Reflections on spiritual growth during difficult seasons",
+              "category": "Growth",
+              "date": "Recent",
+              "url": "/blog/lessons-from-the-valley",
+              "read_time": "6 min read"
+            }
+          ]
+        },
+        "footer_cta": {
+          "layout": "full_width_image",
+          "background_image": "/images/footer-cta-background.jpg",
+          "overlay_color": "#1A202C",
+          "overlay_opacity": 0.8,
+          "title": "Embrace Your Role as a Bond Servant",
+          "subtitle": "Build a life of faith, wisdom, and purpose",
+          "button_text": "Explore More",
+          "button_url": "/discipleship",
+          "button_style": "secondary",
+          "text_color": "#FFFFFF"
+        },
+        "welcome": {
+          "title": "Who I Am",
+          "subtitle": "A Testimony of Transformation",
+          "content": "I am Brother Femi, a bond servant of the Lord Jesus Christ. I am constantly learning His ways from the Bible and others, and gradually working to become more like Him by the day. On June 22, 2025, at HOWJ Atlanta, I experienced a life-changing encounter with Jesus Christ that set me on a new path of faith and purpose.",
+          "cta": {
+            "text": "Read My Full Testimony",
+            "url": "/testimony"
+          }
+        },
+        "highlights": [
+          {
+            "icon": "book-open",
+            "title": "Biblical Wisdom",
+            "description": "Deep dives into Scripture and spiritual principles for daily living"
+          },
+          {
+            "icon": "users",
+            "title": "Mentorship",
+            "description": "Connected with influential spiritual leaders and mentors worldwide"
+          },
+          {
+            "icon": "heart",
+            "title": "Worship & Adoration",
+            "description": "Cultivating a lifestyle of worship and reverence for God"
+          },
+          {
+            "icon": "compass",
+            "title": "Spiritual Growth",
+            "description": "Resources for discipleship, prayer, and personal transformation"
+          }
+        ],
+        "featured_content": {
+          "title": "Featured Resources",
+          "items": [
+            {
+              "id": "worship",
+              "title": "Worship & Adoration",
+              "description": "True worship is a lifestyle of surrender, reverence, and love for God.",
+              "url": "/worship",
+              "icon": "music"
+            },
+            {
+              "id": "newlife",
+              "title": "New Life in Christ",
+              "description": "Understanding the Christian faith and spiritual warfare.",
+              "url": "/newlife",
+              "icon": "sparkles"
+            },
+            {
+              "id": "mentors",
+              "title": "Spiritual Mentors",
+              "description": "Learn from influential spiritual leaders who shaped my journey.",
+              "url": "/mentors",
+              "icon": "users"
+            },
+            {
+              "id": "blog",
+              "title": "Blog & Reflections",
+              "description": "Personal reflections on faith, discipline, and spiritual growth.",
+              "url": "/blog",
+              "icon": "pen"
+            }
+          ]
+        },
+        "cta": {
+          "text": "Join Me on This Spiritual Journey",
+          "button_text": "Get In Touch",
+          "button_url": "/contact"
+        }
+      }
+    },
+    "about": {
+      "seo": {
+        "title": "About Brother Femi - My Story & Vision",
+        "description": "Learn about my spiritual journey, vision, mission, core values, and heart cry as a bond servant of Christ."
+      },
+      "hero": {
+        "title": "About My Journey",
+        "subtitle": "A Bond Servant's Story"
+      },
+      "tabs": [
+        {
+          "id": "testimony",
+          "label": "Testimony",
+          "icon": "heart-fill",
+          "content": {
+            "title": "My Journey to Faith",
+            "description": "On the 22nd of June 2025, at HOWJ Atlanta I had a life-changing encounter with the Lord Jesus Christ. It was a moment of divine personal conviction, revelation and transformation that set me on a new path of faith and purpose - I had a strong nudge in my soul to search God afresh at all cost. Since then, I have been committed to living as a bond servant of Christ, seeking to know Him more deeply and to reflect His love and grace in all aspects of my life.",
+            "paragraph2": "This website is a faith-inspired space to share my journey, connect with fellow believers, and encourage a Christ-centered life of love, humility, and purpose.",
+            "paragraph3": "I look forward to hearing from you, sharing insights, and growing together in faith. May the grace and peace of our Lord Jesus Christ be with you always.",
+            "instagram_embed": "https://www.instagram.com/p/DKRRpO4CCm9/embed",
+            "url_reference": {
+              "text": "HOWJ Atlanta",
+              "href": "https://howjglobal.org/",
+              "target": "_blank"
+            }
+          }
+        },
+        {
+          "id": "vision-mission",
+          "label": "Vision & Mission",
+          "icon": "binoculars",
+          "content": {
+            "vision": {
+              "title": "Vision",
+              "description": "To be disclosed"
+            },
+            "mission": {
+              "title": "Mission",
+              "description": "To be disclosed"
+            }
+          }
+        },
+        {
+          "id": "core-values",
+          "label": "Core Values",
+          "icon": "gem",
+          "content": {
+            "title": "Core Values That Guide My Life",
+            "values": [
+              {
+                "name": "Love & Unity",
+                "description": "Building genuine connections rooted in Christ's love"
+              },
+              {
+                "name": "Purity & Consecration",
+                "description": "Living set apart for God's purposes"
+              },
+              {
+                "name": "Fear & Reverence for God",
+                "description": "Maintaining deep respect and awe for the Almighty"
+              },
+              {
+                "name": "Godly Humility",
+                "description": "Serving with humility and acknowledging God's supremacy"
+              }
+            ]
+          }
+        },
+        {
+          "id": "heart-cry",
+          "label": "Heart Cry",
+          "icon": "chat-heart",
+          "content": {
+            "title": "My Heart's Deepest Prayers",
+            "description": "These are the deepest desires of my heart as I walk with God:",
+            "cries": [
+              "Father set me free from the spirit of pride that thinks it can sustain righteous",
+              "Father, purge and purify every bit of SIN/Concupiscence out of my life",
+              "My Father, count me amongst those you will have mercy on today (Rom 9)",
+              "Give me the ability to obey you promptly without negotiations!"
+            ]
+          }
+        }
+      ]
+    },
+    "spiritual-resources": {
+      "seo": {
+        "title": "Spiritual Resources - Worship, Prayer & Bible Study",
+        "description": "Explore worship, Bible study, hymns, prayers, and spiritual practices for deepening your faith."
+      },
+      "hero": {
+        "title": "Spiritual Resources",
+        "subtitle": "Tools for Growing Deeper in Faith"
+      },
+      "intro": "A comprehensive collection of spiritual resources including worship guidance, biblical teachings, prayers, and hymns to support your spiritual journey.",
+      "tabs": [
+        {
+          "id": "worship",
+          "label": "Worship & Adoration",
+          "icon": "music",
+          "content": {
+            "title": "Worship & Adoration",
+            "bibleVerse": "God is Spirit, and those who worship Him must worship in spirit and truth.",
+            "reference": "John 4:24",
+            "bible_url": "https://www.bible.com/bible/114/JHN.4.24.NKJV",
+            "description": "True worship is a lifestyle of surrender, reverence, and love for God. Let every moment, word, and song be an offering of adoration to the King of kings."
+          }
+        },
+        {
+          "id": "the-word",
+          "label": "The Word (Bible Study)",
+          "icon": "book",
+          "content": {
+            "title": "The Word of God",
+            "bibleVerse": "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
+            "reference": "Colossians 3:16",
+            "bible_url": "https://www.bible.com/bible/114/COL.3.16.NKJV",
+            "descriptions": [
+              "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
+              "May the Word of God be your guide, your strength, and your joy. Stay rooted in Christ, and let His truth shape your every step."
+            ]
+          }
+        },
+        {
+          "id": "hymns",
+          "label": "Hymns",
+          "icon": "music-note-beamed",
+          "content": {
+            "title": "Hymns for Worship",
+            "bibleVerse": "Sing to the Lord, all the earth; proclaim the good news of His salvation from day to day.",
+            "reference": "1 Chronicles 16:23",
+            "bible_url": "https://www.bible.com/bible/114/1CH.16.23.NKJV",
+            "descriptions": [
+              "Sing to the Lord, all the earth; proclaim the good news of His salvation from day to day.",
+              "Enjoy a curated playlist of classic and contemporary hymns to inspire your worship and devotion."
+            ]
+          }
+        }
+      ]
+    },
+    "prayers": {
+      "seo": {
+        "title": "Prayers & Declarations - Daily Spiritual Practice",
+        "description": "Explore prayers, declarations, and spiritual practices to strengthen your prayer life."
+      },
+      "hero": {
+        "title": "Prayers & Spiritual Declarations",
+        "subtitle": "Tools for Daily Prayer & Intercession"
+      },
+      "intro": "A collection of prayers and declarations to guide your spiritual practice, including prayers for protection, thanksgiving, family, and spiritual growth.",
+      "prayer_resources": [
+        {
+          "id": "altar-call",
+          "title": "Altar Call - Prayer of Salvation",
+          "description": "A foundational prayer for welcoming Jesus into your life and beginning your spiritual journey.",
+          "icon": "heart",
+          "url": "/prayers/altar-call"
+        },
+        {
+          "id": "early-morning",
+          "title": "Early Morning Declaration & Prayers",
+          "description": "40 powerful prayers and declarations to begin your day in spiritual authority and protection.",
+          "icon": "sunrise",
+          "url": "/prayers/early-morning"
+        },
+        {
+          "id": "serenity-prayer",
+          "title": "Serenity Prayer",
+          "description": "A prayer of peace, acceptance, and surrender to God's will.",
+          "icon": "peace",
+          "url": "/prayers/serenity"
+        },
+        {
+          "id": "five-finger-prayer",
+          "title": "Five Finger Prayer",
+          "description": "A simple prayer guide for intercession using your five fingers to remember prayer categories.",
+          "icon": "hand-thumbs-up",
+          "url": "/prayers/five-finger"
+        },
+        {
+          "id": "prayer-children",
+          "title": "Prayer for Children & Grandchildren",
+          "description": "Comprehensive prayers covering protection, purpose, character, and faith for the next generation.",
+          "icon": "people",
+          "url": "/prayers/children"
+        }
+      ]
+    },
+    "discipleship": {
+      "seo": {
+        "title": "Discipleship - New Life in Christ & Spiritual Growth",
+        "description": "Resources for understanding Christian faith, spiritual warfare, life principles, and mentorship."
+      },
+      "hero": {
+        "title": "Discipleship Path",
+        "subtitle": "Growing in Christ Through Teaching & Community"
+      },
+      "intro": "Your complete guide to Christian discipleship, including understanding what it means to be a Christian, spiritual warfare, life principles, and connecting with mentors.",
+      "tabs": [
+        {
+          "id": "newlife",
+          "label": "New Life in Christ",
+          "icon": "sparkles",
+          "content": {
+            "title": "New Life in Christ",
+            "bibleVerse": "Therefore, if anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.",
+            "reference": "2 Corinthians 5:17",
+            "bible_url": "https://www.bible.com/bible/114/2CO.5.17.NKJV",
+            "sections": [
+              {
+                "id": "what-is-christian",
+                "title": "What is a Christian?",
+                "content": "A Christian is someone who believes in and follows Jesus Christ as Lord and Savior.",
+                "subsections": [
+                  {
+                    "title": "Core Beliefs",
+                    "items": [
+                      "Jesus is the Son of God, who lived a sinless life, died for our sins, & rose again (1 Corinthians 15:3–4).",
+                      "Salvation is by grace through faith, not earned by good works (Ephesians 2:8–9).",
+                      "The Bible is God's inspired Word, the foundation for belief and practice (2 Timothy 3:16).",
+                      "Christians strive to live like Jesus, loving God and loving others (Matthew 22:37–39)."
+                    ]
+                  },
+                  {
+                    "title": "In Practice",
+                    "items": [
+                      "A Christian has a personal relationship with God through Jesus.",
+                      "They repent of sin, trust in Christ's sacrifice, and walk in obedience.",
+                      "They become part of the body of Christ, the global family of believers."
+                    ]
+                  },
+                  {
+                    "title": "Simply Put",
+                    "description": "A Christian is a forgiven sinner, made new by Christ, and committed to following Him."
+                  }
+                ]
+              },
+              {
+                "id": "spiritual-warfare",
+                "title": "Spiritual Warfare",
+                "description": "The Christian life involves spiritual warfare, as believers stand firm against spiritual opposition and rely on God's strength for victory.",
+                "content": "Spiritual warfare is the ongoing battle between good and evil, light and darkness, in the life of every believer. It is not fought with physical weapons, but with faith, prayer, and the Word of God (Ephesians 6:10–18). Believers are called to stand firm, put on the full armor of God, and resist the schemes of the enemy. Victory is found in Christ, who has already overcome the world (John 16:33). Stay alert, pray continually, and trust in God's power to protect and deliver you."
+              }
+            ]
+          }
+        },
+        {
+          "id": "mentors",
+          "label": "Mentors & Teachers",
+          "icon": "people",
+          "content": {
+            "title": "Spiritual Mentors & Teachers",
+            "description": "I am honored to have learned from these influential spiritual leaders and mentors who have shaped my journey. Their teachings continue to inspire my walk with Christ.",
+            "mentor_count": 30,
+            "categories": [
+              {
+                "name": "Contemporary Leaders",
+                "mentors": ["Dammy Olu Ayeni", "Micheal Orokpo", "Arome Osai", "Kesiena Esiri Henry", "Isaac Omolehin"]
+              },
+              {
+                "name": "International Ministries",
+                "mentors": ["Femi Lazarus", "Dolapo Lawal", "Emmanuel Iren", "Jim Rohm", "Earl Nightingale"]
+              },
+              {
+                "name": "Classical & Legacy Leaders",
+                "mentors": ["Charles Spurgeon", "David Martyn Lloyd-Jones", "Charles Stanley", "David Wilkerson", "Billy Graham"]
+              },
+              {
+                "name": "Leadership & Personal Development",
+                "mentors": ["Napoleon Hill", "D. K. Olukoya", "W. F. Kumuyi", "Victor Chuckwu"]
+              },
+              {
+                "name": "Visionary Pastors & Prophets",
+                "mentors": ["Peter Olaniran", "Benjamin Beckley", "Pade Okunola", "Yemi Adio", "Leonard Ravenhill", "A. W. Tozer", "Carter Conlon", "David Lynn", "Theophilus Sunday", "Reverend Christie Bature"]
+              }
+            ]
+          }
+        },
+        {
+          "id": "life-principles",
+          "label": "Life Principles",
+          "icon": "lightbulb",
+          "content": {
+            "title": "15 Life Principles to Live By",
+            "description": "Timeless principles for navigating life with wisdom, faith, and purpose.",
+            "principles": [
+              {
+                "number": 1,
+                "text": "Our intimacy with God—His highest priority for our lives—determines the impact of our lives."
+              },
+              {
+                "number": 2,
+                "text": "Obey God and leave all the consequences to Him."
+              },
+              {
+                "number": 3,
+                "text": "God's Word is an immovable anchor in times of storm."
+              },
+              {
+                "number": 4,
+                "text": "The awareness of God's presence energizes us for our work."
+              },
+              {
+                "number": 5,
+                "text": "God does not require us to understand His will, just obey it, even if it seems unreasonable."
+              },
+              {
+                "number": 6,
+                "text": "You reap what you sow, more than you sow, and later than you sow."
+              },
+              {
+                "number": 7,
+                "text": "The dark moments of our life will last only so long as is necessary for God to accomplish His purpose in us."
+              },
+              {
+                "number": 8,
+                "text": "Fight all your battles on your knees and you win every time."
+              },
+              {
+                "number": 9,
+                "text": "Trusting God means looking beyond what we can see to what God sees."
+              },
+              {
+                "number": 10,
+                "text": "If necessary, God will move heaven and earth to show us His will."
+              },
+              {
+                "number": 11,
+                "text": "God assumes full responsibility for our needs when we obey Him."
+              },
+              {
+                "number": 12,
+                "text": "Peace with God is the fruit of oneness with God."
+              },
+              {
+                "number": 13,
+                "text": "Listening to God is essential to walking with God."
+              },
+              {
+                "number": 14,
+                "text": "God acts on behalf of those who wait for Him."
+              },
+              {
+                "number": 15,
+                "text": "Brokenness is God's requirement for maximum usefulness."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "blog": {
+      "seo": {
+        "title": "Blog & Reflections - Spiritual Insights & Testimonies",
+        "description": "Read faith-inspired blog posts, testimonies, and reflections on spiritual growth, worship, and walking with Christ."
+      },
+      "hero": {
+        "title": "Blog & Reflections",
+        "subtitle": "Spiritual Insights for Daily Living"
+      },
+      "intro": "Welcome to the Blog! Here you'll find faith-inspired blog posts, testimonies, and reflections. Stay tuned for updates and new entries.",
+      "featured_posts": [
+        {
+          "title": "Midnight Encounter",
+          "short_details": "A life-changing midnight encounter with God that deepened my walk with Christ and taught me the value of seeking Him in the stillness.",
+          "read_more_url": "blog/midnight-encounter.html",
+          "icon": "moon-stars"
+        },
+        {
+          "title": "My Journey to Faith",
+          "short_details": "A personal testimony of how I encountered Christ and the lessons learned along the way.",
+          "read_more_url": "blog/my-journey-to-faith.html",
+          "icon": "path"
+        },
+        {
+          "title": "Lessons from the Valley",
+          "short_details": "Reflections on spiritual growth during difficult seasons and how God uses challenges for our good.",
+          "read_more_url": "blog/lessons-from-the-valley.html",
+          "icon": "mountains"
+        },
+        {
+          "title": "Worship as a Lifestyle",
+          "short_details": "Exploring what it means to worship God in spirit and truth every day, not just in song.",
+          "read_more_url": "blog/worship-as-a-lifestyle.html",
+          "icon": "heart-hands"
+        }
+      ]
+    },
+    "contact": {
+      "seo": {
+        "title": "Contact Brother Femi - Get In Touch",
+        "description": "Connect with me through email or social media. I'd love to hear from you and discuss your spiritual journey."
+      },
+      "hero": {
+        "title": "Get In Touch",
+        "subtitle": "I'd love to hear from you"
+      },
+      "bibleVerse": "Now the God of peace be with you all. Amen.",
+      "reference": "Romans 15:33",
+      "bible_url": "https://www.bible.com/bible/114/ROM.15.33.NKJV",
+      "intro": "Feel free to reach out through any of the channels below. I look forward to connecting with you.",
+      "contact_methods": [
+        {
+          "type": "Email",
+          "url": "mailto:contact@brotherfemi.org",
+          "display": "contact@brotherfemi.org",
+          "icon": "envelope"
+        },
+        {
+          "type": "Instagram",
+          "url": "https://www.instagram.com/thebrotherfemi/",
+          "display": "@thebrotherfemi",
+          "icon": "instagram"
+        },
+        {
+          "type": "Threads",
+          "url": "https://www.threads.com/@thebrotherfemi",
+          "display": "@thebrotherfemi",
+          "icon": "threads"
+        },
+        {
+          "type": "TikTok",
+          "url": "https://www.tiktok.com/@thebrotherfemi",
+          "display": "@thebrotherfemi",
+          "icon": "tiktok"
+        },
+        {
+          "type": "YouTube",
+          "url": "https://www.youtube.com/@thebrotherfemi",
+          "display": "@thebrotherfemi",
+          "icon": "youtube"
+        },
+        {
+          "type": "Facebook",
+          "url": "https://www.facebook.com/thebrotherfemi/",
+          "display": "@thebrotherfemi",
+          "icon": "facebook"
+        }
+      ],
+      "form": {
+        "title": "Send Me a Message",
+        "fields": [
+          {
+            "type": "text",
+            "name": "name",
+            "label": "Your Name",
+            "required": true
+          },
+          {
+            "type": "email",
+            "name": "email",
+            "label": "Your Email",
+            "required": true
+          },
+          {
+            "type": "tel",
+            "name": "phone",
+            "label": "Phone Number",
+            "required": false
+          },
+          {
+            "type": "text",
+            "name": "subject",
+            "label": "Subject",
+            "required": true
+          },
+          {
+            "type": "textarea",
+            "name": "message",
+            "label": "Your Message",
+            "required": true
+          }
+        ],
+        "button": {
+          "text": "Send Message",
+          "type": "submit"
+        },
+        "messages": {
+          "success": "Thank you for reaching out! I'll respond as soon as possible.",
+          "error": "Something went wrong. Please try again."
+        }
+      }
+    }
+  },
+  "footer": {
+    "year": 2025,
+    "copyright": "© {year} Brother Femi. All rights reserved.",
+    "subtitle": "Bond Servant & Steward"
+  },
+  "api": {
+    "base_url": "http://localhost:3001/api",
+    "endpoints": {
+      "contact": "/contact",
+      "prayers": "/prayers",
+      "mentors": "/mentors",
+      "blog": "/blog",
+      "resources": "/resources"
+    },
+    "timeout": 30000,
+    "retry_attempts": 3
+  },
+  "environment": {
+    "development": {
+      "api_url": "http://localhost:3001/api",
+      "debug": true,
+      "log_level": "debug"
+    },
+    "production": {
+      "api_url": "https://api.brotherfemi.org/api",
+      "debug": false,
+      "log_level": "error"
+    },
+    "staging": {
+      "api_url": "https://staging-api.brotherfemi.org/api",
+      "debug": true,
+      "log_level": "info"
+    }
+  },
+  "routing": {
+    "base_path": "/",
+    "routes": [
+      { "path": "/", "component": "Home", "page_id": "home" },
+      { "path": "/about", "component": "About", "page_id": "about" },
+      { "path": "/testimony", "component": "TabContent", "page_id": "about", "tab_id": "testimony" },
+      { "path": "/vision-mission", "component": "TabContent", "page_id": "about", "tab_id": "vision-mission" },
+      { "path": "/core-values", "component": "TabContent", "page_id": "about", "tab_id": "core-values" },
+      { "path": "/heart-cry", "component": "TabContent", "page_id": "about", "tab_id": "heart-cry" },
+      { "path": "/spiritual-resources", "component": "SpiritualResources", "page_id": "spiritual-resources" },
+      { "path": "/worship", "component": "TabContent", "page_id": "spiritual-resources", "tab_id": "worship" },
+      { "path": "/the-word", "component": "TabContent", "page_id": "spiritual-resources", "tab_id": "the-word" },
+      { "path": "/hymns", "component": "TabContent", "page_id": "spiritual-resources", "tab_id": "hymns" },
+      { "path": "/prayers", "component": "Prayers", "page_id": "prayers" },
+      { "path": "/discipleship", "component": "Discipleship", "page_id": "discipleship" },
+      { "path": "/newlife", "component": "TabContent", "page_id": "discipleship", "tab_id": "newlife" },
+      { "path": "/mentors", "component": "TabContent", "page_id": "discipleship", "tab_id": "mentors" },
+      { "path": "/life-principles", "component": "TabContent", "page_id": "discipleship", "tab_id": "life-principles" },
+      { "path": "/blog", "component": "Blog", "page_id": "blog" },
+      { "path": "/contact", "component": "Contact", "page_id": "contact" }
+    ]
+  },
+  "validation": {
+    "contact_form": {
+      "name": {
+        "required": true,
+        "min_length": 2,
+        "max_length": 100,
+        "pattern": "^[a-zA-Z\\s]+$",
+        "error_message": "Please enter a valid name (letters and spaces only)"
+      },
+      "email": {
+        "required": true,
+        "pattern": "^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$",
+        "error_message": "Please enter a valid email address"
+      },
+      "phone": {
+        "required": false,
+        "pattern": "^[\\d\\-\\(\\)\\s\\+]+$",
+        "error_message": "Please enter a valid phone number"
+      },
+      "subject": {
+        "required": true,
+        "min_length": 3,
+        "max_length": 150,
+        "error_message": "Subject must be between 3 and 150 characters"
+      },
+      "message": {
+        "required": true,
+        "min_length": 10,
+        "max_length": 5000,
+        "error_message": "Message must be between 10 and 5000 characters"
+      }
+    }
+  },
+  "state_management": {
+    "provider": "Context API + useReducer",
+    "alternative": "Redux",
+    "initial_state": {
+      "app": {
+        "loading": false,
+        "error": null,
+        "theme": "light"
+      },
+      "content": {
+        "pages": {},
+        "currentPage": "home"
+      },
+      "user": {
+        "contact": null,
+        "preferences": {}
+      }
+    },
+    "actions": [
+      "SET_LOADING",
+      "SET_ERROR",
+      "SET_PAGE_CONTENT",
+      "SET_CURRENT_PAGE",
+      "CLEAR_ERROR",
+      "SET_THEME"
+    ]
+  },
+  "assets": {
+    "images": {
+      "path": "/public/images",
+      "logo": "/public/images/logo.png",
+      "banner": "/public/images/banners",
+      "icons": "/public/images/icons"
+    },
+    "fonts": {
+      "path": "/public/fonts"
+    },
+    "styles": {
+      "path": "/src/styles",
+      "global": "/src/styles/global.css",
+      "tailwind": "/src/styles/tailwind.css"
+    }
+  },
+  "build": {
+    "tool": "Vite",
+    "output_dir": "dist",
+    "source_dir": "src",
+    "public_dir": "public",
+    "base": "/",
+    "minify": true,
+    "source_map": false
+  },
+  "error_handling": {
+    "boundary_enabled": true,
+    "fallback_ui": {
+      "error_page": "ErrorBoundary",
+      "loading_page": "LoadingSpinner",
+      "not_found_page": "NotFound"
+    },
+    "error_messages": {
+      "network_error": "Unable to connect to server. Please check your internet connection.",
+      "server_error": "Server error. Please try again later.",
+      "form_submit_error": "Failed to submit form. Please try again.",
+      "page_not_found": "The page you're looking for doesn't exist."
+    }
+  },
+  "loading_states": {
+    "skeleton_enabled": true,
+    "show_loading_delay": 300,
+    "components": [
+      "PageLoader",
+      "ContentSkeleton",
+      "TabSkeleton",
+      "CardSkeleton"
+    ]
+  },
+  "performance": {
+    "lazy_loading": true,
+    "code_splitting": true,
+    "image_optimization": true,
+    "bundle_analysis": false,
+    "cache_strategy": "network-first"
+  },
+  "analytics": {
+    "enabled": true,
+    "google_analytics_id": "G-XXXXXXXXXX",
+    "track_events": [
+      "page_view",
+      "form_submit",
+      "link_click",
+      "resource_view"
+    ]
+  },
+  "framework": {
+    "frontend": "React.js",
+    "backend": "NestJS",
+    "styling": "Tailwind CSS",
+    "animations": "Framer Motion",
+    "state_management": "Context API / Redux",
+    "data_source": "Dynamic JSON from NestJS API / Server",
+    "package_manager": "npm",
+    "typescript": true,
+    "full_stack": "React.js (Frontend) + NestJS (Backend)",
+    "architecture": "Client-Server with dynamic content delivery"
+  },
+  "seo": {
+    "default_og_image": "/images/og-image.png",
+    "default_twitter_handle": "@thebrotherfemi"
+  },
+  "ux_optimizations": {
+    "consolidated_sections": {
+      "about": "Consolidated 5 separate about pages into 4 organized tabs",
+      "spiritual_resources": "Combined Worship, The Word, and Hymns into one section with tabs",
+      "prayers": "Consolidated all prayer resources into one dedicated section",
+      "discipleship": "Merged New Life, Mentors, and Life Principles for coherent learning path"
+    },
+    "improved_navigation": "Hierarchical menu with clear submenu structure",
+    "tab_organization": "Icon-labeled tabs for better visual scanning and clarity",
+    "information_architecture": "Logical grouping of related content to reduce cognitive load",
+    "accessibility": "Semantic HTML, proper heading hierarchy, and clear CTAs throughout"
+  }
+}

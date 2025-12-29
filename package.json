@@ -1,0 +1,24 @@
+{
+  "name": "brother-femi",
+  "version": "1.0.0",
+  "description": "A faith-inspired platform sharing spiritual insights, biblical wisdom, and personal testimony",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd frontend && npm run preview",
+    "lint": "cd frontend && npm run lint"
+  },
+  "keywords": [
+    "spiritual",
+    "faith",
+    "discipleship",
+    "worship",
+    "prayer"
+  ],
+  "author": "Brother Femi",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
