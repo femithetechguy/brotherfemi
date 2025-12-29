@@ -307,7 +307,7 @@ export default function Navbar({ onNavigate, onSetAboutTab, onSetResourcesTab, o
       }
 
       if (appConfig.pages?.blog?.featured_posts) {
-        appConfig.pages.blog.featured_posts.forEach((post: any, idx: number) => {
+        appConfig.pages.blog.featured_posts.forEach((post: any) => {
           index.push({
             id: `blog-${post.title.replace(/\s+/g, '-').toLowerCase()}`,
             title: post.title,
