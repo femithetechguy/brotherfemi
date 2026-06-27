@@ -181,11 +181,11 @@ export default function Header() {
         >
           <span
             className={`block h-0.5 w-6 origin-center transition-transform duration-200`}
-            style={{ background: "var(--color-dark-muted)", transform: menuOpen ? "rotate(45deg) translateY(8px)" : "" }}
+            style={{ background: "var(--color-gold-lt)", transform: menuOpen ? "rotate(45deg) translateY(8px)" : "" }}
           />
           <span
             className={`block h-0.5 w-6 transition-opacity duration-200`}
-            style={{ background: "var(--color-dark-muted)", opacity: menuOpen ? 0 : 1 }}
+            style={{ background: "var(--color-gold-lt)", opacity: menuOpen ? 0 : 1 }}
           />
           <span
             className={`block h-0.5 w-6 origin-center transition-transform duration-200`}
