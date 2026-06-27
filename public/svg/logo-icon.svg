@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Brother Femi icon">
+  <defs>
+    <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0288d1"/>
+      <stop offset="100%" stop-color="#17445e"/>
+    </linearGradient>
+    <linearGradient id="shine-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4dd0e1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0288d1" stop-opacity="0.7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#brand-grad)"/>
+
+  <!-- Cross: vertical bar -->
+  <rect x="43" y="18" width="14" height="64" rx="4" fill="white"/>
+
+  <!-- Cross: horizontal bar -->
+  <rect x="24" y="34" width="52" height="14" rx="4" fill="white"/>
+
+  <!-- Crown of 3 points at top of vertical bar -->
+  <polygon points="43,24 50,10 57,24" fill="url(#shine-grad)"/>
+  <circle cx="43" cy="24" r="4" fill="#4dd0e1"/>
+  <circle cx="50" cy="10" r="4" fill="#4dd0e1"/>
+  <circle cx="57" cy="24" r="4" fill="#4dd0e1"/>
+</svg>

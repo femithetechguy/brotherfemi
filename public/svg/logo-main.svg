@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" width="420" height="100" role="img" aria-label="Brother Femi logo">
+  <defs>
+    <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0288d1"/>
+      <stop offset="100%" stop-color="#17445e"/>
+    </linearGradient>
+    <linearGradient id="shine-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4dd0e1" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0288d1" stop-opacity="0.7"/>
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0288d1"/>
+      <stop offset="100%" stop-color="#17445e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Icon: outer circle -->
+  <circle cx="50" cy="50" r="46" fill="url(#brand-grad)"/>
+
+  <!-- Cross: vertical bar -->
+  <rect x="44" y="18" width="12" height="60" rx="3.5" fill="white"/>
+
+  <!-- Cross: horizontal bar -->
+  <rect x="26" y="35" width="48" height="12" rx="3.5" fill="white"/>
+
+  <!-- Crown -->
+  <polygon points="44,23 50,11 56,23" fill="url(#shine-grad)"/>
+  <circle cx="44" cy="23" r="3.5" fill="#4dd0e1"/>
+  <circle cx="50" cy="11" r="3.5" fill="#4dd0e1"/>
+  <circle cx="56" cy="23" r="3.5" fill="#4dd0e1"/>
+
+  <!-- "BROTHER FEMI" wordmark -->
+  <text
+    x="108"
+    y="52"
+    font-family="'Source Sans Pro', Georgia, serif"
+    font-size="30"
+    font-weight="700"
+    letter-spacing="3"
+    fill="url(#text-grad)"
+  >BROTHER FEMI</text>
+
+  <!-- "Bond Servant of Christ" subtitle -->
+  <text
+    x="110"
+    y="72"
+    font-family="'Source Sans Pro', Georgia, serif"
+    font-size="13"
+    font-weight="400"
+    letter-spacing="2"
+    fill="#0288d1"
+    opacity="0.8"
+  >Bond Servant of Christ</text>
+</svg>
