@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Header, Footer } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Brother Femi — Bond Servant of Christ",
@@ -22,7 +23,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
-      <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>{children}</body>
+      <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
