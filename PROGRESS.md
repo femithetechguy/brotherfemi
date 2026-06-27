@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 6: Blog migration — FTTG-51)
+Last updated: 2026-06-27 (Session 7: Visual redesign — FTTG-55)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -102,12 +102,32 @@ Last updated: 2026-06-27 (Session 6: Blog migration — FTTG-51)
 - [x] Build passes clean — all 4 posts generate as static HTML at build time
 - [x] Branch pushed to remote
 
+### Phase 2f — Visual Redesign (FTTG-55)
+- [x] Created branch `feature/FTTG-55-visual-redesign` off develop (merged FTTG-50 + FTTG-51 first)
+- [x] `app/globals.css` — Google Fonts import (Cinzel/Lora/Inter), 11-token `@theme` (navy, cobalt, gold, gold-lt, parchment, cream, sage, ink, muted, dark-text, dark-muted), base body/heading styles, utility classes (`.section-label`, `.gold-bar`, `.verse-underline`, `@keyframes growLine`), `prefers-reduced-motion` guard
+- [x] `Header.tsx` — 5-link nav (About/The Word/Blog/Hymns/Contact), transparent→frosted scroll effect (rgba + backdrop-blur), inline SVG social icons from `getBrotherFemi().contact`, font-ui labels, mobile dropdown with social row; IntersectionObserver logic untouched
+- [x] `Footer.tsx` — navy bg, logo-icon, 4 nav links, 6 inline SVG social icons, closing scripture italic Lora gold-lt, copyright font-ui
+- [x] `Worship.tsx` — full-viewport navy hero, inline cross watermark (opacity 0.04), flanked eyebrow, Cinzel clamp(2.8rem,6vw,4.5rem) h1, italic Lora scripture + verse-underline animation, dual CTA (gold fill / gold outline)
+- [x] `About.tsx` — two-column grid, Lora testimony, gold-bar, anchor verse blockquote, cobalt card with Instagram embed + name/title badge
+- [x] `Blog.tsx` — parchment bg, 4-card grid auto-fit, gold top-border cards, category/date/title/excerpt/read-more layout, hover translateY
+- [x] `TheWord.tsx` — navy bg, italic Lora clamp quote in gold-lt, verse-underline, sage citation, gold/12 top+bottom borders
+- [x] `Hymns.tsx` — two-column, left: section-label + Cinzel h2 + Lora verse, right: numbered rows with play buttons and gold/12 separators
+- [x] `NewLife.tsx` — visually segmented into 5 subsections: core beliefs (numbered parchment), five-finger prayer (cobalt cards), spiritual warfare (cobalt), other prayer children (parchment), altar call (navy CTA), children prayer (parchment 2x line-height)
+- [x] `Contact.tsx` — two-column navy layout, info+social icons left, styled cobalt form right (Inter labels, cobalt inputs, gold-focus, gold submit); Formspree logic 100% untouched
+- [x] `Mission.tsx` + `Vision.tsx` — cream bg, centered graceful placeholder in italic Lora muted
+- [x] `CoreValues.tsx` — parchment bg, cobalt card grid with gold left-border, Cinzel numbered index, Lora value text
+- [x] `HeartCry.tsx` — cream bg, centered large italic Lora gold psalm block
+- [x] `Mentors.tsx` — parchment bg, Cinzel name + Inter ministry label, white cards gold border
+- [x] Build passes clean after every step — zero TypeScript errors, all 10 pages static-generated
+- [x] No hardcoded content — all text from props; social links from JSON throughout
+- [x] Branch pushed to remote
+- [x] FTTG-52 closed — fully absorbed by FTTG-55
+
 ---
 
 ## ⚠️ Not Started
 
 ### Phase 2 — Remaining Issues
-- [ ] FTTG-52: Assets and styles — Tailwind migration from `css/styles.css`, SEO meta per page
 - [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
 
 ### Phase 3 — Content & Enhancements
@@ -131,6 +151,19 @@ Last updated: 2026-06-27 (Session 6: Blog migration — FTTG-51)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 7 — 2026-06-27
+**Completed:**
+- FTTG-50 + FTTG-51 merged into develop
+- FTTG-55: Full visual redesign across all 15 files — Cinzel/Lora/Inter type system, 11-token warm parchment palette, all section components restyled; build passed clean after every step; no logic changes
+
+**Key Decisions:**
+- FTTG-55 branch created after merging both FTTG-50 and FTTG-51 (intended order was FTTG-55 before FTTG-51, but no conflict since FTTG-55 is CSS-only — net result on master is identical)
+- FTTG-52 ("Assets and styles") closed — fully absorbed by FTTG-55 scope
+- Social icons implemented as inline SVGs throughout (no icon library dependency)
+- Header scroll effect uses inline `style` prop (rgba + backdrop-filter) rather than Tailwind arbitrary values — avoids Tailwind v4 static analysis edge cases
+- Hymns section has no hymn list in JSON — right column renders available text rows gracefully, with placeholder if empty
+- NewLife rendered as one `<section>` element containing 5 visually distinct subsections (avoids ID fragmentation, keeps IntersectionObserver anchor correct)
 
 ### Session 6 — 2026-06-27
 **Completed:**
