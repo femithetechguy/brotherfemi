@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 4: Layout & Navigation — FTTG-49)
+Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -60,6 +60,7 @@ Last updated: 2026-06-27 (Session 4: Layout & Navigation — FTTG-49)
 
 ### Phase 2 — Next.js Migration (open branches)
 - [ ] PR `feature/FTTG-49-layout-navigation` → `develop`
+- [ ] PR `feature/FTTG-50-home-page` → `develop`
 
 ### Phase 2b — Data Layer (FTTG-48) ✅ merged to develop
 - [x] `lib/data.ts` — typed helpers: `getBrotherFemi`, `getSections`, `getSectionById`, `getMentors`, `getMinistry`
@@ -77,10 +78,22 @@ Last updated: 2026-06-27 (Session 4: Layout & Navigation — FTTG-49)
 - [x] Build passes clean — no type errors
 - [x] Branch pushed to remote
 
+### Phase 2d — Home Page (FTTG-50)
+- [x] Created branch `feature/FTTG-50-home-page` off develop (merged FTTG-49 first)
+- [x] 12 section components in `components/sections/`: Worship, Mission, Vision, CoreValues, HeartCry, About, Mentors, TheWord, Blog, Hymns, NewLife, Contact
+- [x] Worship — hero full-height, navy bg, bible verse, bio, CTA
+- [x] NewLife — full content tree: core beliefs, spiritual warfare, 8 prayer children including five-finger prayer, altar call, children prayer
+- [x] Contact — `use client`, Formspree form with send/success/error state, social links
+- [x] `components/sections/index.ts` — barrel re-export
+- [x] `app/page.tsx` — renders all 12 sections with typed props from `lib/data.ts`
+- [x] Build passes clean — no TypeScript errors
+- [x] Branch pushed to remote
+
 ---
 
 ## ⚠️ Not Started
-- [ ] FTTG-50: Home page — migrate all 12 sections from static site
+
+### Phase 2 — Remaining Issues
 - [ ] FTTG-51: Blog — listing page and 4 individual post pages
 - [ ] FTTG-52: Assets and styles — Tailwind migration from `css/styles.css`, SEO meta per page
 - [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
@@ -106,6 +119,16 @@ Last updated: 2026-06-27 (Session 4: Layout & Navigation — FTTG-49)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 5 — 2026-06-27
+**Completed:**
+- FTTG-50: Built all 12 section components; Worship is the hero; NewLife renders full nested content tree; Contact has Formspree form with client-side state; all sections receive typed props from lib/data.ts
+
+**Key Decisions:**
+- Worship section doubles as the page hero (full-height navy, bible verse, bio, CTA) — no separate hero component needed
+- NewLife casts `section` to `NewLifeSection` interface locally to access nested fields not in base `Section` type
+- Contact is the only `use client` section component (form state); all others are server components
+- Blog renders card layout instead of accordion (no client state needed, better for static export)
 
 ### Session 4 — 2026-06-27
 **Completed:**
