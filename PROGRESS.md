@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 2: Housekeeping, Next.js scaffold, SVG logos)
+Last updated: 2026-06-27 (Session 3: Data layer — FTTG-48)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -61,13 +61,22 @@ Last updated: 2026-06-27 (Session 2: Housekeeping, Next.js scaffold, SVG logos)
 ### Phase 2 — Next.js Migration (open branches)
 - [ ] PR `feature/FTTG-47-nextjs-scaffold` → `develop`
 - [ ] PR `feature/FTTG-54-svg-logo-assets` → `develop`
+- [ ] PR `feature/FTTG-48-data-layer` → `develop`
+
+### Phase 2b — Data Layer (FTTG-48)
+- [x] Created branch `feature/FTTG-48-data-layer`
+- [x] `lib/data.ts` — typed helper functions: `getBrotherFemi`, `getSections`, `getSectionById`, `getMentors`, `getMinistry`
+- [x] `data/ministry.json` — fixed from empty file to valid `{}`
+- [x] `app/page.tsx` — smoke-test `console.log` for all 4 helpers (verified at build time: title, 12 sections, 30 mentors)
+- [x] `app/blog/[slug]/page.tsx` — refactored to use `getSections()`; params typed as `Promise<{slug}>` (Next.js 15+ API)
+- [x] Build passes clean — no type errors
+- [x] Branch pushed to remote
 
 ---
 
 ## ⚠️ Not Started
 
 ### Phase 2 — Remaining Migration Issues
-- [ ] FTTG-48: Data layer — confirm JSON imports work across all pages
 - [ ] FTTG-49: Layout and Navigation component (navbar with logo-main, mobile menu, footer)
 - [ ] FTTG-50: Home page — migrate all 12 sections from static site
 - [ ] FTTG-51: Blog — listing page and 4 individual post pages
@@ -95,6 +104,15 @@ Last updated: 2026-06-27 (Session 2: Housekeeping, Next.js scaffold, SVG logos)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 3 — 2026-06-27
+**Completed:**
+- FTTG-48: Built `lib/data.ts` data layer; fixed empty `ministry.json`; smoke-tested all helpers at build time; updated `blog/[slug]/page.tsx` to async params
+
+**Key Decisions:**
+- `as unknown as Type` cast used on JSON imports to avoid readonly/literal type conflicts with interfaces
+- `params` typed as `Promise<{slug}>` in blog slug page — aligns with Next.js 15+ async params API
+- `ministry.json` is intentionally empty (`{}`) for now — placeholder until ministry content is defined
 
 ### Session 2 — 2026-06-27
 **Completed:**
