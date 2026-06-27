@@ -108,9 +108,9 @@ export default function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 transition-colors duration-300"
+      className="sticky top-0 z-50 transition-all duration-300"
       style={{
-        background: scrolled ? "rgba(26,39,68,0.92)" : "transparent",
+        background: scrolled ? "rgba(26,39,68,0.92)" : "var(--color-navy)",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         borderBottom: "1px solid rgba(201,168,76,0.15)",
       }}
