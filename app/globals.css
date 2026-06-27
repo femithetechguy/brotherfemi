@@ -18,10 +18,15 @@
   --font-ui:      'Inter', sans-serif;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--color-ink);
   background: var(--color-parchment);
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {

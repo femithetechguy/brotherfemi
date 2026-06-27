@@ -25,7 +25,7 @@ export default function CoreValues({ section, coreValues }: Props) {
 
         <div
           className="grid gap-5"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(220px, 100%), 1fr))" }}
         >
           {coreValues.map((value, i) => (
             <div
