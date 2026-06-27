@@ -18,6 +18,19 @@ function buildNavSections(sections: Section[]) {
     .filter((s): s is Section => s !== undefined);
 }
 
+function getSocialColor(type: string): string {
+  switch (type.toLowerCase()) {
+    case "email":     return "#C9A84C";
+    case "instagram": return "#E1306C";
+    case "thread":
+    case "threads":   return "#FFFFFF";
+    case "tiktok":    return "#EE1D52";
+    case "youtube":   return "#FF0000";
+    case "facebook":  return "#1877F2";
+    default:          return "#C9A84C";
+  }
+}
+
 function SocialIcon({ type }: { type: string }) {
   const t = type.toLowerCase();
   if (t === "email") return (
@@ -146,7 +159,7 @@ export default function Header() {
               target={c.url.startsWith("mailto") ? undefined : "_blank"}
               rel="noopener noreferrer"
               aria-label={c.type}
-              style={{ color: "var(--color-gold)" }}
+              style={{ color: getSocialColor(c.type) }}
               className="opacity-70 hover:opacity-100 transition-opacity"
             >
               <SocialIcon type={c.type} />

@@ -10,6 +10,19 @@ interface Props {
 
 const SOCIAL_TYPES = ["Email", "Instagram", "Thread", "Tiktok", "Youtube", "Facebook"];
 
+function getSocialColor(type: string): string {
+  switch (type.toLowerCase()) {
+    case "email":     return "#C9A84C";
+    case "instagram": return "#E1306C";
+    case "thread":
+    case "threads":   return "#FFFFFF";
+    case "tiktok":    return "#EE1D52";
+    case "youtube":   return "#FF0000";
+    case "facebook":  return "#1877F2";
+    default:          return "#C9A84C";
+  }
+}
+
 function SocialIcon({ type, size = 24 }: { type: string; size?: number }) {
   const t = type.toLowerCase();
   if (t === "email") return (
@@ -142,7 +155,7 @@ export default function Contact({ section, contact }: Props) {
                 target={link.url.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={link.type}
-                style={{ color: "var(--color-gold)" }}
+                style={{ color: getSocialColor(link.type) }}
                 className="opacity-60 hover:opacity-100 transition-opacity"
               >
                 <SocialIcon type={link.type} size={24} />
