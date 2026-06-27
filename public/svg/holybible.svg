@@ -1,0 +1,39 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bible cover (left and right) -->
+    <rect x="100" y="120" width="300" height="400" rx="40" fill="#6d4c2b" stroke="#3e2a14" stroke-width="6"/>
+    <rect x="400" y="120" width="300" height="400" rx="40" fill="#6d4c2b" stroke="#3e2a14" stroke-width="6"/>
+    <!-- Pages (left and right) -->
+    <path d="M130 150 Q250 220 390 150 Q370 500 130 500 Z" fill="#f9f6ef" stroke="#d6cfc2" stroke-width="3"/>
+    <path d="M670 150 Q550 220 410 150 Q430 500 670 500 Z" fill="#f9f6ef" stroke="#d6cfc2" stroke-width="3"/>
+    <!-- Center crease -->
+    <rect x="390" y="170" width="20" height="340" rx="10" fill="#e8e2d6" stroke="#c2b59b" stroke-width="2"/>
+    <!-- Shadow for realism -->
+    <ellipse cx="400" cy="545" rx="300" ry="35" fill="#000" opacity="0.13"/>
+    <!-- Text on the right page -->
+    <text x="425" y="250" font-family="Georgia,serif" font-size="19" fill="#4b3a1a" letter-spacing="1">
+        <tspan x="425" dy="0">...for God so loved</tspan>
+        <tspan x="425" dy="24">the world that He gave</tspan>
+        <tspan x="425" dy="24">His only begotten Son,</tspan>
+        <tspan x="425" dy="24">that whoever believes</tspan>
+        <tspan x="425" dy="24">in Him should not perish</tspan>
+        <tspan x="425" dy="24">but have everlasting life.</tspan>
+    </text>
+    <!-- Decorative lines (simulate text lines) -->
+    <g stroke="#c2b59b" stroke-width="2">
+        <line x1="460" y1="400" x2="670" y2="415"/>
+        <line x1="460" y1="430" x2="670" y2="445"/>
+        <line x1="460" y1="460" x2="670" y2="475"/>
+    </g>
+    <!-- Bookmark ribbon -->
+    <polygon points="395,170 405,170 405,400 400,430 395,400" fill="#b71c1c"/>
+    <!-- HOLY BIBLE label at the base -->
+    <defs>
+      <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#FFD700"/>
+        <stop offset="100%" stop-color="#B8860B"/>
+      </linearGradient>
+    </defs>
+    <text x="400" y="560" text-anchor="middle" font-family="Georgia,serif" font-size="40" font-weight="bold" fill="url(#gold-gradient)" letter-spacing="8" >
+      HOLY BIBLE
+    </text>
+</svg>
