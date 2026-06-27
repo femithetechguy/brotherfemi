@@ -139,7 +139,7 @@ export default function Header() {
               className="transition-colors whitespace-nowrap"
               style={{
                 fontFamily: "var(--font-ui)",
-                fontSize: "0.75rem",
+                fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 color: activeId === s.id ? "var(--color-gold)" : "var(--color-dark-muted)",
@@ -204,7 +204,7 @@ export default function Header() {
               className="block px-6 py-3 border-b transition-colors"
               style={{
                 fontFamily: "var(--font-ui)",
-                fontSize: "0.8rem",
+                fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 borderColor: "rgba(255,255,255,0.05)",
