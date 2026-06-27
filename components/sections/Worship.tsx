@@ -1,11 +1,10 @@
-import type { Section, BrotherFemi } from "@/types";
+import type { Section } from "@/types";
 
 interface Props {
   section: Section;
-  brotherFemi: BrotherFemi;
 }
 
-export default function Worship({ section, brotherFemi }: Props) {
+export default function Worship({ section }: Props) {
   return (
     <section
       id={section.id}
@@ -55,7 +54,7 @@ export default function Worship({ section, brotherFemi }: Props) {
           }}
         >
           Welcome,{" "}
-          <span style={{ color: "var(--color-gold)" }}>Brother Femi</span>
+          <span style={{ color: "var(--color-gold)", whiteSpace: "nowrap" }}>Brother Femi</span>
         </h1>
 
         {/* Scripture quote */}
@@ -67,7 +66,7 @@ export default function Worship({ section, brotherFemi }: Props) {
                 fontFamily: "var(--font-body)",
                 fontStyle: "italic",
                 fontSize: "1.05rem",
-                color: "var(--color-dark-muted)",
+                color: "var(--color-gold-lt)",
                 lineHeight: 1.8,
               }}
             >
@@ -94,19 +93,6 @@ export default function Worship({ section, brotherFemi }: Props) {
             )}
           </div>
         )}
-
-        {/* Short bio */}
-        <p
-          className="mb-10 max-w-lg leading-relaxed"
-          style={{
-            fontFamily: "var(--font-body)",
-            fontSize: "0.95rem",
-            color: "var(--color-dark-muted)",
-            lineHeight: 1.8,
-          }}
-        >
-          {brotherFemi.details}
-        </p>
 
         {/* CTAs */}
         <div className="flex flex-wrap gap-4 justify-center">
@@ -146,6 +132,28 @@ export default function Worship({ section, brotherFemi }: Props) {
             Let&apos;s Connect
           </a>
         </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        aria-hidden="true"
+        style={{ animation: "scrollBob 2s ease-in-out infinite" }}
+      >
+        <span
+          style={{
+            fontFamily: "var(--font-ui)",
+            fontSize: "0.6rem",
+            letterSpacing: "0.25em",
+            textTransform: "uppercase",
+            color: "var(--color-dark-muted)",
+          }}
+        >
+          Scroll
+        </span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ color: "var(--color-gold)" }}>
+          <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </div>
     </section>
   );

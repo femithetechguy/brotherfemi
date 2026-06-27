@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <main>
-      <Worship    section={s("worship")}    brotherFemi={brotherFemi} />
+      <Worship    section={s("worship")} />
       <Mission    section={s("mission")} />
       <Vision     section={s("vision")} />
       <CoreValues section={s("core-values")} coreValues={brotherFemi.coreValues} />
