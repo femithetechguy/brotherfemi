@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: June 27, 2026 (Session 1: CLAUDE.md and PROGRESS.md created, Next.js migration planned)
+Last updated: 2026-06-27 (Session 2: Housekeeping, Next.js scaffold, SVG logos)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -19,35 +19,60 @@ Last updated: June 27, 2026 (Session 1: CLAUDE.md and PROGRESS.md created, Next.
 - [x] Anchor verse added (Acts 5:41-42 KJV)
 - [x] Five Finger Prayer added
 - [x] Children prayer section added
-- [x] Christie Bature and Throphilus Sunday added as mentors
+- [x] Christie Bature and Theophilus Sunday added as mentors
+
+### Phase 1 — Housekeeping & Migration Prep (FTTG-45, FTTG-46)
+- [x] Created `CLAUDE.md` with full project context and architecture (FTTG-45)
+- [x] Created `PROGRESS.md` (FTTG-45)
+- [x] Created `MIGRATION.md` with Next.js migration plan (FTTG-45)
+- [x] Deleted `app-remake` branch from remote (FTTG-46)
+- [x] Updated `.gitignore` for Next.js (`node_modules/`, `.next/`, `out/`, `next-env.d.ts`, `.env*`) (FTTG-46)
+- [x] Tagged `v1.0-static` and pushed to remote (FTTG-46)
+- [x] Linear GitHub integration connected (FTTG-45)
+
+### Phase 2 — Next.js Scaffold (FTTG-47)
+- [x] Created branch `feature/FTTG-47-nextjs-scaffold`
+- [x] Scaffolded Next.js 16.2.9 with TypeScript, Tailwind v4, App Router, `output: 'export'`
+- [x] `app/layout.tsx` — root layout with BrotherFemi metadata, SVG favicon refs, `suppressHydrationWarning`
+- [x] `app/page.tsx` — empty home placeholder
+- [x] `app/globals.css` — Tailwind v4 `@import "tailwindcss"` only
+- [x] `app/blog/page.tsx` — blog listing placeholder
+- [x] `app/blog/[slug]/page.tsx` — dynamic route with `generateStaticParams` (reads from `sections.json` blogtitles)
+- [x] `components/layout/`, `components/sections/`, `components/ui/` — scaffold dirs created
+- [x] `data/` — all 4 JSON files copied from `text/`
+- [x] `types/index.ts` — TypeScript interfaces for all JSON data shapes
+- [x] `public/img/`, `public/svg/` — assets moved from root
+- [x] Build passes cleanly (`npm run build`)
+- [x] Branch pushed to remote
+
+### Phase 2a — SVG Logo Assets (FTTG-54)
+- [x] Created branch `feature/FTTG-54-svg-logo-assets`
+- [x] `public/svg/logo-main.svg` — full wordmark (dark navy + gold, cross + BF + BROTHER FEMI + tagline + URL)
+- [x] `public/svg/logo-icon.svg` — standalone 100×100 icon (dark navy circle, gold cross + BF initials)
+- [x] `public/svg/favicon.svg` — 32×32 SVG favicon (dark navy + gold cross + BF)
+- [x] `app/favicon.ico` — replaced default Vercel favicon with project favicon
+- [x] `app/layout.tsx` metadata — SVG favicon + `.ico` fallback + webmanifest wired up
+- [x] Branch pushed to remote
 
 ---
 
 ## 🔁 In Progress
 
-### Phase 1 — Housekeeping & Migration Prep (FTTG-45)
-- [ ] Delete `app-remake` branch from remote: `git push origin --delete app-remake`
-- [ ] Update `.gitignore` for Next.js (`node_modules/`, `.next/`, `.env*`)
-- [ ] Tag current master as `v1.0-static`: `git tag v1.0-static && git push origin v1.0-static`
+### Phase 2 — Next.js Migration (open branches)
+- [ ] PR `feature/FTTG-47-nextjs-scaffold` → `develop`
+- [ ] PR `feature/FTTG-54-svg-logo-assets` → `develop`
 
 ---
 
 ## ⚠️ Not Started
 
-### Phase 2 — Next.js Migration
-- [ ] Create `nextjs-migration` branch from master
-- [ ] Scaffold Next.js 14 app with TypeScript and Tailwind CSS
-- [ ] Configure `next.config.js` with `output: 'export'` for Vercel static hosting
-- [ ] Create `app/layout.tsx` — root layout (nav, footer)
-- [ ] Create `app/page.tsx` — home page (maps all sections from `sections.json`)
-- [ ] Create `app/blog/page.tsx` — blog listing
-- [ ] Create `app/blog/[slug]/page.tsx` — individual blog posts (4 posts)
-- [ ] Build section components (one per section ID in sections.json)
-- [ ] Copy `text/*.json` → `data/` folder
-- [ ] Copy `img/` and `svg/` → `public/`
-- [ ] Migrate `css/styles.css` → Tailwind utilities
-- [ ] Test on Vercel preview before merging to master
-- [ ] PR `nextjs-migration` → develop → master
+### Phase 2 — Remaining Migration Issues
+- [ ] FTTG-48: Data layer — confirm JSON imports work across all pages
+- [ ] FTTG-49: Layout and Navigation component (navbar with logo-main, mobile menu, footer)
+- [ ] FTTG-50: Home page — migrate all 12 sections from static site
+- [ ] FTTG-51: Blog — listing page and 4 individual post pages
+- [ ] FTTG-52: Assets and styles — Tailwind migration from `css/styles.css`, SEO meta per page
+- [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
 
 ### Phase 3 — Content & Enhancements
 - [ ] Add mission content (currently "To be disclosed" in sections.json)
@@ -61,20 +86,26 @@ Last updated: June 27, 2026 (Session 1: CLAUDE.md and PROGRESS.md created, Next.
 
 ### Session 1 — 2026-06-27
 **Completed:**
-- Created `CLAUDE.md` with full project context, stack, architecture, section map, key files, git workflow
-- Created `PROGRESS.md`
+- Created `CLAUDE.md`, `PROGRESS.md`, `MIGRATION.md`
 - Reviewed static site — confirmed all content already JSON-driven
-- Identified `app-remake` as failed migration attempt (vite not installed, TypeScript errors)
-- Planned Next.js migration: App Router, TypeScript, Tailwind, JSON data carry-over, static export
+- Identified `app-remake` as failed migration attempt
+- Planned Next.js migration
 
 **Key Decisions:**
-- JSON files carry over as-is into `data/` folder — no CMS needed initially
-- Sanity CMS as optional future upgrade
+- JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
-- Start fresh on `nextjs-migration` branch — delete `app-remake`
+- Start fresh on feature branches off develop
 
-**Pending from this session:**
-- Delete `app-remake` from remote
-- Update `.gitignore`
-- Tag `v1.0-static`
-- Scaffold Next.js
+### Session 2 — 2026-06-27
+**Completed:**
+- FTTG-45: CLAUDE.md, PROGRESS.md, MIGRATION.md committed and pushed; Linear integration set up
+- FTTG-46: Deleted `app-remake` remote branch; updated `.gitignore`; tagged `v1.0-static`
+- FTTG-47: Scaffolded Next.js 16.2.9 (React 19, Tailwind v4) on `feature/FTTG-47-nextjs-scaffold`; build passes with static export
+- FTTG-54: Created SVG logo assets (dark navy `#1a2744` + gold `#c9a84c` brand); wired favicon metadata in layout.tsx
+
+**Key Decisions:**
+- `create-next-app@latest` resolves to Next.js 16.2.9 — proceeding with latest rather than pinning to 14
+- Tailwind v4 uses `@import "tailwindcss"` (not `@tailwind` directives)
+- `suppressHydrationWarning` added to `<html>` and `<body>` (Twitter/X browser extension injects attributes)
+- SVG favicon preferred over `.ico`; `.ico` kept as fallback in metadata
+- Brand colour scheme updated to dark navy + gold (`#1a2744`, `#c9a84c`) — used across all 3 logo SVGs
