@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 3: Data layer — FTTG-48)
+Last updated: 2026-06-27 (Session 4: Layout & Navigation — FTTG-49)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -59,25 +59,27 @@ Last updated: 2026-06-27 (Session 3: Data layer — FTTG-48)
 ## 🔁 In Progress
 
 ### Phase 2 — Next.js Migration (open branches)
-- [ ] PR `feature/FTTG-47-nextjs-scaffold` → `develop`
-- [ ] PR `feature/FTTG-54-svg-logo-assets` → `develop`
-- [ ] PR `feature/FTTG-48-data-layer` → `develop`
+- [ ] PR `feature/FTTG-49-layout-navigation` → `develop`
 
-### Phase 2b — Data Layer (FTTG-48)
-- [x] Created branch `feature/FTTG-48-data-layer`
-- [x] `lib/data.ts` — typed helper functions: `getBrotherFemi`, `getSections`, `getSectionById`, `getMentors`, `getMinistry`
+### Phase 2b — Data Layer (FTTG-48) ✅ merged to develop
+- [x] `lib/data.ts` — typed helpers: `getBrotherFemi`, `getSections`, `getSectionById`, `getMentors`, `getMinistry`
 - [x] `data/ministry.json` — fixed from empty file to valid `{}`
-- [x] `app/page.tsx` — smoke-test `console.log` for all 4 helpers (verified at build time: title, 12 sections, 30 mentors)
-- [x] `app/blog/[slug]/page.tsx` — refactored to use `getSections()`; params typed as `Promise<{slug}>` (Next.js 15+ API)
+- [x] `app/blog/[slug]/page.tsx` — uses `getSections()`; async params for Next.js 15+
+- [x] Merged into `develop`
+
+### Phase 2c — Layout & Navigation (FTTG-49)
+- [x] Created branch `feature/FTTG-49-layout-navigation` off develop
+- [x] `globals.css` — `@theme` adds `bg-navy`, `text-gold`, `text-cream` as Tailwind v4 utilities
+- [x] `components/layout/Header.tsx` — sticky navy header; desktop: `logo-main.svg` + anchor nav; mobile: `logo-icon.svg` + animated hamburger dropdown; `IntersectionObserver` gold active-link tracking
+- [x] `components/layout/Footer.tsx` — navy footer, `logo-icon.svg`, 5 social links from JSON, copyright
+- [x] `components/layout/index.ts` — barrel re-export
+- [x] `app/layout.tsx` — `<Header />` + `<Footer />` wrap all pages
 - [x] Build passes clean — no type errors
 - [x] Branch pushed to remote
 
 ---
 
 ## ⚠️ Not Started
-
-### Phase 2 — Remaining Migration Issues
-- [ ] FTTG-49: Layout and Navigation component (navbar with logo-main, mobile menu, footer)
 - [ ] FTTG-50: Home page — migrate all 12 sections from static site
 - [ ] FTTG-51: Blog — listing page and 4 individual post pages
 - [ ] FTTG-52: Assets and styles — Tailwind migration from `css/styles.css`, SEO meta per page
@@ -104,6 +106,16 @@ Last updated: 2026-06-27 (Session 3: Data layer — FTTG-48)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 4 — 2026-06-27
+**Completed:**
+- FTTG-49: Built Header and Footer; added brand colors to Tailwind @theme; wired into root layout; merged FTTG-48 into develop first
+
+**Key Decisions:**
+- Tailwind v4 `@theme` block used for brand colors (`--color-navy/gold/cream`) — avoids scattering hex codes across components
+- `IntersectionObserver` in Header uses `rootMargin: "-30% 0px -65% 0px"` to trigger active state when section is in the middle third of viewport
+- Footer is a server component (no state needed); Header is `use client` (needs menu + scroll state)
+- `getSections()` called directly in client component — safe because JSON is bundled at build time, not fetched
 
 ### Session 3 — 2026-06-27
 **Completed:**
