@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 7: Visual redesign — FTTG-55)
+Last updated: 2026-06-27 (Session 8: Visual redesign polish — FTTG-55)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -122,6 +122,14 @@ Last updated: 2026-06-27 (Session 7: Visual redesign — FTTG-55)
 - [x] No hardcoded content — all text from props; social links from JSON throughout
 - [x] Branch pushed to remote
 - [x] FTTG-52 closed — fully absorbed by FTTG-55
+- [x] Social icons: each platform uses its own brand color (Email gold, Instagram #E1306C, Threads white, TikTok #EE1D52, YouTube #FF0000, Facebook #1877F2)
+- [x] WCAG contrast audit — fixed all failures: section-label default cobalt (10.8:1), HeartCry moved to navy bg + gold-lt text (10.2:1), Worship eyebrow dark-muted (6.7:1), Blog dates/read-more/excerpts → cobalt/ink, all bible ref links on light bg → cobalt, muted body text on light bg → ink
+- [x] Header: always-navy base (no transparent-at-top), frosted blur only on scroll — fixes nav legibility
+- [x] Nav font size: 0.75rem → 0.85rem (desktop + mobile)
+- [x] Mobile dropdown: absolute positioned to overlay page (transparency + blur now visible), hover effect on links (`bg-white/10` + indent slide)
+- [x] Mobile nav open: page content blurs via `html.mobile-nav-open body > *:not(header)` CSS rule; class toggled via `useEffect`
+- [x] Horizontal overflow fixed: `overflow-x: clip` on `html` + `body` (clip doesn't break `position: sticky`); auto-fit grids use `minmax(min(Xpx, 100%), 1fr)` to prevent overflow on narrow viewports
+- [x] Hamburger lines: dark-muted → gold-lt (#E8D4A8, 10.2:1 on navy) — always visible regardless of scroll state
 
 ---
 
@@ -151,6 +159,16 @@ Last updated: 2026-06-27 (Session 7: Visual redesign — FTTG-55)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 8 — 2026-06-27
+**Completed:**
+- FTTG-55 polish: brand colors on social icons, full WCAG contrast audit + fixes, header always-navy, nav 0.85rem, mobile nav absolute overlay + hover effects, background blur when mobile nav open, horizontal overflow fix (overflow-x: clip), hamburger gold-lt
+
+**Key Decisions:**
+- `overflow-x: clip` preferred over `overflow-x: hidden` on `html` — `hidden` creates a new scroll container which breaks `position: sticky` on mobile; `clip` clips visually without creating a scroll container
+- Gold reserved for dark backgrounds only; cobalt used for interactive/accent text on light backgrounds (passes 10.8:1 vs gold's 2.1:1 on parchment)
+- HeartCry moved from cream bg to navy to enable gold-lt psalm quotes — design intent preserved at proper contrast
+- `html.mobile-nav-open` class approach chosen over portal/fixed overlay — no DOM outside the component tree, no React import changes needed
 
 ### Session 7 — 2026-06-27
 **Completed:**
