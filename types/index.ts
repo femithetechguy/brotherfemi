@@ -105,3 +105,12 @@ export interface MentorsData {
 export interface MinistryData {
   [key: string]: unknown;
 }
+
+// blog.json
+export interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  excerpt: string;
+  content: string;
+}
