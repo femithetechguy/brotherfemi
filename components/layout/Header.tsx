@@ -189,11 +189,17 @@ export default function Header() {
         </button>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile dropdown — absolutely positioned to overlay page content */}
       {menuOpen && (
         <nav
-          className="md:hidden border-t"
-          style={{ background: "rgba(26,39,68,0.88)", backdropFilter: "blur(16px)", borderColor: "rgba(201,168,76,0.15)" }}
+          className="md:hidden border-t absolute left-0 right-0"
+          style={{
+            top: "100%",
+            background: "rgba(26,39,68,0.82)",
+            backdropFilter: "blur(20px)",
+            WebkitBackdropFilter: "blur(20px)",
+            borderColor: "rgba(201,168,76,0.15)",
+          }}
           aria-label="Mobile navigation"
         >
           {navSections.map((s) => (
@@ -201,13 +207,13 @@ export default function Header() {
               key={s.id}
               href={`/#${s.id}`}
               onClick={closeMenu}
-              className="block px-6 py-3 border-b transition-colors"
+              className="block px-6 py-4 border-b transition-all hover:bg-white/10 hover:pl-8"
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                borderColor: "rgba(255,255,255,0.05)",
+                borderColor: "rgba(255,255,255,0.06)",
                 color: activeId === s.id ? "var(--color-gold)" : "var(--color-dark-muted)",
               }}
             >
