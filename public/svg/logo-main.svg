@@ -1,54 +1,25 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" width="420" height="100" role="img" aria-label="Brother Femi logo">
-  <defs>
-    <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0288d1"/>
-      <stop offset="100%" stop-color="#17445e"/>
-    </linearGradient>
-    <linearGradient id="shine-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#4dd0e1" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#0288d1" stop-opacity="0.7"/>
-    </linearGradient>
-    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#0288d1"/>
-      <stop offset="100%" stop-color="#17445e"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 100" role="img" aria-label="Brother Femi logo">
+  <!-- Icon circle -->
+  <circle cx="50" cy="50" r="44" fill="#1a2744"/>
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+  <!-- Cross -->
+  <rect x="46" y="16" width="8" height="40" rx="2" fill="#c9a84c"/>
+  <rect x="30" y="28" width="40" height="8" rx="2" fill="#c9a84c"/>
+  <!-- BF below cross -->
+  <text x="50" y="76" font-family="Georgia, 'Book Antiqua', serif" font-size="13" font-weight="bold" fill="#c9a84c" text-anchor="middle" letter-spacing="4" opacity="0.9">BF</text>
 
-  <!-- Icon: outer circle -->
-  <circle cx="50" cy="50" r="46" fill="url(#brand-grad)"/>
+  <!-- Vertical divider -->
+  <line x1="106" y1="14" x2="106" y2="86" stroke="#c9a84c" stroke-width="0.75" opacity="0.5"/>
 
-  <!-- Cross: vertical bar -->
-  <rect x="44" y="18" width="12" height="60" rx="3.5" fill="white"/>
+  <!-- BROTHER FEMI wordmark -->
+  <text x="120" y="46" font-family="Georgia, 'Book Antiqua', serif" font-size="22" font-weight="bold" fill="#c9a84c" letter-spacing="3">BROTHER FEMI</text>
 
-  <!-- Cross: horizontal bar -->
-  <rect x="26" y="35" width="48" height="12" rx="3.5" fill="white"/>
+  <!-- Separator -->
+  <line x1="120" y1="55" x2="372" y2="55" stroke="#c9a84c" stroke-width="0.5" opacity="0.4"/>
 
-  <!-- Crown -->
-  <polygon points="44,23 50,11 56,23" fill="url(#shine-grad)"/>
-  <circle cx="44" cy="23" r="3.5" fill="#4dd0e1"/>
-  <circle cx="50" cy="11" r="3.5" fill="#4dd0e1"/>
-  <circle cx="56" cy="23" r="3.5" fill="#4dd0e1"/>
+  <!-- Tagline -->
+  <text x="120" y="70" font-family="Georgia, 'Book Antiqua', serif" font-size="11" font-weight="bold" fill="#f5f0e8" letter-spacing="4">BOND SERVANT OF CHRIST</text>
 
-  <!-- "BROTHER FEMI" wordmark -->
-  <text
-    x="108"
-    y="52"
-    font-family="'Source Sans Pro', Georgia, serif"
-    font-size="30"
-    font-weight="700"
-    letter-spacing="3"
-    fill="url(#text-grad)"
-  >BROTHER FEMI</text>
-
-  <!-- "Bond Servant of Christ" subtitle -->
-  <text
-    x="110"
-    y="72"
-    font-family="'Source Sans Pro', Georgia, serif"
-    font-size="13"
-    font-weight="400"
-    letter-spacing="2"
-    fill="#0288d1"
-    opacity="0.8"
-  >Bond Servant of Christ</text>
+  <!-- URL -->
+  <text x="122" y="84" font-family="'Trebuchet MS', Arial, sans-serif" font-size="8" fill="#c9a84c" letter-spacing="3" opacity="0.8">· BROTHERFEMI.ORG ·</text>
 </svg>
