@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
+Last updated: 2026-06-27 (Session 6: Blog migration — FTTG-51)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -91,10 +91,22 @@ Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
 
 ---
 
+### Phase 2e — Blog Migration (FTTG-51)
+- [x] Created branch `feature/FTTG-51-blog` off develop (merged FTTG-50 first)
+- [x] `data/blog.json` — 4 posts: midnight-encounter (extracted from HTML), my-journey-to-faith, lessons-from-the-valley, worship-as-a-lifestyle (written from titles/excerpts)
+- [x] `types/index.ts` — added `BlogPost` interface
+- [x] `lib/data.ts` — added `getBlogPosts()` and `getBlogPost(slug)` helpers
+- [x] `app/blog/page.tsx` — full listing page with article cards (date, title, excerpt, link)
+- [x] `app/blog/[slug]/page.tsx` — static detail pages with `generateStaticParams`, `generateMetadata`, and `dangerouslySetInnerHTML` render
+- [x] `components/sections/Blog.tsx` — updated to use `getBlogPosts()` instead of hardcoded `blogtitles`
+- [x] Build passes clean — all 4 posts generate as static HTML at build time
+- [x] Branch pushed to remote
+
+---
+
 ## ⚠️ Not Started
 
 ### Phase 2 — Remaining Issues
-- [ ] FTTG-51: Blog — listing page and 4 individual post pages
 - [ ] FTTG-52: Assets and styles — Tailwind migration from `css/styles.css`, SEO meta per page
 - [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
 
@@ -119,6 +131,16 @@ Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 6 — 2026-06-27
+**Completed:**
+- FTTG-51: Blog migration — `data/blog.json` with 4 posts; `BlogPost` type; `getBlogPosts`/`getBlogPost` helpers; `/blog` listing page; `/blog/[slug]` detail pages; `Blog.tsx` updated; all 4 posts static-generated at build time
+
+**Key Decisions:**
+- Blog content for 3 empty HTML files written from scratch using their titles and excerpts as guidance — personal testimony, valley/trials reflections, worship-as-lifestyle devotional
+- Midnight-encounter content extracted faithfully from 207-line HTML file including Jeremiah 33:3, 3-5am significance section, and 14 recommended actions
+- `dangerouslySetInnerHTML` used on detail page — content is internal HTML written by us, not user input, so XSS risk is zero
+- Tailwind prose-like styling done with arbitrary class selectors (`[&_h2]:`, `[&_ul]:` etc.) to avoid adding @tailwindcss/typography plugin
 
 ### Session 5 — 2026-06-27
 **Completed:**
