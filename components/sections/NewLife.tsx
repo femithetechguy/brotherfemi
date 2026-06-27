@@ -27,26 +27,14 @@ interface NewLifeSection extends Section {
 
 interface Props { section: Section }
 
-function SubSection({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="mb-8">
-      <h3 className="text-lg font-bold text-gold mb-3 border-b border-gold/20 pb-1">
-        {title}
-      </h3>
-      {children}
-    </div>
-  );
-}
-
 function PrayerLines({ lines }: { lines: string[] }) {
   return (
-    <div className="space-y-1 text-navy/80 text-sm leading-relaxed">
+    <div
+      className="space-y-1"
+      style={{ fontFamily: "var(--font-body)", fontSize: "1.05rem", lineHeight: 2, color: "var(--color-ink)" }}
+    >
       {lines.map((line, i) =>
-        line === "" ? (
-          <div key={i} className="h-2" />
-        ) : (
-          <p key={i}>{line}</p>
-        )
+        line === "" ? <div key={i} className="h-3" /> : <p key={i}>{line}</p>
       )}
     </div>
   );
@@ -55,104 +43,192 @@ function PrayerLines({ lines }: { lines: string[] }) {
 export default function NewLife({ section }: Props) {
   const s = section as NewLifeSection;
   const text = Array.isArray(s.text) ? s.text : [];
+  const coreBeliefsRefs = s.core_beliefs_reference ?? [];
+  const spiritual = s.spiritualNewlife;
+  const children = s.children ?? [];
+
+  const fiveFingerChild = children.find((c) => c.id === "five-finger-prayer");
+  const altarCallChild = children.find((c) => c.id === "altar-call");
+  const childrenPrayerChild = children.find((c) => c.id === "children-prayer" || c.id === "childrens-prayer");
+  const otherChildren = children.filter(
+    (c) => c.id !== "five-finger-prayer" && c.id !== "altar-call" && c.id !== "children-prayer" && c.id !== "childrens-prayer"
+  );
 
   return (
-    <section id={section.id} className="py-16 px-4 bg-white">
-      <div className="max-w-3xl mx-auto">
-        <h2 className="text-2xl font-bold text-gold mb-4 tracking-widest uppercase text-center">
-          {section.title}
-        </h2>
+    <section id={section.id}>
+      {/* CORE BELIEFS — parchment bg */}
+      <div className="py-20 px-4" style={{ background: "var(--color-parchment)" }}>
+        <div className="max-w-4xl mx-auto">
+          {section.bibleVerse && (
+            <div className="mb-10 text-center">
+              <p className="section-label">New Life in Christ</p>
+              <h2 className="text-3xl leading-tight mb-6" style={{ color: "var(--color-ink)" }}>
+                {section.title}
+              </h2>
+              <blockquote className="max-w-xl mx-auto">
+                <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1.05rem", color: "var(--color-muted)", lineHeight: 1.8 }}>
+                  &ldquo;{section.bibleVerse}&rdquo;
+                </p>
+                {section.reference && (
+                  <a href={section.bible_url} target="_blank" rel="noopener noreferrer" className="inline-block mt-2"
+                    style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-gold)" }}>
+                    — {section.reference}
+                  </a>
+                )}
+              </blockquote>
+            </div>
+          )}
 
-        {/* Key verse */}
-        {section.bibleVerse && (
-          <blockquote className="border-l-4 border-gold pl-5 mb-8 italic text-navy/70">
-            <p className="mb-1">"{section.bibleVerse}"</p>
-            {section.reference && (
-              <a href={section.bible_url} target="_blank" rel="noopener noreferrer" className="text-gold text-sm not-italic">
-                — {section.reference}
-              </a>
-            )}
-          </blockquote>
-        )}
-
-        {/* Who is a Christian */}
-        <SubSection title="What is a Christian?">
-          <div className="space-y-2 text-navy/80 text-sm leading-relaxed">
+          {/* What is a Christian */}
+          <p className="section-label">What is a Christian?</p>
+          <ol className="space-y-3 mb-8">
             {text.map((line, i) => (
-              <p key={i}>{line}</p>
+              <li key={i} className="flex gap-4">
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", fontWeight: 700, color: "var(--color-gold)", minWidth: "1.8rem" }}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "0.97rem", color: "var(--color-ink)", lineHeight: 1.75 }}>{line}</span>
+              </li>
             ))}
-          </div>
-          {s.core_beliefs_reference && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {s.core_beliefs_reference.map((ref) => (
+          </ol>
+          {coreBeliefsRefs.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {coreBeliefsRefs.map((ref) => (
                 <a key={ref.reference} href={ref.bible_url} target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-gold border border-gold/30 rounded px-2 py-0.5 hover:bg-gold/10 transition-colors">
+                  className="transition-colors"
+                  style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", color: "var(--color-gold)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "2px", padding: "0.2rem 0.6rem" }}>
                   {ref.reference}
                 </a>
               ))}
             </div>
           )}
-        </SubSection>
+        </div>
+      </div>
 
-        {/* Spiritual Warfare */}
-        {s.spiritualNewlife && (
-          <SubSection title="Spiritual Warfare">
-            <div className="space-y-2 text-navy/80 text-sm leading-relaxed mb-3">
-              {s.spiritualNewlife.text.map((line, i) => <p key={i}>{line}</p>)}
+      {/* FIVE FINGER PRAYER — cobalt bg */}
+      {fiveFingerChild && (
+        <div className="py-20 px-4" style={{ background: "var(--color-cobalt)" }}>
+          <div className="max-w-5xl mx-auto">
+            <p className="section-label" style={{ color: "var(--color-sage)" }}>{fiveFingerChild.title}</p>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "var(--color-dark-muted)", lineHeight: 1.75, marginBottom: "2rem" }}>
+              {fiveFingerChild.text[0]}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {fiveFingerChild.fiveFingerPrayer?.map((f) => (
+                <div key={f.finger} className="rounded-sm p-5" style={{ background: "rgba(250,247,242,0.05)", border: "1px solid rgba(201,168,76,0.2)" }}>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: "0.8rem", fontWeight: 700, color: "var(--color-gold)", marginBottom: "0.4rem" }}>
+                    {f.finger}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-ui)", fontSize: "0.65rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--color-sage)", marginBottom: "0.6rem" }}>
+                    {f.meaning}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "var(--color-dark-text)", lineHeight: 1.6, marginBottom: "0.5rem" }}>
+                    {f.prayFor.join(", ")}
+                  </p>
+                  <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "0.8rem", color: "var(--color-dark-muted)", lineHeight: 1.5 }}>
+                    {f.prayerFocus}
+                  </p>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-wrap gap-2 mb-3">
-              {s.spiritualNewlife.spiritual_newlife_text_reference.map((ref) => (
+            {fiveFingerChild.scriptureReferences && (
+              <div className="mt-6 space-y-2">
+                {fiveFingerChild.scriptureReferences.map((sr) => (
+                  <p key={sr.reference} style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "0.82rem", color: "var(--color-dark-muted)" }}>
+                    {sr.reference} ({sr.version}): &ldquo;{sr.text}&rdquo;
+                  </p>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* SPIRITUAL WARFARE — cobalt bg */}
+      {spiritual && (
+        <div className="py-20 px-4" style={{ background: "var(--color-cobalt)", borderTop: "1px solid rgba(201,168,76,0.08)" }}>
+          <div className="max-w-4xl mx-auto">
+            <p className="section-label" style={{ color: "var(--color-sage)" }}>Spiritual Warfare</p>
+            <div className="space-y-4 mb-6">
+              {spiritual.text.map((line, i) => (
+                <p key={i} style={{ fontFamily: "var(--font-body)", fontSize: "0.97rem", color: "var(--color-dark-text)", lineHeight: 1.8 }}>{line}</p>
+              ))}
+            </div>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {spiritual.spiritual_newlife_text_reference.map((ref) => (
                 <a key={ref.reference} href={ref.bible_url} target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-gold border border-gold/30 rounded px-2 py-0.5 hover:bg-gold/10 transition-colors">
+                  style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", color: "var(--color-gold)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "2px", padding: "0.2rem 0.6rem" }}>
                   {ref.reference}
                 </a>
               ))}
             </div>
             <div className="flex flex-wrap gap-2">
-              {s.spiritualNewlife.bibleReferences.map((ref) => (
+              {spiritual.bibleReferences.map((ref) => (
                 <a key={ref.reference} href={ref.url} target="_blank" rel="noopener noreferrer"
-                  className="text-xs text-gold/70 border border-gold/20 rounded px-2 py-0.5 hover:bg-gold/10 transition-colors">
+                  style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", color: "var(--color-dark-muted)", border: "1px solid rgba(201,168,76,0.15)", borderRadius: "2px", padding: "0.2rem 0.6rem" }}>
                   {ref.reference}
                 </a>
               ))}
             </div>
-          </SubSection>
-        )}
+          </div>
+        </div>
+      )}
 
-        {/* Children sections */}
-        {s.children?.map((child) => {
-          if (child.id === "five-finger-prayer") {
-            return (
-              <SubSection key={child.id} title={child.title}>
-                <p className="text-navy/70 text-sm mb-4">{child.text[0]}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {child.fiveFingerPrayer?.map((f) => (
-                    <div key={f.finger} className="border border-gold/20 rounded-lg p-3 bg-cream/40">
-                      <p className="text-gold font-bold text-sm">{f.finger} — {f.meaning}</p>
-                      <p className="text-navy/60 text-xs mt-1">{f.prayFor.join(", ")}</p>
-                      <p className="text-navy/70 text-xs mt-1 italic">{f.prayerFocus}</p>
-                    </div>
-                  ))}
-                </div>
-                {child.scriptureReferences && (
-                  <div className="mt-3 space-y-1">
-                    {child.scriptureReferences.map((sr) => (
-                      <p key={sr.reference} className="text-xs text-navy/60 italic">
-                        {sr.reference} ({sr.version}): "{sr.text}"
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </SubSection>
-            );
-          }
-          return (
-            <SubSection key={child.id} title={child.title}>
-              <PrayerLines lines={child.text} />
-            </SubSection>
-          );
-        })}
-      </div>
+      {/* OTHER CHILDREN — parchment bg */}
+      {otherChildren.map((child) => (
+        <div key={child.id} className="py-16 px-4" style={{ background: "var(--color-parchment)", borderTop: "1px solid rgba(201,168,76,0.1)" }}>
+          <div className="max-w-3xl mx-auto">
+            <p className="section-label">{child.title}</p>
+            <PrayerLines lines={child.text} />
+          </div>
+        </div>
+      ))}
+
+      {/* ALTAR CALL — navy bg, centered */}
+      {altarCallChild && (
+        <div className="py-24 px-4 text-center" style={{ background: "var(--color-navy)" }}>
+          <div className="max-w-2xl mx-auto">
+            <p className="section-label" style={{ color: "var(--color-sage)" }}>{altarCallChild.title}</p>
+            <div className="space-y-4 mb-10">
+              {altarCallChild.text.map((line, i) => (
+                <p key={i} style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1.05rem", color: "var(--color-dark-text)", lineHeight: 1.85 }}>{line}</p>
+              ))}
+            </div>
+            <a
+              href="/#contact"
+              style={{
+                fontFamily: "var(--font-ui)",
+                fontSize: "0.78rem",
+                fontWeight: 500,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                background: "var(--color-gold)",
+                color: "var(--color-navy)",
+                borderRadius: "2px",
+                padding: "0.9rem 2.4rem",
+                display: "inline-block",
+              }}
+            >
+              Receive New Life
+            </a>
+          </div>
+        </div>
+      )}
+
+      {/* CHILDREN'S PRAYER — parchment bg */}
+      {childrenPrayerChild && (
+        <div className="py-20 px-4" style={{ background: "var(--color-parchment)", borderTop: "1px solid rgba(201,168,76,0.1)" }}>
+          <div className="max-w-3xl mx-auto">
+            <p className="section-label">For the Little Ones</p>
+            <h3 className="text-2xl mb-6" style={{ color: "var(--color-ink)" }}>{childrenPrayerChild.title}</h3>
+            <div className="space-y-1" style={{ fontFamily: "var(--font-body)", fontSize: "1.05rem", lineHeight: 2, color: "var(--color-ink)" }}>
+              {childrenPrayerChild.text.map((line, i) =>
+                line === "" ? <div key={i} className="h-3" /> : <p key={i}>{line}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,7 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-navy: #1a2744;
-  --color-gold: #c9a84c;
-  --color-cream: #f5f0e8;
+  --color-navy:      #1A2744;
+  --color-cobalt:    #1E3A5F;
+  --color-gold:      #C9A84C;
+  --color-gold-lt:   #E8D4A8;
+  --color-parchment: #FAF7F2;
+  --color-cream:     #F0EBE1;
+  --color-sage:      #5F8F82;
+  --color-ink:       #1C2B3A;
+  --color-muted:     #6B7A8D;
+  --color-dark-text: #EDE8DF;
+  --color-dark-muted:#9FB0C0;
+  --font-display: 'Cinzel', serif;
+  --font-body:    'Lora', serif;
+  --font-ui:      'Inter', sans-serif;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-parchment);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+}
+
+.section-label {
+  font-family: var(--font-ui);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-sage);
+  margin-bottom: 0.75rem;
+}
+
+.gold-bar {
+  display: block;
+  width: 48px;
+  height: 2px;
+  background: var(--color-gold);
+  margin: 1.25rem 0;
+}
+
+.verse-underline {
+  display: block;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  margin: 0.5rem auto 0;
+  animation: growLine 2s ease-out 0.8s forwards;
+}
+
+@keyframes growLine {
+  to { width: 80%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

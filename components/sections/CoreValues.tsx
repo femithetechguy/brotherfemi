@@ -7,19 +7,60 @@ interface Props {
 
 export default function CoreValues({ section, coreValues }: Props) {
   return (
-    <section id={section.id} className="py-16 px-4 bg-cream">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-2xl font-bold text-gold mb-10 tracking-widest uppercase">
-          {section.title}
-        </h2>
-        <ul className="inline-flex flex-col gap-4 text-left">
+    <section
+      id={section.id}
+      className="py-20 px-4"
+      style={{ background: "var(--color-parchment)" }}
+    >
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="section-label">{section.title}</p>
+          <h2
+            className="text-3xl leading-tight"
+            style={{ color: "var(--color-ink)" }}
+          >
+            What We Stand For
+          </h2>
+        </div>
+
+        <div
+          className="grid gap-5"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}
+        >
           {coreValues.map((value, i) => (
-            <li key={i} className="flex items-start gap-3 text-navy text-lg">
-              <span className="text-gold font-bold mt-0.5">✦</span>
-              <span>{value}</span>
-            </li>
+            <div
+              key={i}
+              className="px-6 py-5 rounded-sm"
+              style={{
+                background: "var(--color-cobalt)",
+                borderLeft: "3px solid var(--color-gold)",
+              }}
+            >
+              <p
+                className="mb-2"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "var(--color-gold)",
+                  letterSpacing: "0.05em",
+                }}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontSize: "1rem",
+                  color: "var(--color-dark-text)",
+                  lineHeight: 1.6,
+                }}
+              >
+                {value}
+              </p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );
