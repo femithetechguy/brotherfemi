@@ -193,7 +193,7 @@ export default function Header() {
       {menuOpen && (
         <nav
           className="md:hidden border-t"
-          style={{ background: "var(--color-navy)", borderColor: "rgba(201,168,76,0.15)" }}
+          style={{ background: "rgba(26,39,68,0.88)", backdropFilter: "blur(16px)", borderColor: "rgba(201,168,76,0.15)" }}
           aria-label="Mobile navigation"
         >
           {navSections.map((s) => (
