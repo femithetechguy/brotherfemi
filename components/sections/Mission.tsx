@@ -23,7 +23,7 @@ export default function Mission({ section }: Props) {
             fontFamily: "var(--font-body)",
             fontStyle: "italic",
             fontSize: "1.05rem",
-            color: "var(--color-muted)",
+            color: "var(--color-ink)",
             lineHeight: 1.85,
           }}
         >

@@ -10,13 +10,13 @@ export default function HeartCry({ section, heartCry }: Props) {
     <section
       id={section.id}
       className="py-20 px-4"
-      style={{ background: "var(--color-cream)" }}
+      style={{ background: "var(--color-navy)" }}
     >
       <div className="max-w-2xl mx-auto text-center">
-        <p className="section-label">{section.title}</p>
+        <p className="section-label" style={{ color: "var(--color-dark-muted)" }}>{section.title}</p>
         <h2
           className="text-3xl leading-tight mb-6"
-          style={{ color: "var(--color-ink)" }}
+          style={{ color: "var(--color-dark-text)" }}
         >
           A Cry from the Heart
         </h2>
@@ -30,7 +30,7 @@ export default function HeartCry({ section, heartCry }: Props) {
                 fontFamily: "var(--font-body)",
                 fontStyle: "italic",
                 fontSize: "1.1rem",
-                color: "var(--color-gold)",
+                color: "var(--color-gold-lt)",
                 lineHeight: 1.85,
                 padding: "0 1rem",
               }}

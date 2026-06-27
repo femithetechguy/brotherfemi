@@ -66,12 +66,12 @@ export default function NewLife({ section }: Props) {
                 {section.title}
               </h2>
               <blockquote className="max-w-xl mx-auto">
-                <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1.05rem", color: "var(--color-muted)", lineHeight: 1.8 }}>
+                <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1.05rem", color: "var(--color-ink)", lineHeight: 1.8 }}>
                   &ldquo;{section.bibleVerse}&rdquo;
                 </p>
                 {section.reference && (
                   <a href={section.bible_url} target="_blank" rel="noopener noreferrer" className="inline-block mt-2"
-                    style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-gold)" }}>
+                    style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-cobalt)" }}>
                     — {section.reference}
                   </a>
                 )}
@@ -84,7 +84,7 @@ export default function NewLife({ section }: Props) {
           <ol className="space-y-3 mb-8">
             {text.map((line, i) => (
               <li key={i} className="flex gap-4">
-                <span style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", fontWeight: 700, color: "var(--color-gold)", minWidth: "1.8rem" }}>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem", fontWeight: 700, color: "var(--color-cobalt)", minWidth: "1.8rem" }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span style={{ fontFamily: "var(--font-body)", fontSize: "0.97rem", color: "var(--color-ink)", lineHeight: 1.75 }}>{line}</span>
@@ -96,7 +96,7 @@ export default function NewLife({ section }: Props) {
               {coreBeliefsRefs.map((ref) => (
                 <a key={ref.reference} href={ref.bible_url} target="_blank" rel="noopener noreferrer"
                   className="transition-colors"
-                  style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", color: "var(--color-gold)", border: "1px solid rgba(201,168,76,0.3)", borderRadius: "2px", padding: "0.2rem 0.6rem" }}>
+                  style={{ fontFamily: "var(--font-ui)", fontSize: "0.7rem", color: "var(--color-cobalt)", border: "1px solid rgba(30,58,95,0.3)", borderRadius: "2px", padding: "0.2rem 0.6rem" }}>
                   {ref.reference}
                 </a>
               ))}

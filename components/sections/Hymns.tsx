@@ -30,7 +30,7 @@ export default function Hymns({ section }: Props) {
                   fontFamily: "var(--font-body)",
                   fontStyle: "italic",
                   fontSize: "1rem",
-                  color: "var(--color-muted)",
+                  color: "var(--color-ink)",
                   lineHeight: 1.8,
                 }}
               >
@@ -46,7 +46,7 @@ export default function Hymns({ section }: Props) {
                     fontSize: "0.7rem",
                     letterSpacing: "0.15em",
                     textTransform: "uppercase",
-                    color: "var(--color-gold)",
+                    color: "var(--color-cobalt)",
                   }}
                 >
                   — {section.reference}
@@ -61,7 +61,7 @@ export default function Hymns({ section }: Props) {
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.97rem",
-                color: "var(--color-muted)",
+                color: "var(--color-ink)",
                 lineHeight: 1.75,
               }}
             >
@@ -89,7 +89,7 @@ export default function Hymns({ section }: Props) {
                   style={{
                     fontFamily: "var(--font-display)",
                     fontSize: "0.75rem",
-                    color: "var(--color-gold)",
+                    color: "var(--color-cobalt)",
                     minWidth: "1.5rem",
                   }}
                 >
@@ -110,7 +110,7 @@ export default function Hymns({ section }: Props) {
                   className="flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-full transition-colors"
                   style={{
                     border: "1px solid var(--color-gold)",
-                    color: "var(--color-gold)",
+                    color: "var(--color-cobalt)",
                     background: "transparent",
                     fontSize: "0.75rem",
                   }}
@@ -124,7 +124,7 @@ export default function Hymns({ section }: Props) {
                 style={{
                   fontFamily: "var(--font-body)",
                   fontStyle: "italic",
-                  color: "var(--color-muted)",
+                  color: "var(--color-ink)",
                   fontSize: "0.9rem",
                 }}
               >

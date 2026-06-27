@@ -28,7 +28,7 @@ export default function Worship({ section, brotherFemi }: Props) {
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-3xl mx-auto py-24">
         {/* Eyebrow */}
         <div className="flex items-center gap-3 mb-6">
-          <span className="block h-px w-10" style={{ background: "var(--color-sage)" }} />
+          <span className="block h-px w-10" style={{ background: "var(--color-dark-muted)" }} />
           <span
             style={{
               fontFamily: "var(--font-ui)",
@@ -36,12 +36,12 @@ export default function Worship({ section, brotherFemi }: Props) {
               fontWeight: 500,
               letterSpacing: "0.25em",
               textTransform: "uppercase",
-              color: "var(--color-sage)",
+              color: "var(--color-dark-muted)",
             }}
           >
             Bond Servant of Christ
           </span>
-          <span className="block h-px w-10" style={{ background: "var(--color-sage)" }} />
+          <span className="block h-px w-10" style={{ background: "var(--color-dark-muted)" }} />
         </div>
 
         {/* Heading */}

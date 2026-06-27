@@ -49,7 +49,7 @@ export default function About({ section, brotherFemi }: Props) {
               style={{
                 fontFamily: "var(--font-body)",
                 fontStyle: "italic",
-                color: "var(--color-muted)",
+                color: "var(--color-ink)",
               }}
             >
               &ldquo;{anchor.bibleVerse}&rdquo;
@@ -63,7 +63,7 @@ export default function About({ section, brotherFemi }: Props) {
                 fontSize: "0.7rem",
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                color: "var(--color-gold)",
+                color: "var(--color-cobalt)",
               }}
             >
               — {anchor.reference}

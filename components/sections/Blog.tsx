@@ -65,7 +65,7 @@ export default function Blog({ section }: Props) {
                       fontWeight: 500,
                       letterSpacing: "0.18em",
                       textTransform: "uppercase",
-                      color: "var(--color-sage)",
+                      color: "var(--color-cobalt)",
                     }}
                   >
                     {post.date}
@@ -85,7 +85,7 @@ export default function Blog({ section }: Props) {
                     style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "0.9rem",
-                      color: "var(--color-muted)",
+                      color: "var(--color-ink)",
                       lineHeight: 1.7,
                     }}
                   >
@@ -96,7 +96,7 @@ export default function Blog({ section }: Props) {
                       fontFamily: "var(--font-ui)",
                       fontSize: "0.75rem",
                       fontWeight: 500,
-                      color: "var(--color-gold)",
+                      color: "var(--color-cobalt)",
                     }}
                   >
                     Read more →
