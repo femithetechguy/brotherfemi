@@ -1,0 +1,12 @@
+export { default as Worship } from "./Worship";
+export { default as Mission } from "./Mission";
+export { default as Vision } from "./Vision";
+export { default as CoreValues } from "./CoreValues";
+export { default as HeartCry } from "./HeartCry";
+export { default as About } from "./About";
+export { default as Mentors } from "./Mentors";
+export { default as TheWord } from "./TheWord";
+export { default as Blog } from "./Blog";
+export { default as Hymns } from "./Hymns";
+export { default as NewLife } from "./NewLife";
+export { default as Contact } from "./Contact";
