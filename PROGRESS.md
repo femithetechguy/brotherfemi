@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
+Last updated: 2026-06-27 (Session 8: Visual redesign polish — FTTG-55)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -91,11 +91,51 @@ Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
 
 ---
 
+### Phase 2e — Blog Migration (FTTG-51)
+- [x] Created branch `feature/FTTG-51-blog` off develop (merged FTTG-50 first)
+- [x] `data/blog.json` — 4 posts: midnight-encounter (extracted from HTML), my-journey-to-faith, lessons-from-the-valley, worship-as-a-lifestyle (written from titles/excerpts)
+- [x] `types/index.ts` — added `BlogPost` interface
+- [x] `lib/data.ts` — added `getBlogPosts()` and `getBlogPost(slug)` helpers
+- [x] `app/blog/page.tsx` — full listing page with article cards (date, title, excerpt, link)
+- [x] `app/blog/[slug]/page.tsx` — static detail pages with `generateStaticParams`, `generateMetadata`, and `dangerouslySetInnerHTML` render
+- [x] `components/sections/Blog.tsx` — updated to use `getBlogPosts()` instead of hardcoded `blogtitles`
+- [x] Build passes clean — all 4 posts generate as static HTML at build time
+- [x] Branch pushed to remote
+
+### Phase 2f — Visual Redesign (FTTG-55)
+- [x] Created branch `feature/FTTG-55-visual-redesign` off develop (merged FTTG-50 + FTTG-51 first)
+- [x] `app/globals.css` — Google Fonts import (Cinzel/Lora/Inter), 11-token `@theme` (navy, cobalt, gold, gold-lt, parchment, cream, sage, ink, muted, dark-text, dark-muted), base body/heading styles, utility classes (`.section-label`, `.gold-bar`, `.verse-underline`, `@keyframes growLine`), `prefers-reduced-motion` guard
+- [x] `Header.tsx` — 5-link nav (About/The Word/Blog/Hymns/Contact), transparent→frosted scroll effect (rgba + backdrop-blur), inline SVG social icons from `getBrotherFemi().contact`, font-ui labels, mobile dropdown with social row; IntersectionObserver logic untouched
+- [x] `Footer.tsx` — navy bg, logo-icon, 4 nav links, 6 inline SVG social icons, closing scripture italic Lora gold-lt, copyright font-ui
+- [x] `Worship.tsx` — full-viewport navy hero, inline cross watermark (opacity 0.04), flanked eyebrow, Cinzel clamp(2.8rem,6vw,4.5rem) h1, italic Lora scripture + verse-underline animation, dual CTA (gold fill / gold outline)
+- [x] `About.tsx` — two-column grid, Lora testimony, gold-bar, anchor verse blockquote, cobalt card with Instagram embed + name/title badge
+- [x] `Blog.tsx` — parchment bg, 4-card grid auto-fit, gold top-border cards, category/date/title/excerpt/read-more layout, hover translateY
+- [x] `TheWord.tsx` — navy bg, italic Lora clamp quote in gold-lt, verse-underline, sage citation, gold/12 top+bottom borders
+- [x] `Hymns.tsx` — two-column, left: section-label + Cinzel h2 + Lora verse, right: numbered rows with play buttons and gold/12 separators
+- [x] `NewLife.tsx` — visually segmented into 5 subsections: core beliefs (numbered parchment), five-finger prayer (cobalt cards), spiritual warfare (cobalt), other prayer children (parchment), altar call (navy CTA), children prayer (parchment 2x line-height)
+- [x] `Contact.tsx` — two-column navy layout, info+social icons left, styled cobalt form right (Inter labels, cobalt inputs, gold-focus, gold submit); Formspree logic 100% untouched
+- [x] `Mission.tsx` + `Vision.tsx` — cream bg, centered graceful placeholder in italic Lora muted
+- [x] `CoreValues.tsx` — parchment bg, cobalt card grid with gold left-border, Cinzel numbered index, Lora value text
+- [x] `HeartCry.tsx` — cream bg, centered large italic Lora gold psalm block
+- [x] `Mentors.tsx` — parchment bg, Cinzel name + Inter ministry label, white cards gold border
+- [x] Build passes clean after every step — zero TypeScript errors, all 10 pages static-generated
+- [x] No hardcoded content — all text from props; social links from JSON throughout
+- [x] Branch pushed to remote
+- [x] FTTG-52 closed — fully absorbed by FTTG-55
+- [x] Social icons: each platform uses its own brand color (Email gold, Instagram #E1306C, Threads white, TikTok #EE1D52, YouTube #FF0000, Facebook #1877F2)
+- [x] WCAG contrast audit — fixed all failures: section-label default cobalt (10.8:1), HeartCry moved to navy bg + gold-lt text (10.2:1), Worship eyebrow dark-muted (6.7:1), Blog dates/read-more/excerpts → cobalt/ink, all bible ref links on light bg → cobalt, muted body text on light bg → ink
+- [x] Header: always-navy base (no transparent-at-top), frosted blur only on scroll — fixes nav legibility
+- [x] Nav font size: 0.75rem → 0.85rem (desktop + mobile)
+- [x] Mobile dropdown: absolute positioned to overlay page (transparency + blur now visible), hover effect on links (`bg-white/10` + indent slide)
+- [x] Mobile nav open: page content blurs via `html.mobile-nav-open body > *:not(header)` CSS rule; class toggled via `useEffect`
+- [x] Horizontal overflow fixed: `overflow-x: clip` on `html` + `body` (clip doesn't break `position: sticky`); auto-fit grids use `minmax(min(Xpx, 100%), 1fr)` to prevent overflow on narrow viewports
+- [x] Hamburger lines: dark-muted → gold-lt (#E8D4A8, 10.2:1 on navy) — always visible regardless of scroll state
+
+---
+
 ## ⚠️ Not Started
 
 ### Phase 2 — Remaining Issues
-- [ ] FTTG-51: Blog — listing page and 4 individual post pages
-- [ ] FTTG-52: Assets and styles — Tailwind migration from `css/styles.css`, SEO meta per page
 - [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
 
 ### Phase 3 — Content & Enhancements
@@ -119,6 +159,39 @@ Last updated: 2026-06-27 (Session 5: Home page — FTTG-50)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 8 — 2026-06-27
+**Completed:**
+- FTTG-55 polish: brand colors on social icons, full WCAG contrast audit + fixes, header always-navy, nav 0.85rem, mobile nav absolute overlay + hover effects, background blur when mobile nav open, horizontal overflow fix (overflow-x: clip), hamburger gold-lt
+
+**Key Decisions:**
+- `overflow-x: clip` preferred over `overflow-x: hidden` on `html` — `hidden` creates a new scroll container which breaks `position: sticky` on mobile; `clip` clips visually without creating a scroll container
+- Gold reserved for dark backgrounds only; cobalt used for interactive/accent text on light backgrounds (passes 10.8:1 vs gold's 2.1:1 on parchment)
+- HeartCry moved from cream bg to navy to enable gold-lt psalm quotes — design intent preserved at proper contrast
+- `html.mobile-nav-open` class approach chosen over portal/fixed overlay — no DOM outside the component tree, no React import changes needed
+
+### Session 7 — 2026-06-27
+**Completed:**
+- FTTG-50 + FTTG-51 merged into develop
+- FTTG-55: Full visual redesign across all 15 files — Cinzel/Lora/Inter type system, 11-token warm parchment palette, all section components restyled; build passed clean after every step; no logic changes
+
+**Key Decisions:**
+- FTTG-55 branch created after merging both FTTG-50 and FTTG-51 (intended order was FTTG-55 before FTTG-51, but no conflict since FTTG-55 is CSS-only — net result on master is identical)
+- FTTG-52 ("Assets and styles") closed — fully absorbed by FTTG-55 scope
+- Social icons implemented as inline SVGs throughout (no icon library dependency)
+- Header scroll effect uses inline `style` prop (rgba + backdrop-filter) rather than Tailwind arbitrary values — avoids Tailwind v4 static analysis edge cases
+- Hymns section has no hymn list in JSON — right column renders available text rows gracefully, with placeholder if empty
+- NewLife rendered as one `<section>` element containing 5 visually distinct subsections (avoids ID fragmentation, keeps IntersectionObserver anchor correct)
+
+### Session 6 — 2026-06-27
+**Completed:**
+- FTTG-51: Blog migration — `data/blog.json` with 4 posts; `BlogPost` type; `getBlogPosts`/`getBlogPost` helpers; `/blog` listing page; `/blog/[slug]` detail pages; `Blog.tsx` updated; all 4 posts static-generated at build time
+
+**Key Decisions:**
+- Blog content for 3 empty HTML files written from scratch using their titles and excerpts as guidance — personal testimony, valley/trials reflections, worship-as-lifestyle devotional
+- Midnight-encounter content extracted faithfully from 207-line HTML file including Jeremiah 33:3, 3-5am significance section, and 14 recommended actions
+- `dangerouslySetInnerHTML` used on detail page — content is internal HTML written by us, not user input, so XSS risk is zero
+- Tailwind prose-like styling done with arbitrary class selectors (`[&_h2]:`, `[&_ul]:` etc.) to avoid adding @tailwindcss/typography plugin
 
 ### Session 5 — 2026-06-27
 **Completed:**

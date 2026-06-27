@@ -9,39 +9,139 @@ export default function Worship({ section, brotherFemi }: Props) {
   return (
     <section
       id={section.id}
-      className="min-h-screen bg-navy text-cream flex items-center py-20 px-4"
+      className="relative flex items-center justify-center min-h-screen overflow-hidden"
+      style={{ background: "var(--color-navy)" }}
     >
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-10">
-        <img
-          src="/svg/holybible.svg"
-          alt="Holy Bible"
-          className="w-64 md:w-80 flex-shrink-0 opacity-90"
-        />
-        <div className="flex-1 text-center md:text-left">
-          <h1 className="text-4xl md:text-5xl font-bold text-gold mb-4 leading-tight">
+      {/* Cross watermark */}
+      <svg
+        aria-hidden="true"
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: 0.04 }}
+        viewBox="0 0 400 400"
+        preserveAspectRatio="xMidYMid meet"
+      >
+        <circle cx="200" cy="200" r="200" fill="var(--color-gold)" />
+        <rect x="188" y="60" width="24" height="280" fill="var(--color-navy)" />
+        <rect x="100" y="148" width="200" height="24" fill="var(--color-navy)" />
+      </svg>
+
+      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-3xl mx-auto py-24">
+        {/* Eyebrow */}
+        <div className="flex items-center gap-3 mb-6">
+          <span className="block h-px w-10" style={{ background: "var(--color-dark-muted)" }} />
+          <span
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "0.7rem",
+              fontWeight: 500,
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              color: "var(--color-dark-muted)",
+            }}
+          >
             Bond Servant of Christ
-          </h1>
-          <p className="text-cream/80 text-lg leading-relaxed mb-6">
-            {brotherFemi.details}
-          </p>
-          {section.bibleVerse && (
-            <blockquote className="border-l-4 border-gold pl-4 mb-6 italic text-cream/70">
-              <p className="mb-1">"{section.bibleVerse}"</p>
-              {section.reference && (
-                <a
-                  href={section.bible_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gold text-sm not-italic"
-                >
-                  — {section.reference}
-                </a>
-              )}
-            </blockquote>
-          )}
+          </span>
+          <span className="block h-px w-10" style={{ background: "var(--color-dark-muted)" }} />
+        </div>
+
+        {/* Heading */}
+        <h1
+          className="mb-8 leading-tight"
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
+            fontWeight: 700,
+            color: "var(--color-dark-text)",
+          }}
+        >
+          Welcome,{" "}
+          <span style={{ color: "var(--color-gold)" }}>Brother Femi</span>
+        </h1>
+
+        {/* Scripture quote */}
+        {section.bibleVerse && (
+          <div className="mb-8 max-w-xl">
+            <p
+              className="leading-relaxed mb-3"
+              style={{
+                fontFamily: "var(--font-body)",
+                fontStyle: "italic",
+                fontSize: "1.05rem",
+                color: "var(--color-dark-muted)",
+                lineHeight: 1.8,
+              }}
+            >
+              &ldquo;{section.bibleVerse}&rdquo;
+            </p>
+            <span className="verse-underline" />
+            {section.reference && (
+              <a
+                href={section.bible_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block mt-3"
+                style={{
+                  fontFamily: "var(--font-ui)",
+                  fontSize: "0.7rem",
+                  fontWeight: 500,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "var(--color-gold)",
+                }}
+              >
+                — {section.reference}
+              </a>
+            )}
+          </div>
+        )}
+
+        {/* Short bio */}
+        <p
+          className="mb-10 max-w-lg leading-relaxed"
+          style={{
+            fontFamily: "var(--font-body)",
+            fontSize: "0.95rem",
+            color: "var(--color-dark-muted)",
+            lineHeight: 1.8,
+          }}
+        >
+          {brotherFemi.details}
+        </p>
+
+        {/* CTAs */}
+        <div className="flex flex-wrap gap-4 justify-center">
+          <a
+            href="/#about"
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "0.78rem",
+              fontWeight: 500,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              background: "var(--color-gold)",
+              color: "var(--color-navy)",
+              borderRadius: "2px",
+              padding: "0.9rem 2.2rem",
+              display: "inline-block",
+            }}
+          >
+            My Story
+          </a>
           <a
             href="/#contact"
-            className="inline-block bg-gold text-navy font-bold px-6 py-3 rounded-full text-sm tracking-wide hover:bg-gold/90 transition-colors"
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "0.78rem",
+              fontWeight: 500,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              background: "transparent",
+              color: "var(--color-dark-text)",
+              border: "1px solid var(--color-gold)",
+              borderRadius: "2px",
+              padding: "0.9rem 2.2rem",
+              display: "inline-block",
+            }}
           >
             Let&apos;s Connect
           </a>

@@ -7,19 +7,38 @@ interface Props {
 
 export default function HeartCry({ section, heartCry }: Props) {
   return (
-    <section id={section.id} className="py-16 px-4 bg-navy text-cream">
-      <div className="max-w-3xl mx-auto text-center">
-        <h2 className="text-2xl font-bold text-gold mb-10 tracking-widest uppercase">
-          {section.title}
+    <section
+      id={section.id}
+      className="py-20 px-4"
+      style={{ background: "var(--color-navy)" }}
+    >
+      <div className="max-w-2xl mx-auto text-center">
+        <p className="section-label" style={{ color: "var(--color-dark-muted)" }}>{section.title}</p>
+        <h2
+          className="text-3xl leading-tight mb-6"
+          style={{ color: "var(--color-dark-text)" }}
+        >
+          A Cry from the Heart
         </h2>
-        <ul className="inline-flex flex-col gap-5 text-left">
+        <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
+
+        <div className="space-y-8 mt-8">
           {heartCry.map((cry, i) => (
-            <li key={i} className="flex items-start gap-3 text-cream/90 text-base leading-relaxed">
-              <span className="text-gold font-bold mt-0.5 flex-shrink-0">♱</span>
-              <span>{cry}</span>
-            </li>
+            <p
+              key={i}
+              style={{
+                fontFamily: "var(--font-body)",
+                fontStyle: "italic",
+                fontSize: "1.1rem",
+                color: "var(--color-gold-lt)",
+                lineHeight: 1.85,
+                padding: "0 1rem",
+              }}
+            >
+              &ldquo;{cry}&rdquo;
+            </p>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );
