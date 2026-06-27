@@ -59,6 +59,13 @@ h1, h2, h3 {
   to { width: 80%; }
 }
 
+html.mobile-nav-open body > *:not(header) {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.2s ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

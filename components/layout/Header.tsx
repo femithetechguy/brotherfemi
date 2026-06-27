@@ -104,6 +104,11 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.documentElement.classList.toggle("mobile-nav-open", menuOpen);
+    return () => document.documentElement.classList.remove("mobile-nav-open");
+  }, [menuOpen]);
+
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
