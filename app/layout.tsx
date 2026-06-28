@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Header, Footer } from "@/components/layout";
+import MusicPlayer from "@/components/ui/MusicPlayer";
 
 export const metadata: Metadata = {
   title: "Brother Femi — Bond Servant of Christ",
@@ -27,6 +28,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <MusicPlayer />
       </body>
     </html>
   );

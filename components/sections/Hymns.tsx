@@ -132,6 +132,31 @@ export default function Hymns({ section }: Props) {
               </div>
             )}
           </div>
+
+          {/* Music player hint */}
+          <p
+            className="mt-4"
+            style={{
+              fontFamily: "var(--font-body)",
+              fontStyle: "italic",
+              fontSize: "0.88rem",
+              color: "var(--color-muted)",
+            }}
+          >
+            Now playing — a playlist of worship hymns
+          </p>
+          <p
+            className="mt-1"
+            style={{
+              fontFamily: "var(--font-ui)",
+              fontSize: "0.65rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "var(--color-sage)",
+            }}
+          >
+            Controls appear bottom-right ↘
+          </p>
         </div>
       </div>
     </section>
