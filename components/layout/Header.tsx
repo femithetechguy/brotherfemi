@@ -72,7 +72,13 @@ export default function Header() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            setActiveId(id);
+            // Keep URL in sync with visible section — no hash, no navigation
+            const path = id === "worship" ? "/" : `/${id}`;
+            window.history.replaceState(null, "", path);
+          }
         });
       },
       { rootMargin: "-30% 0px -65% 0px" }
@@ -128,7 +134,7 @@ export default function Header() {
           {navSections.map((s) => (
             <a
               key={s.id}
-              href={`/#${s.id}`}
+              href={`/${s.id}`}
               className={`nav-link whitespace-nowrap flex items-center gap-1.5${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
@@ -216,7 +222,7 @@ export default function Header() {
           {navSections.map((s) => (
             <a
               key={s.id}
-              href={`/#${s.id}`}
+              href={`/${s.id}`}
               onClick={closeMenu}
               className={`nav-link-mobile block px-6 py-4 border-b hover:bg-white/10 hover:pl-8${activeId === s.id ? " is-active" : ""}`}
               style={{
