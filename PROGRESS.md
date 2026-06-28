@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 8: Visual redesign polish — FTTG-55)
+Last updated: 2026-06-27 (Session 9: Hero optimization, social icon system, UI polish — FTTG-56, FTTG-57, FTTG-58)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -102,6 +102,30 @@ Last updated: 2026-06-27 (Session 8: Visual redesign polish — FTTG-55)
 - [x] Build passes clean — all 4 posts generate as static HTML at build time
 - [x] Branch pushed to remote
 
+### Phase 2g — Vercel Deploy Fix (FTTG-56)
+- [x] Created `vercel.json` with `outputDirectory: "out"` — fixes "No Output Directory named dist" build error
+- [x] Vercel now correctly serves Next.js static export from `out/`
+
+### Phase 2h — Hero Section Optimization (FTTG-57)
+- [x] Removed bio paragraph from hero (content lives in About section — cleaner hero)
+- [x] Elevated scripture verse from `dark-muted` to `gold-lt` (10.4:1 contrast on navy)
+- [x] Replaced "Welcome, Brother Femi" heading with "Brother Femi" in gold — previous copy read as addressing him, not welcoming visitors
+- [x] Added `white-space: nowrap` to prevent heading orphan on mobile
+- [x] Added animated scroll indicator (bobbing chevron + "SCROLL" label) at bottom of hero
+- [x] Removed `brotherFemi` prop from Worship — no longer needed; `page.tsx` updated accordingly
+
+### Phase 2i — General UI Polish (FTTG-58)
+- [x] Social icon hover animation: lift (translateY -3px) + scale (1.2×) + brand-color `drop-shadow` glow — `.social-icon` CSS class in globals.css
+- [x] Applied `.social-icon` to all 3 locations: Header, Footer, Contact (Contact was missed in initial pass)
+- [x] Extracted shared `components/ui/SocialIcon.tsx` — `SocialIcon`, `getSocialColor`, `SOCIAL_ORDER_NAV`, `SOCIAL_ORDER_CONTACT` — eliminates duplication across 3 files
+- [x] Email removed from Header and Footer (contact form handles direct reach; email redundant in nav)
+- [x] Email kept in Contact section, moved to last position
+- [x] Social icon order: Instagram → YouTube → TikTok → Threads → Facebook (reach order; Facebook last)
+- [x] Icon sizes standardized: 20px in Header/Footer, 24px in Contact
+- [x] Mobile nav: social icons now use brand colors (were using flat gold)
+- [x] Logo click: scrolls smoothly to top when already on home page (`onClick` + `window.scrollTo`)
+- [x] Fixed React 19 `allowTransparency` warning on Instagram iframe — removed deprecated prop
+
 ### Phase 2f — Visual Redesign (FTTG-55)
 - [x] Created branch `feature/FTTG-55-visual-redesign` off develop (merged FTTG-50 + FTTG-51 first)
 - [x] `app/globals.css` — Google Fonts import (Cinzel/Lora/Inter), 11-token `@theme` (navy, cobalt, gold, gold-lt, parchment, cream, sage, ink, muted, dark-text, dark-muted), base body/heading styles, utility classes (`.section-label`, `.gold-bar`, `.verse-underline`, `@keyframes growLine`), `prefers-reduced-motion` guard
@@ -159,6 +183,20 @@ Last updated: 2026-06-27 (Session 8: Visual redesign polish — FTTG-55)
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 9 — 2026-06-27
+**Completed:**
+- FTTG-56: `vercel.json` created to fix Vercel deploy (outputDirectory: out)
+- FTTG-57: Hero section redesigned — bio removed, verse to gold-lt, heading changed from "Welcome, Brother Femi" → "Brother Femi" in gold, scroll indicator added
+- FTTG-58: Social icon system overhauled — shared `components/ui/SocialIcon.tsx`, hover animation on all 3 locations, email removed from nav, consistent order and sizes, logo scroll-to-top fixed, React 19 iframe warning resolved
+
+**Key Decisions:**
+- "Welcome, Brother Femi" reads as addressing him, not welcoming visitors — dropped "Welcome," entirely; name alone in gold is more impactful and unambiguous
+- Email excluded from Header/Footer social row — contact form is the intended channel; email in nav prime real estate signals wrong priority
+- Facebook moved to last in social order — Instagram/YouTube/TikTok/Threads carry more ministry reach
+- Shared `SocialIcon` component extracted to `components/ui/` — was duplicated identically in 3 files; single source of truth for icons, colors, and order constants
+- `drop-shadow(0 0 8px currentColor)` used for hover glow — inherits the icon's brand color automatically, no per-icon CSS needed
+- Logo `onClick` scroll-to-top handles the "already on home page" case; Next.js `<Link href="/">` handles cross-page navigation naturally
 
 ### Session 8 — 2026-06-27
 **Completed:**
