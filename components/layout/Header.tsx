@@ -1,12 +1,44 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, type ReactElement } from "react";
 import Link from "next/link";
 import { getSections, getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
 import type { Section } from "@/types";
 
-const NAV_IDS = ["about", "the-word", "blog", "hymns", "contact"];
+const NAV_IDS = ["about", "the-word", "blog", "newlife", "contact"];
+
+const NAV_ICONS: Record<string, ReactElement> = {
+  about: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <line x1="4" y1="5.5" x2="12" y2="5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  "the-word": (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M8 13V4.5C7 3.5 5.5 3 4 3H2v9h2c1.5 0 3 .5 4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M8 13V4.5c1-1 2.5-1.5 4-1.5h2v9h-2c-1.5 0-3 .5-4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  ),
+  blog: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M11 2l3 3-7 7H4v-3l7-7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <line x1="2" y1="14" x2="14" y2="14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+  newlife: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M8 14C8 14 3 10.5 3 6.5C3 4 5 2 8 2C8 2 7 5 9 7C9 7 10 5.5 9.5 3.5C11.5 5 13 7 13 9C13 11.5 11 14 8 14Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+    </svg>
+  ),
+  contact: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <rect x="2" y="4" width="12" height="9" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M2 5.5l6 4.5 6-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+};
 
 const ALL_OBSERVE_IDS = [
   "worship", "mission", "vision", "core-values", "heart-cry",
@@ -97,7 +129,7 @@ export default function Header() {
             <a
               key={s.id}
               href={`/#${s.id}`}
-              className={`nav-link whitespace-nowrap${activeId === s.id ? " is-active" : ""}`}
+              className={`nav-link whitespace-nowrap flex items-center gap-1.5${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.85rem",
@@ -105,6 +137,7 @@ export default function Header() {
                 textTransform: "uppercase",
               }}
             >
+              {NAV_ICONS[s.id]}
               {s.menu}
             </a>
           ))}
