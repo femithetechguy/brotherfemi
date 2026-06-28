@@ -74,7 +74,11 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 gap-6">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0">
+        <Link
+          href="/"
+          className="flex-shrink-0"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <img
             src="/svg/logo-main.svg"
             alt="Brother Femi"
