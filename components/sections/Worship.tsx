@@ -25,33 +25,34 @@ export default function Worship({ section }: Props) {
         <rect x="100" y="148" width="200" height="24" fill="var(--color-navy)" />
       </svg>
 
-      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-3xl mx-auto py-24">
+      <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto py-24">
         {/* Eyebrow */}
-        <div className="flex items-center gap-3 mb-6">
-          <span className="block h-px w-10" style={{ background: "var(--color-dark-muted)" }} />
+        <div className="flex items-center gap-3 mb-8">
+          <span className="block h-px w-12" style={{ background: "var(--color-dark-muted)" }} />
           <span
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "0.7rem",
               fontWeight: 500,
-              letterSpacing: "0.25em",
+              letterSpacing: "0.28em",
               textTransform: "uppercase",
               color: "var(--color-dark-muted)",
             }}
           >
             Bond Servant of Christ
           </span>
-          <span className="block h-px w-10" style={{ background: "var(--color-dark-muted)" }} />
+          <span className="block h-px w-12" style={{ background: "var(--color-dark-muted)" }} />
         </div>
 
         {/* Heading */}
         <h1
-          className="mb-8 leading-tight"
+          className="mb-8 leading-none"
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
+            fontSize: "clamp(3.2rem, 8vw, 5.5rem)",
             fontWeight: 700,
             color: "var(--color-gold)",
+            whiteSpace: "nowrap",
           }}
         >
           Brother Femi
@@ -59,15 +60,15 @@ export default function Worship({ section }: Props) {
 
         {/* Scripture quote */}
         {section.bibleVerse && (
-          <div className="mb-8 max-w-xl">
+          <div className="mb-10 max-w-2xl">
             <p
               className="leading-relaxed mb-3"
               style={{
                 fontFamily: "var(--font-body)",
                 fontStyle: "italic",
-                fontSize: "1.05rem",
+                fontSize: "clamp(1.05rem, 2.2vw, 1.3rem)",
                 color: "var(--color-gold-lt)",
-                lineHeight: 1.8,
+                lineHeight: 1.85,
               }}
             >
               &ldquo;{section.bibleVerse}&rdquo;
@@ -81,9 +82,9 @@ export default function Worship({ section }: Props) {
                 className="inline-block mt-3"
                 style={{
                   fontFamily: "var(--font-ui)",
-                  fontSize: "0.7rem",
+                  fontSize: "0.72rem",
                   fontWeight: 500,
-                  letterSpacing: "0.2em",
+                  letterSpacing: "0.22em",
                   textTransform: "uppercase",
                   color: "var(--color-gold)",
                 }}
@@ -97,7 +98,7 @@ export default function Worship({ section }: Props) {
         {/* CTAs */}
         <div className="flex flex-wrap gap-4 justify-center">
           <a
-            href="/#about"
+            href="/about"
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "0.78rem",
@@ -107,14 +108,14 @@ export default function Worship({ section }: Props) {
               background: "var(--color-gold)",
               color: "var(--color-navy)",
               borderRadius: "2px",
-              padding: "0.9rem 2.2rem",
+              padding: "0.9rem 2.4rem",
               display: "inline-block",
             }}
           >
             My Story
           </a>
           <a
-            href="/#contact"
+            href="/contact"
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "0.78rem",
@@ -125,7 +126,7 @@ export default function Worship({ section }: Props) {
               color: "var(--color-dark-text)",
               border: "1px solid var(--color-gold)",
               borderRadius: "2px",
-              padding: "0.9rem 2.2rem",
+              padding: "0.9rem 2.4rem",
               display: "inline-block",
             }}
           >

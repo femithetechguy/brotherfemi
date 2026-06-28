@@ -102,6 +102,15 @@ export default function Header() {
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault();
+      setMenuOpen(false);
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    },
+    []
+  );
+
   return (
     <header
       className="sticky top-0 z-50 transition-all duration-300"
@@ -116,7 +125,7 @@ export default function Header() {
         <Link
           href="/"
           className="flex-shrink-0"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
         >
           <img
             src="/svg/logo-main.svg"
@@ -136,6 +145,7 @@ export default function Header() {
             <a
               key={s.id}
               href={`/${s.id}`}
+              onClick={(e) => handleNavClick(e, s.id)}
               className={`nav-link whitespace-nowrap flex items-center gap-1.5${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
@@ -238,7 +248,7 @@ export default function Header() {
             <a
               key={s.id}
               href={`/${s.id}`}
-              onClick={closeMenu}
+              onClick={(e) => handleNavClick(e, s.id)}
               className={`nav-link-mobile block px-6 py-4 border-b hover:bg-white/10 hover:pl-8${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
@@ -259,8 +269,8 @@ export default function Header() {
                 target={c.url.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={c.type}
-                style={{ color: getSocialColor(c.type) }}
-                className="social-icon"
+                style={{ "--brand": getSocialColor(c.type) } as React.CSSProperties}
+                className="social-icon social-icon--header"
               >
                 <SocialIcon type={c.type} />
               </a>
