@@ -34,6 +34,7 @@ export default function MusicPlayer() {
   const [headerSlot, setHeaderSlot]         = useState<Element | null>(null);
   const [activePlaylist, setActivePlaylist] = useState(0);
   const [showPlaylists, setShowPlaylists]   = useState(false);
+  const [trackTitle, setTrackTitle]         = useState("");
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -119,6 +120,8 @@ export default function MusicPlayer() {
           if (!window.YT) return;
           if (e.data === window.YT.PlayerState.PLAYING) {
             setState("playing");
+            const title = e.target.getVideoData()?.title ?? "";
+            setTrackTitle(title);
             const idx    = e.target.getPlaylistIndex();
             const seekTo = TRACK_STARTS[idx];
             if (seekTo !== undefined && e.target.getCurrentTime() < 3) {
@@ -161,6 +164,7 @@ export default function MusicPlayer() {
     setActivePlaylist(index);
     setReady(false);
     setState("idle");
+    setTrackTitle("");
 
     if (playerRef.current) {
       playerRef.current.destroy();
@@ -190,6 +194,15 @@ export default function MusicPlayer() {
 
   const player = (
     <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+      {/* Scrolling track title — visible when unmuted, hides when playlist picker is open */}
+      {!muted && trackTitle && !showPlaylists && (
+        <div className="mp-track-strip">
+          <span className="mp-track-text">
+            {trackTitle}&nbsp;&nbsp;·&nbsp;&nbsp;{trackTitle}
+          </span>
+        </div>
+      )}
+
       {/* Playlist switcher dropdown */}
       <div className={`mp-playlist-row${showPlaylists ? " mp-playlist-visible" : ""}`}>
         {PLAYLISTS.map((pl, i) => (
