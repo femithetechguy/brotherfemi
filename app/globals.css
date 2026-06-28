@@ -191,7 +191,7 @@ html.mobile-nav-open body > *:not(header) {
 .mp-track-strip {
   position: fixed;
   top: 64px; /* header h-16 */
-  right: 8px;
+  right: max(1rem, calc((100vw - 80rem) / 2));
   overflow: hidden;
   white-space: nowrap;
   background: rgba(26,39,68,0.92);
@@ -229,7 +229,7 @@ html.mobile-nav-open body > *:not(header) {
 .mp-playlist-row {
   position: fixed;
   top: 64px;
-  right: 8px;
+  right: max(1rem, calc((100vw - 80rem) / 2));
   display: flex;
   align-items: center;
   gap: 6px;
