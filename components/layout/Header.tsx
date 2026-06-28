@@ -4,9 +4,10 @@ import { useEffect, useState, useCallback, type ReactElement } from "react";
 import Link from "next/link";
 import { getSections, getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
+import SearchButton from "@/components/ui/SearchButton";
 import type { Section } from "@/types";
 
-const NAV_IDS = ["about", "the-word", "blog", "newlife", "contact"];
+const NAV_IDS = ["about", "word", "blog", "newlife", "contact"];
 
 const NAV_ICONS: Record<string, ReactElement> = {
   about: (
@@ -15,7 +16,7 @@ const NAV_ICONS: Record<string, ReactElement> = {
       <line x1="4" y1="5.5" x2="12" y2="5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   ),
-  "the-word": (
+  word: (
     <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
       <path d="M8 13V4.5C7 3.5 5.5 3 4 3H2v9h2c1.5 0 3 .5 4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
       <path d="M8 13V4.5c1-1 2.5-1.5 4-1.5h2v9h-2c-1.5 0-3 .5-4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -42,7 +43,7 @@ const NAV_ICONS: Record<string, ReactElement> = {
 
 const ALL_OBSERVE_IDS = [
   "worship", "mission", "vision", "core-values", "heart-cry",
-  "about", "mentors", "the-word", "blog", "hymns", "newlife", "contact",
+  "about", "mentors", "word", "blog", "hymns", "newlife", "contact",
 ];
 
 function buildNavSections(sections: Section[]) {
@@ -72,7 +73,13 @@ export default function Header() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            setActiveId(id);
+            // Keep URL in sync with visible section — no hash, no navigation
+            const path = id === "worship" ? "/" : `/${id}`;
+            window.history.replaceState(null, "", path);
+          }
         });
       },
       { rootMargin: "-30% 0px -65% 0px" }
@@ -128,7 +135,7 @@ export default function Header() {
           {navSections.map((s) => (
             <a
               key={s.id}
-              href={`/#${s.id}`}
+              href={`/${s.id}`}
               className={`nav-link whitespace-nowrap flex items-center gap-1.5${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
@@ -170,6 +177,17 @@ export default function Header() {
           />
           {/* MusicPlayer portals inline content here on desktop */}
           <div id="music-player-header-slot" style={{ display: "flex", alignItems: "center" }} />
+          <span
+            style={{
+              display: "block",
+              width: 1,
+              height: 20,
+              background: "rgba(201,168,76,0.2)",
+              margin: "0 4px",
+              flexShrink: 0,
+            }}
+          />
+          <SearchButton />
         </div>
 
         {/* Music player slot — mobile center */}
@@ -178,13 +196,15 @@ export default function Header() {
           className="md:hidden flex-1 flex justify-center items-center"
         />
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden p-2 flex flex-col justify-center gap-1.5 flex-shrink-0"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
+        {/* Mobile search + hamburger */}
+        <div className="md:hidden flex items-center gap-1 flex-shrink-0">
+          <SearchButton />
+          <button
+            className="p-2 flex flex-col justify-center gap-1.5"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
           <span
             className={`block h-0.5 w-6 origin-center transition-transform duration-200`}
             style={{ background: "var(--color-gold-lt)", transform: menuOpen ? "rotate(45deg) translateY(8px)" : "" }}
@@ -197,7 +217,8 @@ export default function Header() {
             className={`block h-0.5 w-6 origin-center transition-transform duration-200`}
             style={{ background: "var(--color-dark-muted)", transform: menuOpen ? "rotate(-45deg) translateY(-8px)" : "" }}
           />
-        </button>
+          </button>
+        </div>
       </div>
 
       {/* Mobile dropdown — absolutely positioned to overlay page content */}
@@ -216,7 +237,7 @@ export default function Header() {
           {navSections.map((s) => (
             <a
               key={s.id}
-              href={`/#${s.id}`}
+              href={`/${s.id}`}
               onClick={closeMenu}
               className={`nav-link-mobile block px-6 py-4 border-b hover:bg-white/10 hover:pl-8${activeId === s.id ? " is-active" : ""}`}
               style={{

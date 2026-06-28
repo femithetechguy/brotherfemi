@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_CONTACT } from "@/components/ui/SocialIcon";
+import BibleVerseLink from "@/components/ui/BibleVerseLink";
 import type { Section, ContactLink } from "@/types";
 
 interface Props {
@@ -86,10 +87,14 @@ export default function Contact({ section, contact }: Props) {
             >
               &ldquo;{section.bibleVerse}&rdquo;{" "}
               {section.reference && (
-                <a href={section.bible_url} target="_blank" rel="noopener noreferrer"
-                  style={{ color: "var(--color-gold)", fontStyle: "italic" }}>
+                <BibleVerseLink
+                  verse={section.bibleVerse!}
+                  reference={section.reference}
+                  bibleUrl={section.bible_url}
+                  style={{ color: "var(--color-gold)", fontStyle: "italic" }}
+                >
                   — {section.reference}
-                </a>
+                </BibleVerseLink>
               )}
             </p>
           )}

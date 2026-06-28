@@ -383,6 +383,39 @@ html.mobile-nav-open body > *:not(header) {
   90%       { transform: rotate(3deg)  scale(1.02); }
 }
 
+@keyframes bvmSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Bible verse floating card */
+.bvm-card {
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem !important;
+}
+.bvm-inner {
+  border-radius: 8px;
+  border: 1px solid rgba(201,168,76,0.35) !important;
+  box-shadow: 0 -4px 0 0 #C9A84C, 0 8px 48px rgba(0,0,0,0.7), 0 2px 16px rgba(0,0,0,0.4) !important;
+}
+.bvm-body {
+  padding: 1rem 1.25rem 1.5rem;
+}
+
+/* Desktop: anchored to bottom-right corner, max 400px */
+@media (min-width: 640px) {
+  .bvm-card {
+    left: auto;
+    right: 1.75rem;
+    bottom: 1.75rem !important;
+    max-width: 420px;
+  }
+  .bvm-body {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
