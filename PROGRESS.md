@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-28 (Session 11: FTTG-61 clean section URLs, FTTG-60 search, FTTG-62 bible verse modal — PR to develop pending)
+Last updated: 2026-06-28 (Session 12: UI polish — section redesigns, animations, nav fix, pronoun fix — PR to develop pending)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -114,6 +114,20 @@ Last updated: 2026-06-28 (Session 11: FTTG-61 clean section URLs, FTTG-60 search
 - [x] Added animated scroll indicator (bobbing chevron + "SCROLL" label) at bottom of hero
 - [x] Removed `brotherFemi` prop from Worship — no longer needed; `page.tsx` updated accordingly
 
+### Phase 2l — UI Polish & Section Redesigns (Session 12, on FTTG-61 branch)
+- [x] `BibleVerseModal.tsx` — redesigned as non-intrusive floating card (no overlay, no scroll lock); mobile: full-width bottom sheet with 0.75rem margins; desktop: anchored bottom-right, 420px max-width; 4px gold top bar; `aria-modal="false"`
+- [x] Social icons — replaced custom inline SVGs with `react-icons` (Font Awesome Brands: FaInstagram, FaYoutube, FaTiktok, FaFacebook, FaThreads, MdEmail); eliminates blur/anti-aliasing issues on retina
+- [x] Footer logo — now links back to home (`<a href="/">`)
+- [x] Mentors — navy background, cobalt cards, scroll-reveal stagger (IntersectionObserver + CSS transition-delay via `--delay` CSS var), SVG cross icon, Cinzel name / italic Lora ministry; inline iframe modal (`MentorModal.tsx`) with ESC + backdrop dismiss, gold spinner loading state, "Open in new tab" fallback
+- [x] Mission & Vision — combined into `MissionVision.tsx`; cream background; side-by-side flex on desktop with gold vertical divider; animated FlameIcon (`flameDance` keyframe) for Mission, animated EyeIcon with radiating rays (`eyePulse` + `rayFade`) for Vision; Roman numeral watermarks; scroll-reveal per panel; `ComingSoon` pulse pill
+- [x] Core Values — navy background; SVG icon per value (HeartIcon / FlameIcon / CrossRaysIcon / HandsIcon) in 72px gold-tinted circle; numeral watermark per card; scroll-reveal stagger via `--cv-delay` CSS var; hover lift + gold border
+- [x] HeartCry — gold gradient heart icon with `hcHeartBeat` animation; large decorative open-quote watermark (7% opacity); scroll-reveal stagger per prayer (`hcCryReveal` + `--hc-delay` CSS var); kept cream background
+- [x] About — "use client" for scroll-reveal; heading changed from "Acts 5:41-42 KJV" → "A Life Changed by Grace"; "Where it began / HOWJ Atlanta · June 22 2025" label with gradient overlay on card top; right card (`about-panel--delayed`) fades in 0.18s after left panel
+- [x] Section rhythm restored — light/dark alternating: Worship (navy) → Mission/Vision (cream) → Core Values (navy) → Heart-Cry (cream) → About (parchment) → Mentors (navy) → TheWord (navy) → Blog (parchment) → Hymns (cream) → NewLife (parchment) → Contact (navy)
+- [x] Pronoun fix — "Our Mission" → "My Mission", "Our Vision" → "My Vision", "What We Stand For" → "What I Stand For" (in MissionVision, Mission, Vision, CoreValues)
+- [x] Nav click fix — nav `<a>` links now call `e.preventDefault()` + `scrollIntoView({ behavior: "smooth" })` instead of triggering full page reload; eliminates header visual shift (scrolled/activeId state no longer resets)
+- [x] Dolapo Lawal added to `data/mentors.json`; duplicate entry removed (30 mentors total)
+
 ### Phase 2k — Clean Section URLs + Search + Bible Verse Modal (FTTG-61, FTTG-60, FTTG-62)
 - [x] FTTG-61: Route-based section URLs — `/worship`, `/about`, `/word`, `/contact` etc. instead of `/#hash` links
 - [x] `app/[section]/page.tsx` — dynamic route with `generateStaticParams` for all 11 section slugs; renders `<HomeContent />` + `<ScrollToSection id>` to scroll-on-mount
@@ -222,6 +236,28 @@ Last updated: 2026-06-28 (Session 11: FTTG-61 clean section URLs, FTTG-60 search
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 12 — 2026-06-28
+**Completed:**
+- BibleVerseModal redesigned as a non-intrusive floating card (bottom sheet mobile, bottom-right desktop); no overlay, no scroll lock
+- Social icons replaced with react-icons Font Awesome Brands — eliminates blur/anti-aliasing issues, especially Instagram
+- Footer logo now links back to home
+- Mentors section: navy bg, cobalt cards, scroll-reveal stagger, inline iframe MentorModal with ESC/backdrop dismiss and "Open in new tab" fallback
+- Mission & Vision: combined into single component side-by-side on desktop; cream bg; animated Flame/Eye icons; scroll-reveal; Coming Soon pills
+- Core Values: navy bg; SVG icon per value in gold circle; numeral watermark; scroll-reveal stagger with hover lift
+- HeartCry: heart icon with heartbeat animation; decorative open-quote watermark; scroll-reveal stagger per prayer
+- About: "A Life Changed by Grace" heading replaces verse reference; "Where it began / HOWJ Atlanta · June 22 2025" card label; both panels scroll-reveal with stagger
+- Section rhythm restored to light/dark alternating pattern after too many consecutive navy sections
+- Pronoun standardisation: "Our/We" → "My/I" across all section headings
+- Nav click fix: `e.preventDefault()` + `scrollIntoView` prevents full page reload on nav click; eliminates header visual shift
+- Dolapo Lawal added to mentors; duplicate entry removed (30 mentors total)
+
+**Key Decisions:**
+- BibleVerseModal uses `aria-modal="false"` — it's a supplemental panel, not a true modal; page stays interactive
+- react-icons chosen over custom SVGs for social icons — professionally optimised fill paths, correct brand shapes at any size
+- MissionVision combined into one component so the gold vertical divider and side-by-side layout can be implemented as a single flex container
+- "A Life Changed by Grace" hardcoded as About heading — it's presentational, not content data; the verse reference belongs in the blockquote, not the h2
+- Nav `e.preventDefault()` approach preferred over Next.js `<Link>` — avoids triggering route transitions while preserving the existing IntersectionObserver + replaceState URL sync system
 
 ### Session 11 — 2026-06-28
 **Completed:**
