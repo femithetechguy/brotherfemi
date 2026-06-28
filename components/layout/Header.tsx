@@ -167,14 +167,13 @@ export default function Header() {
               key={s.id}
               href={`/#${s.id}`}
               onClick={closeMenu}
-              className="block px-6 py-4 border-b transition-all hover:bg-white/10 hover:pl-8"
+              className={`nav-link-mobile block px-6 py-4 border-b hover:bg-white/10 hover:pl-8${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 borderColor: "rgba(255,255,255,0.06)",
-                color: activeId === s.id ? "var(--color-gold)" : "var(--color-dark-muted)",
               }}
             >
               {s.menu}

@@ -102,6 +102,20 @@ html.mobile-nav-open body > *:not(header) {
   right: 0;
 }
 
+.nav-link-mobile {
+  color: var(--color-dark-muted);
+  border-left: 2px solid transparent;
+  transition: color 0.25s ease, border-left-color 0.25s ease;
+}
+.nav-link-mobile.is-active {
+  color: var(--color-gold);
+  border-left-color: var(--color-gold);
+}
+.nav-link-mobile:hover {
+  color: var(--color-gold-lt);
+  border-left-color: var(--color-gold);
+}
+
 .social-icon {
   opacity: 0.7;
   transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
