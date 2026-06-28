@@ -5,8 +5,9 @@ import { createPortal } from "react-dom";
 
 // ─── PLAYLISTS — add new entries here ────────────────────────────────────────
 const PLAYLISTS = [
-  { id: "PLXlw5wgpCx0w", label: "Worship" },
-  { id: "PLfDBbmAY2PYE", label: "Praise"  },
+  { id: "PLXlw5wgpCx0w",                   label: "Worship"  },
+  { id: "PLfDBbmAY2PYE",                   label: "Praise"   },
+  { id: "PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8", label: "Messages" },
 ] as const;
 
 const START_INDEX = 0;
