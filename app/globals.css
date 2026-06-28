@@ -191,6 +191,22 @@ html.mobile-nav-open body > *:not(header) {
 }
 .mp-main-btn:active { transform: scale(0.92); }
 
+.mp-main-btn-inline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  height: 32px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  cursor: pointer;
+  color: #C9A84C;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.mp-main-btn-inline:hover  { background: rgba(201,168,76,0.08); border-color: rgba(201,168,76,0.45); }
+.mp-main-btn-inline:active { transform: scale(0.92); }
+
 .mp-icon {
   display: flex;
   align-items: flex-end;

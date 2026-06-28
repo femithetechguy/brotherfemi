@@ -155,7 +155,7 @@ export default function Hymns({ section }: Props) {
               color: "var(--color-sage)",
             }}
           >
-            Controls appear bottom-right ↘
+            Player controls in the header ↑
           </p>
         </div>
       </div>

@@ -17,7 +17,7 @@ declare global {
 
 type PlayerState = "idle" | "playing" | "paused";
 
-export default function MusicPlayer() {
+export default function MusicPlayer({ inline = false }: { inline?: boolean }) {
   const playerRef = useRef<any>(null);
   const [state, setState]       = useState<PlayerState>("idle");
   const [muted, setMuted]       = useState(true);
@@ -119,14 +119,56 @@ export default function MusicPlayer() {
 
   const isPlaying        = state === "playing";
   const showControls     = !muted;
-  const showLabelVisible = showLabel || muted;
+  const showLabelVisible = !inline && (showLabel || muted);
   const labelText        = muted ? "CLICK TO LISTEN" : isPlaying ? "PAUSE" : "PLAY";
 
   const mainBtnClass = [
-    "mp-main-btn",
-    wiggle                ? "mp-wiggle" : "",
-    isPlaying && !muted   ? "mp-pulse"  : "",
+    inline ? "mp-main-btn-inline" : "mp-main-btn",
+    wiggle              ? "mp-wiggle" : "",
+    isPlaying && !muted ? "mp-pulse"  : "",
   ].filter(Boolean).join(" ");
+
+  const row = (
+    <div className="mp-row">
+      {/* Prev button */}
+      <div className={`mp-side-wrap${showControls ? " mp-side-visible" : ""}`}>
+        <button className="mp-side-btn" onClick={handlePrev} title="Previous track" aria-label="Previous track">
+          <BackIcon />
+        </button>
+      </div>
+
+      {/* Main button */}
+      <button
+        className={mainBtnClass}
+        onClick={handleClick}
+        onMouseEnter={() => setShowLabel(true)}
+        onMouseLeave={() => setShowLabel(false)}
+        title={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
+        aria-label={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
+      >
+        <span className="mp-icon">
+          {isPlaying && !muted ? <AudioBars /> : <MusicNote />}
+        </span>
+        {!inline && (
+          <span className={`mp-label${showLabelVisible ? " mp-label-visible" : ""}`}>
+            {labelText}
+          </span>
+        )}
+        {inline && showLabel && (
+          <span className="mp-label mp-label-visible" style={{ fontSize: "9px" }}>
+            {labelText}
+          </span>
+        )}
+      </button>
+
+      {/* Next button */}
+      <div className={`mp-side-wrap${showControls ? " mp-side-visible" : ""}`}>
+        <button className="mp-side-btn" onClick={handleNext} title="Next track" aria-label="Next track">
+          <SkipIcon />
+        </button>
+      </div>
+    </div>
+  );
 
   return (
     <>
@@ -142,53 +184,7 @@ export default function MusicPlayer() {
         <div id="yt-bg-player" />
       </div>
 
-      {/* Floating player */}
-      <div className="mp-wrapper">
-        <div className="mp-row">
-
-          {/* Prev button */}
-          <div className={`mp-side-wrap${showControls ? " mp-side-visible" : ""}`}>
-            <button
-              className="mp-side-btn"
-              onClick={handlePrev}
-              title="Previous track"
-              aria-label="Previous track"
-            >
-              <BackIcon />
-            </button>
-          </div>
-
-          {/* Main button */}
-          <button
-            className={mainBtnClass}
-            onClick={handleClick}
-            onMouseEnter={() => setShowLabel(true)}
-            onMouseLeave={() => setShowLabel(false)}
-            title={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
-            aria-label={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
-          >
-            <span className="mp-icon">
-              {isPlaying && !muted ? <AudioBars /> : <MusicNote />}
-            </span>
-            <span className={`mp-label${showLabelVisible ? " mp-label-visible" : ""}`}>
-              {labelText}
-            </span>
-          </button>
-
-          {/* Next button */}
-          <div className={`mp-side-wrap${showControls ? " mp-side-visible" : ""}`}>
-            <button
-              className="mp-side-btn"
-              onClick={handleNext}
-              title="Next track"
-              aria-label="Next track"
-            >
-              <SkipIcon />
-            </button>
-          </div>
-
-        </div>
-      </div>
+      {inline ? row : <div className="mp-wrapper">{row}</div>}
     </>
   );
 }

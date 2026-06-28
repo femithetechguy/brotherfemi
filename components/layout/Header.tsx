@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { getSections, getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
+import MusicPlayer from "@/components/ui/MusicPlayer";
 import type { Section } from "@/types";
 
 const NAV_IDS = ["about", "the-word", "blog", "hymns", "contact"];
@@ -110,7 +111,7 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Social icons — desktop */}
+        {/* Social icons + music player — desktop */}
         <div className="hidden md:flex items-center gap-3 flex-shrink-0">
           {contact.map((c) => (
             <a
@@ -125,6 +126,16 @@ export default function Header() {
               <SocialIcon type={c.type} />
             </a>
           ))}
+          <span
+            style={{
+              display: "block",
+              width: 1,
+              height: 20,
+              background: "rgba(201,168,76,0.2)",
+              margin: "0 4px",
+            }}
+          />
+          <MusicPlayer inline />
         </div>
 
         {/* Mobile hamburger */}
