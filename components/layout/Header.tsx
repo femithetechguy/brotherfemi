@@ -97,13 +97,12 @@ export default function Header() {
             <a
               key={s.id}
               href={`/#${s.id}`}
-              className="transition-colors whitespace-nowrap"
+              className={`nav-link whitespace-nowrap${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: activeId === s.id ? "var(--color-gold)" : "var(--color-dark-muted)",
               }}
             >
               {s.menu}
