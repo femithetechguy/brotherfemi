@@ -1,11 +1,44 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, type ReactElement } from "react";
 import Link from "next/link";
 import { getSections, getBrotherFemi } from "@/lib/data";
+import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
 import type { Section } from "@/types";
 
-const NAV_IDS = ["about", "the-word", "blog", "hymns", "contact"];
+const NAV_IDS = ["about", "the-word", "blog", "newlife", "contact"];
+
+const NAV_ICONS: Record<string, ReactElement> = {
+  about: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <line x1="8" y1="2" x2="8" y2="14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <line x1="4" y1="5.5" x2="12" y2="5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  "the-word": (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M8 13V4.5C7 3.5 5.5 3 4 3H2v9h2c1.5 0 3 .5 4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M8 13V4.5c1-1 2.5-1.5 4-1.5h2v9h-2c-1.5 0-3 .5-4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  ),
+  blog: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M11 2l3 3-7 7H4v-3l7-7z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <line x1="2" y1="14" x2="14" y2="14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+  newlife: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <path d="M8 14C8 14 3 10.5 3 6.5C3 4 5 2 8 2C8 2 7 5 9 7C9 7 10 5.5 9.5 3.5C11.5 5 13 7 13 9C13 11.5 11 14 8 14Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+    </svg>
+  ),
+  contact: (
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+      <rect x="2" y="4" width="12" height="9" rx="1" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M2 5.5l6 4.5 6-4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ),
+};
 
 const ALL_OBSERVE_IDS = [
   "worship", "mission", "vision", "core-values", "heart-cry",
@@ -18,62 +51,13 @@ function buildNavSections(sections: Section[]) {
     .filter((s): s is Section => s !== undefined);
 }
 
-function getSocialColor(type: string): string {
-  switch (type.toLowerCase()) {
-    case "email":     return "#C9A84C";
-    case "instagram": return "#E1306C";
-    case "thread":
-    case "threads":   return "#FFFFFF";
-    case "tiktok":    return "#EE1D52";
-    case "youtube":   return "#FF0000";
-    case "facebook":  return "#1877F2";
-    default:          return "#C9A84C";
-  }
-}
-
-function SocialIcon({ type }: { type: string }) {
-  const t = type.toLowerCase();
-  if (t === "email") return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-      <rect x="2" y="4" width="20" height="16" rx="2"/>
-      <path d="M2 7l10 7 10-7"/>
-    </svg>
-  );
-  if (t === "instagram") return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-      <rect x="2" y="2" width="20" height="20" rx="5"/>
-      <circle cx="12" cy="12" r="4"/>
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-    </svg>
-  );
-  if (t === "thread" || t === "threads") return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-      <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.5 12.068v-.076c0-3.548.85-6.424 2.525-8.547C5.865 1.18 8.609-.003 12.18 0h.014c2.746.018 5.143.806 6.92 2.233 1.645 1.323 2.678 3.165 3.079 5.477l-2.484.438c-.605-3.417-2.86-5.32-7.529-5.35-2.844.002-5.046.89-6.548 2.638-1.374 1.6-2.07 3.898-2.07 6.831v.076c0 2.924.698 5.209 2.072 6.792 1.501 1.726 3.71 2.605 6.564 2.612 2.523-.01 4.243-.61 5.35-1.813.734-.8 1.182-1.896 1.369-3.316-.974.148-1.99.205-3.035.17-1.62-.06-3.04-.41-4.186-1.04-1.36-.738-2.111-1.862-2.111-3.167 0-2.607 2.162-4.158 5.771-4.158.87 0 1.718.07 2.533.205-.143-.928-.476-1.648-1.003-2.152-.64-.609-1.573-.924-2.776-.935-1.18 0-2.148.262-2.877.778l-1.318-2.05c1.133-.76 2.564-1.147 4.254-1.147 3.856 0 6.028 2.082 6.28 5.865.194.072.386.149.572.23 1.877.822 2.954 2.219 2.954 4.169 0 .226-.014.45-.04.667C21.27 21.405 17.838 24 12.186 24zm1.247-8.31c1.093 0 2.115-.083 3.04-.247-.079-2.032-1.275-3.162-3.605-3.162-1.815 0-2.826.721-2.826 1.786 0 1.177 1.418 1.655 3.391 1.623z"/>
-    </svg>
-  );
-  if (t === "tiktok") return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.18 8.18 0 004.78 1.53V6.75a4.85 4.85 0 01-1.01-.06z"/>
-    </svg>
-  );
-  if (t === "youtube") return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-      <path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
-    </svg>
-  );
-  if (t === "facebook") return (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
-      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-    </svg>
-  );
-  return null;
-}
 
 export default function Header() {
   const navSections = buildNavSections(getSections());
-  const contact = getBrotherFemi().contact.filter(
-    (c) => !["website"].includes(c.type.toLowerCase())
-  );
+  const allContact = getBrotherFemi().contact;
+  const contact = SOCIAL_ORDER_NAV
+    .map((type) => allContact.find((c) => c.type === type))
+    .filter((c): c is NonNullable<typeof c> => c !== undefined);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
   const [scrolled, setScrolled] = useState(false);
@@ -122,7 +106,11 @@ export default function Header() {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-16 gap-6">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0">
+        <Link
+          href="/"
+          className="flex-shrink-0"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <img
             src="/svg/logo-main.svg"
             alt="Brother Femi"
@@ -141,21 +129,21 @@ export default function Header() {
             <a
               key={s.id}
               href={`/#${s.id}`}
-              className="transition-colors whitespace-nowrap"
+              className={`nav-link whitespace-nowrap flex items-center gap-1.5${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                color: activeId === s.id ? "var(--color-gold)" : "var(--color-dark-muted)",
               }}
             >
+              {NAV_ICONS[s.id]}
               {s.menu}
             </a>
           ))}
         </nav>
 
-        {/* Social icons — desktop */}
+        {/* Social icons + music player slot — desktop */}
         <div className="hidden md:flex items-center gap-3 flex-shrink-0">
           {contact.map((c) => (
             <a
@@ -165,16 +153,34 @@ export default function Header() {
               rel="noopener noreferrer"
               aria-label={c.type}
               style={{ color: getSocialColor(c.type) }}
-              className="opacity-70 hover:opacity-100 transition-opacity"
+              className="social-icon"
             >
               <SocialIcon type={c.type} />
             </a>
           ))}
+          <span
+            style={{
+              display: "block",
+              width: 1,
+              height: 20,
+              background: "rgba(201,168,76,0.2)",
+              margin: "0 4px",
+              flexShrink: 0,
+            }}
+          />
+          {/* MusicPlayer portals inline content here on desktop */}
+          <div id="music-player-header-slot" style={{ display: "flex", alignItems: "center" }} />
         </div>
+
+        {/* Music player slot — mobile center */}
+        <div
+          id="music-player-mobile-slot"
+          className="md:hidden flex-1 flex justify-center items-center"
+        />
 
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 flex flex-col justify-center gap-1.5 ml-auto"
+          className="md:hidden p-2 flex flex-col justify-center gap-1.5 flex-shrink-0"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
@@ -212,14 +218,13 @@ export default function Header() {
               key={s.id}
               href={`/#${s.id}`}
               onClick={closeMenu}
-              className="block px-6 py-4 border-b transition-all hover:bg-white/10 hover:pl-8"
+              className={`nav-link-mobile block px-6 py-4 border-b hover:bg-white/10 hover:pl-8${activeId === s.id ? " is-active" : ""}`}
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
                 borderColor: "rgba(255,255,255,0.06)",
-                color: activeId === s.id ? "var(--color-gold)" : "var(--color-dark-muted)",
               }}
             >
               {s.menu}
@@ -233,8 +238,8 @@ export default function Header() {
                 target={c.url.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={c.type}
-                style={{ color: "var(--color-gold)" }}
-                className="opacity-70 hover:opacity-100 transition-opacity"
+                style={{ color: getSocialColor(c.type) }}
+                className="social-icon"
               >
                 <SocialIcon type={c.type} />
               </a>
