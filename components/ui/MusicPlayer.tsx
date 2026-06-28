@@ -193,7 +193,7 @@ export default function MusicPlayer() {
     `mp-side-wrap${visible ? " mp-side-visible" : ""}`;
 
   const player = (
-    <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+    <div style={{ display: "flex", alignItems: "center" }}>
       {/* Scrolling track title — visible when unmuted, hides when playlist picker is open */}
       {!muted && trackTitle && !showPlaylists && (
         <div className="mp-track-strip">
