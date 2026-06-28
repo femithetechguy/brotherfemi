@@ -461,6 +461,35 @@ html.mobile-nav-open body > *:not(header) {
 .mv-panel { opacity: 0; }
 .mv-panel.mv-visible { animation: mvReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
 
+/* Heart Cry section */
+@keyframes hcHeartBeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.1); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.07); }
+  56%       { transform: scale(1); }
+}
+.hc-heart-icon { animation: hcHeartBeat 2.6s ease-in-out infinite; }
+
+@keyframes hcCryReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hc-cry {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--color-cobalt);
+  line-height: 1.9;
+  padding: 0 0.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+}
+.hc-cry--visible {
+  animation: hcCryReveal 0.65s cubic-bezier(0.16,1,0.3,1) both;
+  animation-delay: var(--hc-delay, 0s);
+}
+
 @keyframes bvmSlideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
