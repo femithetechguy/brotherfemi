@@ -461,6 +461,18 @@ html.mobile-nav-open body > *:not(header) {
 .mv-panel { opacity: 0; }
 .mv-panel.mv-visible { animation: mvReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
 
+/* About / Testimony section */
+.about-panel {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.about-panel.about-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.about-panel--delayed { transition-delay: 0.18s; }
+
 /* Heart Cry section */
 @keyframes hcHeartBeat {
   0%, 100% { transform: scale(1); }
