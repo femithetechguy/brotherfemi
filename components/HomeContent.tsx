@@ -1,8 +1,9 @@
 import { getBrotherFemi, getSections, getMentors } from "@/lib/data";
 import {
-  Worship, Mission, Vision, CoreValues, HeartCry,
+  Worship, CoreValues, HeartCry,
   About, Mentors, TheWord, Blog, Hymns, NewLife, Contact,
 } from "@/components/sections";
+import MissionVision from "@/components/sections/MissionVision";
 
 export default function HomeContent() {
   const brotherFemi = getBrotherFemi();
@@ -16,8 +17,7 @@ export default function HomeContent() {
   return (
     <main>
       <Worship    section={s("worship")} />
-      <Mission    section={s("mission")} />
-      <Vision     section={s("vision")} />
+      <MissionVision mission={s("mission")} vision={s("vision")} />
       <CoreValues section={s("core-values")} coreValues={brotherFemi.coreValues} />
       <HeartCry   section={s("heart-cry")}   heartCry={brotherFemi.heartCry} />
       <About      section={s("about")}       brotherFemi={brotherFemi} />

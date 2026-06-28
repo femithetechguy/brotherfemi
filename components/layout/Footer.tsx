@@ -25,7 +25,9 @@ export default function Footer() {
       }}
     >
       <div className="max-w-5xl mx-auto flex flex-col items-center gap-6">
-        <img src="/svg/logo-icon.svg" alt="Brother Femi" className="h-12 w-12" />
+        <a href="/" aria-label="Back to home">
+          <img src="/svg/logo-icon.svg" alt="Brother Femi" className="h-12 w-12 opacity-80 hover:opacity-100 transition-opacity" />
+        </a>
 
         {/* Nav links */}
         <nav className="flex flex-wrap justify-center gap-6">
