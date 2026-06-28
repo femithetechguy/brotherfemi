@@ -20,10 +20,12 @@ export function SocialIcon({ type, size = 20 }: { type: string; size?: number })
     </svg>
   );
   if (t === "instagram") return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={size} height={size}>
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-      <circle cx="12" cy="12" r="4"/>
-      <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+    <svg viewBox="0 0 24 24" fill="currentColor" width={size} height={size}>
+      <path
+        fillRule="evenodd"
+        d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zM12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9z"
+      />
+      <circle cx="16.8" cy="7.2" r="1.1"/>
     </svg>
   );
   if (t === "thread" || t === "threads") return (
