@@ -117,22 +117,12 @@ html.mobile-nav-open body > *:not(header) {
 }
 
 .social-icon {
-  opacity: 0.8;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 1;
+  transition: transform 0.2s ease;
 }
 .social-icon:hover {
-  opacity: 1;
   transform: translateY(-3px) scale(1.2);
   filter: drop-shadow(0 0 6px currentColor);
-}
-
-/* Header variant: neutral at rest → brand color on hover */
-.social-icon--header {
-  color: rgba(159, 176, 192, 0.75);
-  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
-}
-.social-icon--header:hover {
-  color: var(--brand);
 }
 
 /* ─── Music Player ─────────────────────────────────────────────────────────── */
