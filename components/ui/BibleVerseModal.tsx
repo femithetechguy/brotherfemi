@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 interface Props {
-  verse: string;
+  verse?: string;
   reference: string;
   bibleUrl?: string;
   onClose: () => void;
@@ -101,18 +101,33 @@ export default function BibleVerseModal({ verse, reference, bibleUrl, onClose }:
           </div>
 
           {/* Verse text */}
-          <p
-            style={{
-              fontFamily: "var(--font-body)",
-              fontStyle: "italic",
-              fontSize: "clamp(0.95rem, 2.2vw, 1.1rem)",
-              color: "var(--color-gold-lt)",
-              lineHeight: 1.85,
-              marginBottom: "1rem",
-            }}
-          >
-            &ldquo;{verse}&rdquo;
-          </p>
+          {verse ? (
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontStyle: "italic",
+                fontSize: "clamp(0.95rem, 2.2vw, 1.1rem)",
+                color: "var(--color-gold-lt)",
+                lineHeight: 1.85,
+                marginBottom: "1rem",
+              }}
+            >
+              &ldquo;{verse}&rdquo;
+            </p>
+          ) : (
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontStyle: "italic",
+                fontSize: "0.92rem",
+                color: "var(--color-dark-muted)",
+                lineHeight: 1.7,
+                marginBottom: "1rem",
+              }}
+            >
+              Read this passage in full on Bible.com →
+            </p>
+          )}
 
           {/* Read in context */}
           {bibleUrl && (

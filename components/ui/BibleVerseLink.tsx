@@ -7,7 +7,7 @@ import type { CSSProperties, ReactNode } from "react";
 const BibleVerseModal = dynamic(() => import("./BibleVerseModal"), { ssr: false });
 
 interface Props {
-  verse: string;
+  verse?: string;
   reference: string;
   bibleUrl?: string;
   children: ReactNode;

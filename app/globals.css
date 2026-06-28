@@ -147,6 +147,25 @@ html.mobile-nav-open body > *:not(header) {
   transform: translateY(-5px);
 }
 
+/* Blog cards */
+.blog-card {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease,
+    box-shadow 0.25s ease;
+  transition-delay: var(--blog-delay, 0s);
+}
+.blog-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.blog-card:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.08), 0 0 0 1px rgba(201,168,76,0.2);
+  transform: translateY(-4px);
+}
+
 /* Mentor cards */
 .mentor-card {
   background: var(--color-cobalt);
@@ -460,6 +479,17 @@ html.mobile-nav-open body > *:not(header) {
 .vision-icon  { animation: eyePulse  4s   ease-in-out infinite; }
 .mv-panel { opacity: 0; }
 .mv-panel.mv-visible { animation: mvReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+/* TheWord section */
+.word-panel {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+}
+.word-panel.word-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* About / Testimony section */
 .about-panel {
