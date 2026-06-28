@@ -155,7 +155,7 @@ export default function Hymns({ section }: Props) {
               color: "var(--color-sage)",
             }}
           >
-            Player controls in the header ↑
+            Player controls in the top bar ↑
           </p>
         </div>
       </div>

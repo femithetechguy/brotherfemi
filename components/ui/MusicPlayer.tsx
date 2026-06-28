@@ -37,10 +37,14 @@ export default function MusicPlayer() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Find header portal slot (Header mounts before MusicPlayer in layout)
+  // Find header portal slots (Header mounts before MusicPlayer in layout)
   useEffect(() => {
-    setHeaderSlot(document.getElementById("music-player-header-slot"));
-  }, []);
+    setHeaderSlot(
+      isMobile
+        ? document.getElementById("music-player-mobile-slot")
+        : document.getElementById("music-player-header-slot")
+    );
+  }, [isMobile]);
 
   // Load YouTube IFrame API once
   useEffect(() => {
@@ -234,6 +238,7 @@ export default function MusicPlayer() {
 
   // suppress unused variable warning
   void controls;
+  void floatingPlayer;
 
   return (
     <>
@@ -249,11 +254,8 @@ export default function MusicPlayer() {
         <div id="yt-bg-player" />
       </div>
 
-      {/* Mobile: floating bottom-right */}
-      {isMobile && floatingPlayer}
-
-      {/* Desktop: portal into header slot */}
-      {!isMobile && headerSlot && createPortal(inlinePlayer, headerSlot)}
+      {/* Portal into header — mobile center slot or desktop right slot */}
+      {headerSlot && createPortal(inlinePlayer, headerSlot)}
     </>
   );
 }

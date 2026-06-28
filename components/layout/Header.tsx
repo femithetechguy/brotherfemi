@@ -139,9 +139,15 @@ export default function Header() {
           <div id="music-player-header-slot" style={{ display: "flex", alignItems: "center" }} />
         </div>
 
+        {/* Music player slot — mobile center */}
+        <div
+          id="music-player-mobile-slot"
+          className="md:hidden flex-1 flex justify-center items-center"
+        />
+
         {/* Mobile hamburger */}
         <button
-          className="md:hidden p-2 flex flex-col justify-center gap-1.5 ml-auto"
+          className="md:hidden p-2 flex flex-col justify-center gap-1.5 flex-shrink-0"
           onClick={() => setMenuOpen((o) => !o)}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
