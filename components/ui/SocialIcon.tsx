@@ -50,7 +50,6 @@ export function SocialIcon({ type, size = 20 }: { type: string; size?: number })
 }
 
 // Order for header/footer (no email — contact form handles that)
-export const SOCIAL_ORDER_NAV = ["Instagram", "Facebook", "Youtube", "Tiktok", "Thread"];
+export const SOCIAL_ORDER_NAV = ["Instagram", "Youtube", "Tiktok", "Thread", "Facebook"];
 
-// Order for contact section (email last as an alternative)
-export const SOCIAL_ORDER_CONTACT = ["Instagram", "Facebook", "Youtube", "Tiktok", "Thread", "Email"];
+export const SOCIAL_ORDER_CONTACT = ["Instagram", "Youtube", "Tiktok", "Thread", "Facebook", "Email"];
