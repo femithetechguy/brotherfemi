@@ -3,8 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-// ─── CONFIGURE YOUR PLAYLIST ─────────────────────────────────────────────────
-const PLAYLIST_ID = ""; // paste YouTube playlist ID here (the part after ?list=)
+// ─── PLAYLISTS — add new entries here ────────────────────────────────────────
+const PLAYLISTS = [
+  { id: "PLXlw5wgpCx0w", label: "Worship" },
+  { id: "PLfDBbmAY2PYE", label: "Praise"  },
+] as const;
+
 const START_INDEX = 0;
 const TRACK_STARTS: Record<number, number> = {}; // e.g. { 0: 27, 1: 23 }
 // ─────────────────────────────────────────────────────────────────────────────
@@ -20,15 +24,16 @@ type PlayerState = "idle" | "playing" | "paused";
 
 export default function MusicPlayer() {
   const playerRef = useRef<any>(null);
-  const [state, setState]           = useState<PlayerState>("idle");
-  const [muted, setMuted]           = useState(true);
-  const [ready, setReady]           = useState(false);
-  const [showLabel, setShowLabel]   = useState(false);
-  const [wiggle, setWiggle]         = useState(false);
-  const [isMobile, setIsMobile]     = useState(false);
-  const [headerSlot, setHeaderSlot] = useState<Element | null>(null);
+  const [state, setState]                   = useState<PlayerState>("idle");
+  const [muted, setMuted]                   = useState(true);
+  const [ready, setReady]                   = useState(false);
+  const [showLabel, setShowLabel]           = useState(false);
+  const [wiggle, setWiggle]                 = useState(false);
+  const [isMobile, setIsMobile]             = useState(false);
+  const [headerSlot, setHeaderSlot]         = useState<Element | null>(null);
+  const [activePlaylist, setActivePlaylist] = useState(0);
+  const [showPlaylists, setShowPlaylists]   = useState(false);
 
-  // Detect mobile breakpoint
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
     setIsMobile(mq.matches);
@@ -37,7 +42,6 @@ export default function MusicPlayer() {
     return () => mq.removeEventListener("change", handler);
   }, []);
 
-  // Find header portal slots (Header mounts before MusicPlayer in layout)
   useEffect(() => {
     setHeaderSlot(
       isMobile
@@ -46,7 +50,6 @@ export default function MusicPlayer() {
     );
   }, [isMobile]);
 
-  // Load YouTube IFrame API once
   useEffect(() => {
     if (document.getElementById("yt-iframe-api")) {
       if (window.YT?.Player) initPlayer();
@@ -63,7 +66,6 @@ export default function MusicPlayer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Attention wiggle — fires once after 2 s
   useEffect(() => {
     const t = setTimeout(() => {
       setWiggle(true);
@@ -79,7 +81,7 @@ export default function MusicPlayer() {
       width:  "1",
       playerVars: {
         listType:       "playlist",
-        list:           PLAYLIST_ID,
+        list:           PLAYLISTS[0].id,
         index:          START_INDEX,
         autoplay:       1,
         mute:           1,
@@ -138,17 +140,26 @@ export default function MusicPlayer() {
     playerRef.current.previousVideo();
   }
 
+  function handlePlaylistSwitch(index: number) {
+    if (index === activePlaylist || !ready || !playerRef.current) return;
+    setActivePlaylist(index);
+    playerRef.current.loadPlaylist({
+      list: PLAYLISTS[index].id,
+      listType: "playlist",
+      index: 0,
+    });
+    if (muted) playerRef.current.mute();
+  }
+
   const isPlaying    = state === "playing";
   const showControls = !muted;
-  const labelText    = muted ? "CLICK TO LISTEN" : isPlaying ? "PAUSE" : "PLAY";
+  const labelText    = muted
+    ? "CLICK TO LISTEN"
+    : isPlaying
+    ? PLAYLISTS[activePlaylist].label.toUpperCase()
+    : "PLAY";
 
-  const mainBtnFloating = [
-    "mp-main-btn",
-    wiggle              ? "mp-wiggle" : "",
-    isPlaying && !muted ? "mp-pulse"  : "",
-  ].filter(Boolean).join(" ");
-
-  const mainBtnInline = [
+  const mainBtnClass = [
     "mp-main-btn-inline",
     wiggle              ? "mp-wiggle" : "",
     isPlaying && !muted ? "mp-pulse"  : "",
@@ -157,31 +168,31 @@ export default function MusicPlayer() {
   const sideWrapClass = (visible: boolean) =>
     `mp-side-wrap${visible ? " mp-side-visible" : ""}`;
 
-  const controls = (
-    <>
-      <div className={sideWrapClass(showControls)}>
-        <button className="mp-side-btn" onClick={handlePrev} title="Previous" aria-label="Previous track">
-          <BackIcon />
-        </button>
+  const player = (
+    <div style={{ position: "relative", display: "inline-flex", alignItems: "center" }}>
+      {/* Playlist switcher dropdown */}
+      <div className={`mp-playlist-row${showPlaylists ? " mp-playlist-visible" : ""}`}>
+        {PLAYLISTS.map((pl, i) => (
+          <button
+            key={pl.id}
+            className={`mp-pl-pill${activePlaylist === i ? " mp-pl-active" : ""}`}
+            onClick={() => handlePlaylistSwitch(i)}
+          >
+            {pl.label}
+          </button>
+        ))}
       </div>
-      <div className={sideWrapClass(showControls)}>
-        <button className="mp-side-btn" onClick={handleNext} title="Next" aria-label="Next track">
-          <SkipIcon />
-        </button>
-      </div>
-    </>
-  );
 
-  const floatingPlayer = (
-    <div className="mp-wrapper">
-      <div className="mp-row">
+      {/* Controls row */}
+      <div className="mp-row" style={{ gap: 4 }}>
         <div className={sideWrapClass(showControls)}>
-          <button className="mp-side-btn" onClick={handlePrev} title="Previous" aria-label="Previous track">
+          <button className="mp-side-btn mp-side-btn-sm" onClick={handlePrev} title="Previous" aria-label="Previous track">
             <BackIcon />
           </button>
         </div>
+
         <button
-          className={mainBtnFloating}
+          className={mainBtnClass}
           onClick={handleClick}
           onMouseEnter={() => setShowLabel(true)}
           onMouseLeave={() => setShowLabel(false)}
@@ -191,54 +202,32 @@ export default function MusicPlayer() {
           <span className="mp-icon">
             {isPlaying && !muted ? <AudioBars /> : <MusicNote />}
           </span>
-          <span className={`mp-label${showLabel || muted ? " mp-label-visible" : ""}`}>
-            {labelText}
-          </span>
+          {showLabel && (
+            <span className="mp-label mp-label-visible" style={{ fontSize: "9px" }}>
+              {labelText}
+            </span>
+          )}
         </button>
+
         <div className={sideWrapClass(showControls)}>
-          <button className="mp-side-btn" onClick={handleNext} title="Next" aria-label="Next track">
+          <button className="mp-side-btn mp-side-btn-sm" onClick={handleNext} title="Next" aria-label="Next track">
             <SkipIcon />
+          </button>
+        </div>
+
+        <div className={sideWrapClass(showControls)}>
+          <button
+            className={`mp-side-btn mp-side-btn-sm${showPlaylists ? " mp-side-btn-active" : ""}`}
+            onClick={() => setShowPlaylists((p) => !p)}
+            title="Switch playlist"
+            aria-label="Switch playlist"
+          >
+            <ListIcon />
           </button>
         </div>
       </div>
     </div>
   );
-
-  const inlinePlayer = (
-    <div className="mp-row" style={{ gap: 4 }}>
-      <div className={sideWrapClass(showControls)} style={{ gap: 4 }}>
-        <button className="mp-side-btn mp-side-btn-sm" onClick={handlePrev} title="Previous" aria-label="Previous track">
-          <BackIcon />
-        </button>
-      </div>
-      <button
-        className={mainBtnInline}
-        onClick={handleClick}
-        onMouseEnter={() => setShowLabel(true)}
-        onMouseLeave={() => setShowLabel(false)}
-        title={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
-        aria-label={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
-      >
-        <span className="mp-icon">
-          {isPlaying && !muted ? <AudioBars /> : <MusicNote />}
-        </span>
-        {showLabel && (
-          <span className="mp-label mp-label-visible" style={{ fontSize: "9px" }}>
-            {labelText}
-          </span>
-        )}
-      </button>
-      <div className={sideWrapClass(showControls)} style={{ gap: 4 }}>
-        <button className="mp-side-btn mp-side-btn-sm" onClick={handleNext} title="Next" aria-label="Next track">
-          <SkipIcon />
-        </button>
-      </div>
-    </div>
-  );
-
-  // suppress unused variable warning
-  void controls;
-  void floatingPlayer;
 
   return (
     <>
@@ -255,7 +244,7 @@ export default function MusicPlayer() {
       </div>
 
       {/* Portal into header — mobile center slot or desktop right slot */}
-      {headerSlot && createPortal(inlinePlayer, headerSlot)}
+      {headerSlot && createPortal(player, headerSlot)}
     </>
   );
 }
@@ -298,6 +287,19 @@ function BackIcon() {
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
       <polygon points="19,4 9,12 19,20" fill="currentColor" />
       <rect x="4" y="4" width="3" height="16" rx="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function ListIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+      <circle cx="4" cy="6"  r="1.5" fill="currentColor" />
+      <circle cx="4" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="4" cy="18" r="1.5" fill="currentColor" />
+      <rect x="8" y="5"  width="12" height="2" rx="1" fill="currentColor" />
+      <rect x="8" y="11" width="12" height="2" rx="1" fill="currentColor" />
+      <rect x="8" y="17" width="12" height="2" rx="1" fill="currentColor" />
     </svg>
   );
 }
