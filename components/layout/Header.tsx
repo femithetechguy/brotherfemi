@@ -4,7 +4,6 @@ import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { getSections, getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
-import MusicPlayer from "@/components/ui/MusicPlayer";
 import type { Section } from "@/types";
 
 const NAV_IDS = ["about", "the-word", "blog", "hymns", "contact"];
@@ -111,7 +110,7 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* Social icons + music player — desktop */}
+        {/* Social icons + music player slot — desktop */}
         <div className="hidden md:flex items-center gap-3 flex-shrink-0">
           {contact.map((c) => (
             <a
@@ -133,9 +132,11 @@ export default function Header() {
               height: 20,
               background: "rgba(201,168,76,0.2)",
               margin: "0 4px",
+              flexShrink: 0,
             }}
           />
-          <MusicPlayer inline />
+          {/* MusicPlayer portals inline content here on desktop */}
+          <div id="music-player-header-slot" style={{ display: "flex", alignItems: "center" }} />
         </div>
 
         {/* Mobile hamburger */}

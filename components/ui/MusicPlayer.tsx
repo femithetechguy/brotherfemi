@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 // ─── CONFIGURE YOUR PLAYLIST ─────────────────────────────────────────────────
 const PLAYLIST_ID = ""; // paste YouTube playlist ID here (the part after ?list=)
@@ -17,13 +18,29 @@ declare global {
 
 type PlayerState = "idle" | "playing" | "paused";
 
-export default function MusicPlayer({ inline = false }: { inline?: boolean }) {
+export default function MusicPlayer() {
   const playerRef = useRef<any>(null);
-  const [state, setState]       = useState<PlayerState>("idle");
-  const [muted, setMuted]       = useState(true);
-  const [ready, setReady]       = useState(false);
-  const [showLabel, setShowLabel] = useState(false);
-  const [wiggle, setWiggle]     = useState(false);
+  const [state, setState]           = useState<PlayerState>("idle");
+  const [muted, setMuted]           = useState(true);
+  const [ready, setReady]           = useState(false);
+  const [showLabel, setShowLabel]   = useState(false);
+  const [wiggle, setWiggle]         = useState(false);
+  const [isMobile, setIsMobile]     = useState(false);
+  const [headerSlot, setHeaderSlot] = useState<Element | null>(null);
+
+  // Detect mobile breakpoint
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  // Find header portal slot (Header mounts before MusicPlayer in layout)
+  useEffect(() => {
+    setHeaderSlot(document.getElementById("music-player-header-slot"));
+  }, []);
 
   // Load YouTube IFrame API once
   useEffect(() => {
@@ -117,29 +134,81 @@ export default function MusicPlayer({ inline = false }: { inline?: boolean }) {
     playerRef.current.previousVideo();
   }
 
-  const isPlaying        = state === "playing";
-  const showControls     = !muted;
-  const showLabelVisible = !inline && (showLabel || muted);
-  const labelText        = muted ? "CLICK TO LISTEN" : isPlaying ? "PAUSE" : "PLAY";
+  const isPlaying    = state === "playing";
+  const showControls = !muted;
+  const labelText    = muted ? "CLICK TO LISTEN" : isPlaying ? "PAUSE" : "PLAY";
 
-  const mainBtnClass = [
-    inline ? "mp-main-btn-inline" : "mp-main-btn",
+  const mainBtnFloating = [
+    "mp-main-btn",
     wiggle              ? "mp-wiggle" : "",
     isPlaying && !muted ? "mp-pulse"  : "",
   ].filter(Boolean).join(" ");
 
-  const row = (
-    <div className="mp-row">
-      {/* Prev button */}
-      <div className={`mp-side-wrap${showControls ? " mp-side-visible" : ""}`}>
-        <button className="mp-side-btn" onClick={handlePrev} title="Previous track" aria-label="Previous track">
+  const mainBtnInline = [
+    "mp-main-btn-inline",
+    wiggle              ? "mp-wiggle" : "",
+    isPlaying && !muted ? "mp-pulse"  : "",
+  ].filter(Boolean).join(" ");
+
+  const sideWrapClass = (visible: boolean) =>
+    `mp-side-wrap${visible ? " mp-side-visible" : ""}`;
+
+  const controls = (
+    <>
+      <div className={sideWrapClass(showControls)}>
+        <button className="mp-side-btn" onClick={handlePrev} title="Previous" aria-label="Previous track">
           <BackIcon />
         </button>
       </div>
+      <div className={sideWrapClass(showControls)}>
+        <button className="mp-side-btn" onClick={handleNext} title="Next" aria-label="Next track">
+          <SkipIcon />
+        </button>
+      </div>
+    </>
+  );
 
-      {/* Main button */}
+  const floatingPlayer = (
+    <div className="mp-wrapper">
+      <div className="mp-row">
+        <div className={sideWrapClass(showControls)}>
+          <button className="mp-side-btn" onClick={handlePrev} title="Previous" aria-label="Previous track">
+            <BackIcon />
+          </button>
+        </div>
+        <button
+          className={mainBtnFloating}
+          onClick={handleClick}
+          onMouseEnter={() => setShowLabel(true)}
+          onMouseLeave={() => setShowLabel(false)}
+          title={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
+          aria-label={muted ? "Click to hear music" : isPlaying ? "Pause music" : "Play music"}
+        >
+          <span className="mp-icon">
+            {isPlaying && !muted ? <AudioBars /> : <MusicNote />}
+          </span>
+          <span className={`mp-label${showLabel || muted ? " mp-label-visible" : ""}`}>
+            {labelText}
+          </span>
+        </button>
+        <div className={sideWrapClass(showControls)}>
+          <button className="mp-side-btn" onClick={handleNext} title="Next" aria-label="Next track">
+            <SkipIcon />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const inlinePlayer = (
+    <div className="mp-row" style={{ gap: 4 }}>
+      <div className={sideWrapClass(showControls)} style={{ gap: 4 }}>
+        <button className="mp-side-btn mp-side-btn-sm" onClick={handlePrev} title="Previous" aria-label="Previous track">
+          <BackIcon />
+        </button>
+      </div>
       <button
-        className={mainBtnClass}
+        className={mainBtnInline}
         onClick={handleClick}
         onMouseEnter={() => setShowLabel(true)}
         onMouseLeave={() => setShowLabel(false)}
@@ -149,30 +218,26 @@ export default function MusicPlayer({ inline = false }: { inline?: boolean }) {
         <span className="mp-icon">
           {isPlaying && !muted ? <AudioBars /> : <MusicNote />}
         </span>
-        {!inline && (
-          <span className={`mp-label${showLabelVisible ? " mp-label-visible" : ""}`}>
-            {labelText}
-          </span>
-        )}
-        {inline && showLabel && (
+        {showLabel && (
           <span className="mp-label mp-label-visible" style={{ fontSize: "9px" }}>
             {labelText}
           </span>
         )}
       </button>
-
-      {/* Next button */}
-      <div className={`mp-side-wrap${showControls ? " mp-side-visible" : ""}`}>
-        <button className="mp-side-btn" onClick={handleNext} title="Next track" aria-label="Next track">
+      <div className={sideWrapClass(showControls)} style={{ gap: 4 }}>
+        <button className="mp-side-btn mp-side-btn-sm" onClick={handleNext} title="Next" aria-label="Next track">
           <SkipIcon />
         </button>
       </div>
     </div>
   );
 
+  // suppress unused variable warning
+  void controls;
+
   return (
     <>
-      {/* Hidden YouTube iframe target */}
+      {/* Hidden YouTube iframe target — always in DOM */}
       <div
         aria-hidden="true"
         style={{
@@ -184,7 +249,11 @@ export default function MusicPlayer({ inline = false }: { inline?: boolean }) {
         <div id="yt-bg-player" />
       </div>
 
-      {inline ? row : <div className="mp-wrapper">{row}</div>}
+      {/* Mobile: floating bottom-right */}
+      {isMobile && floatingPlayer}
+
+      {/* Desktop: portal into header slot */}
+      {!isMobile && headerSlot && createPortal(inlinePlayer, headerSlot)}
     </>
   );
 }
