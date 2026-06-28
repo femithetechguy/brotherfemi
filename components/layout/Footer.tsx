@@ -1,10 +1,10 @@
 import { getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
 const NAV_LINKS = [
-  { label: "The Word", href: "/#the-word" },
+  { label: "Word", href: "/word" },
   { label: "Blog", href: "/blog" },
-  { label: "Hymns", href: "/#hymns" },
-  { label: "New Life", href: "/#newlife" },
+  { label: "Hymns", href: "/hymns" },
+  { label: "New Life", href: "/newlife" },
 ];
 
 

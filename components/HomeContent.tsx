@@ -22,7 +22,7 @@ export default function HomeContent() {
       <HeartCry   section={s("heart-cry")}   heartCry={brotherFemi.heartCry} />
       <About      section={s("about")}       brotherFemi={brotherFemi} />
       <Mentors    section={s("mentors")}     mentors={mentors} />
-      <TheWord    section={s("the-word")} />
+      <TheWord    section={s("word")} />
       <Blog       section={s("blog")} />
       <Hymns      section={s("hymns")} />
       <NewLife    section={s("newlife")} />

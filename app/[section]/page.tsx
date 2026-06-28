@@ -11,7 +11,7 @@ const SECTION_SLUGS = [
   "heart-cry",
   "about",
   "mentors",
-  "the-word",
+  "word",
   "hymns",
   "newlife",
   "contact",

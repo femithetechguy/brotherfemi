@@ -6,7 +6,7 @@ import { getSections, getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
 import type { Section } from "@/types";
 
-const NAV_IDS = ["about", "the-word", "blog", "newlife", "contact"];
+const NAV_IDS = ["about", "word", "blog", "newlife", "contact"];
 
 const NAV_ICONS: Record<string, ReactElement> = {
   about: (
@@ -15,7 +15,7 @@ const NAV_ICONS: Record<string, ReactElement> = {
       <line x1="4" y1="5.5" x2="12" y2="5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   ),
-  "the-word": (
+  word: (
     <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
       <path d="M8 13V4.5C7 3.5 5.5 3 4 3H2v9h2c1.5 0 3 .5 4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
       <path d="M8 13V4.5c1-1 2.5-1.5 4-1.5h2v9h-2c-1.5 0-3 .5-4 1.5z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
@@ -42,7 +42,7 @@ const NAV_ICONS: Record<string, ReactElement> = {
 
 const ALL_OBSERVE_IDS = [
   "worship", "mission", "vision", "core-values", "heart-cry",
-  "about", "mentors", "the-word", "blog", "hymns", "newlife", "contact",
+  "about", "mentors", "word", "blog", "hymns", "newlife", "contact",
 ];
 
 function buildNavSections(sections: Section[]) {
