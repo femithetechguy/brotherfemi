@@ -159,8 +159,8 @@ export default function Header() {
               target={c.url.startsWith("mailto") ? undefined : "_blank"}
               rel="noopener noreferrer"
               aria-label={c.type}
-              style={{ color: getSocialColor(c.type) }}
-              className="social-icon"
+              style={{ "--brand": getSocialColor(c.type) } as React.CSSProperties}
+              className="social-icon social-icon--header"
             >
               <SocialIcon type={c.type} />
             </a>
@@ -259,8 +259,8 @@ export default function Header() {
                 target={c.url.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={c.type}
-                style={{ color: getSocialColor(c.type) }}
-                className="social-icon"
+                style={{ "--brand": getSocialColor(c.type) } as React.CSSProperties}
+                className="social-icon social-icon--header"
               >
                 <SocialIcon type={c.type} />
               </a>

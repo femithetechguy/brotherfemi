@@ -126,6 +126,15 @@ html.mobile-nav-open body > *:not(header) {
   filter: drop-shadow(0 0 6px currentColor);
 }
 
+/* Header variant: neutral at rest → brand color on hover */
+.social-icon--header {
+  color: rgba(159, 176, 192, 0.75);
+  transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.social-icon--header:hover {
+  color: var(--brand);
+}
+
 /* ─── Music Player ─────────────────────────────────────────────────────────── */
 .mp-wrapper {
   position: fixed;
