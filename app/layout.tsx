@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header, Footer } from "@/components/layout";
 import MusicPlayer from "@/components/ui/MusicPlayer";
+import { BibleVerseProvider } from "@/components/ui/BibleVerseContext";
+import BibleVerseModal from "@/components/ui/BibleVerseModal";
 
 export const metadata: Metadata = {
   title: "Brother Femi — Bond Servant of Christ",
@@ -25,10 +27,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full" suppressHydrationWarning>
       <body className="min-h-full flex flex-col antialiased" suppressHydrationWarning>
-        <Header />
-        {children}
-        <Footer />
-        <MusicPlayer />
+        <BibleVerseProvider>
+          <Header />
+          {children}
+          <Footer />
+          <MusicPlayer />
+          <BibleVerseModal />
+        </BibleVerseProvider>
       </body>
     </html>
   );
