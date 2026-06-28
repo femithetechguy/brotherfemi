@@ -75,6 +75,16 @@ html.mobile-nav-open body > *:not(header) {
   transition: filter 0.2s ease;
 }
 
+.social-icon {
+  opacity: 0.7;
+  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+.social-icon:hover {
+  opacity: 1;
+  transform: translateY(-3px) scale(1.2);
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

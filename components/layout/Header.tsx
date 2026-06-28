@@ -165,7 +165,7 @@ export default function Header() {
               rel="noopener noreferrer"
               aria-label={c.type}
               style={{ color: getSocialColor(c.type) }}
-              className="opacity-70 hover:opacity-100 transition-opacity"
+              className="social-icon"
             >
               <SocialIcon type={c.type} />
             </a>
@@ -233,8 +233,8 @@ export default function Header() {
                 target={c.url.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={c.type}
-                style={{ color: "var(--color-gold)" }}
-                className="opacity-70 hover:opacity-100 transition-opacity"
+                style={{ color: getSocialColor(c.type) }}
+                className="social-icon"
               >
                 <SocialIcon type={c.type} />
               </a>

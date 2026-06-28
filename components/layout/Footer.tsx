@@ -108,7 +108,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               aria-label={link.type}
               style={{ color: getSocialColor(link.type) }}
-              className="opacity-60 hover:opacity-100 transition-opacity"
+              className="social-icon"
             >
               <SocialIcon type={link.type} size={22} />
             </a>
