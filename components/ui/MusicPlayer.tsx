@@ -52,8 +52,8 @@ export default function MusicPlayer() {
 
   useEffect(() => {
     if (document.getElementById("yt-iframe-api")) {
-      if (window.YT?.Player) initPlayer();
-      else window.onYouTubeIframeAPIReady = initPlayer;
+      if (window.YT?.Player) createPlayer(0, true);
+      else window.onYouTubeIframeAPIReady = () => createPlayer(0, true);
       return;
     }
     const script = document.createElement("script");
@@ -61,7 +61,7 @@ export default function MusicPlayer() {
     script.src   = "https://www.youtube.com/iframe_api";
     script.async = true;
     document.head.appendChild(script);
-    window.onYouTubeIframeAPIReady = initPlayer;
+    window.onYouTubeIframeAPIReady = () => createPlayer(0, true);
     return () => { playerRef.current?.destroy(); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -74,14 +74,26 @@ export default function MusicPlayer() {
     return () => clearTimeout(t);
   }, []);
 
-  function initPlayer() {
+  // Shared player factory — called on init and on playlist switch.
+  // destroy() removes the YT iframe but leaves no element behind, so we
+  // reset the target div via the wrapper before creating a new player.
+  function createPlayer(playlistIndex: number, startMuted: boolean) {
     if (playerRef.current) return;
+
+    // Ensure the target div exists (may have been removed by a prior destroy())
+    const wrap = document.getElementById("yt-bg-player-wrap");
+    if (wrap && !document.getElementById("yt-bg-player")) {
+      const div = document.createElement("div");
+      div.id = "yt-bg-player";
+      wrap.appendChild(div);
+    }
+
     playerRef.current = new window.YT.Player("yt-bg-player", {
       height: "1",
       width:  "1",
       playerVars: {
         listType:       "playlist",
-        list:           PLAYLISTS[0].id,
+        list:           PLAYLISTS[playlistIndex].id,
         index:          START_INDEX,
         autoplay:       1,
         mute:           1,
@@ -98,6 +110,7 @@ export default function MusicPlayer() {
         onReady(e: any) {
           setReady(true);
           e.target.setVolume(55);
+          if (!startMuted) e.target.unMute();
           e.target.playVideo();
           setState("playing");
         },
@@ -141,14 +154,20 @@ export default function MusicPlayer() {
   }
 
   function handlePlaylistSwitch(index: number) {
-    if (index === activePlaylist || !ready || !playerRef.current) return;
+    if (index === activePlaylist) return;
+
+    const wasMuted = muted;
     setActivePlaylist(index);
-    playerRef.current.loadPlaylist({
-      list: PLAYLISTS[index].id,
-      listType: "playlist",
-      index: 0,
-    });
-    if (muted) playerRef.current.mute();
+    setReady(false);
+    setState("idle");
+
+    if (playerRef.current) {
+      playerRef.current.destroy();
+      playerRef.current = null;
+    }
+
+    // createPlayer checks for the target div and recreates it if needed
+    createPlayer(index, wasMuted);
   }
 
   const isPlaying    = state === "playing";
@@ -231,8 +250,9 @@ export default function MusicPlayer() {
 
   return (
     <>
-      {/* Hidden YouTube iframe target — always in DOM */}
+      {/* Wrapper keeps a stable DOM parent so we can recreate the YT target div after destroy() */}
       <div
+        id="yt-bg-player-wrap"
         aria-hidden="true"
         style={{
           position: "fixed", bottom: 0, left: 0,
