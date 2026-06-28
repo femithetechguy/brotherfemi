@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 9: Hero optimization, social icon system, UI polish — FTTG-56, FTTG-57, FTTG-58)
+Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, nav icons, nav reorganisation — FTTG-58, FTTG-59, FTTG-55)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -113,6 +113,24 @@ Last updated: 2026-06-27 (Session 9: Hero optimization, social icon system, UI p
 - [x] Added `white-space: nowrap` to prevent heading orphan on mobile
 - [x] Added animated scroll indicator (bobbing chevron + "SCROLL" label) at bottom of hero
 - [x] Removed `brotherFemi` prop from Worship — no longer needed; `page.tsx` updated accordingly
+
+### Phase 2j — Music Player + Nav Overhaul (FTTG-58, FTTG-59, FTTG-55)
+- [x] `MusicPlayer.tsx` created — single instance, portals into `#music-player-header-slot` (desktop) or `#music-player-mobile-slot` (mobile) via `createPortal`; detects viewport with `matchMedia("(max-width: 767px)")`
+- [x] YouTube IFrame API integration — hidden 1×1 iframe, autoplay muted, looping playlist
+- [x] Controls: prev / play-pause / next / playlist switcher; slide-in label on hover; audio-bars animation when playing; gold-pulse when idle
+- [x] Playlist switcher — 4 playlists: Worship (`PLXlw5wgpCx0w`), Praise (`PLfDBbmAY2PYE`), Messages (`PL9GoCpwDjkCVHSesG3mJ4qmLDWratKeg8`), Hymns (`PL9GoCpwDjkCX5gXgnt6Xb0gQi0gCRfVgN`)
+- [x] Playlist switching uses destroy-and-recreate pattern — `playerRef.destroy()` → null → `createPlayer(index, wasMuted)` (avoids YouTube IFrame API `loadPlaylist()` reliability issues)
+- [x] Scrolling track title strip — appears below header when unmuted; duplicated text marquee `@keyframes mpMarquee`; `position: fixed; top: 64px; right: max(1rem, calc((100vw - 80rem) / 2))` keeps it aligned with max-w-7xl container on any screen width
+- [x] Playlist row also `position: fixed` with same right calculation — fully decoupled from header flex layout
+- [x] Track title captured from `e.target.getVideoData().title` in `onStateChange PLAYING`
+- [x] Desktop slot: gold divider + `#music-player-header-slot` div added after social icons in Header
+- [x] Mobile slot: `#music-player-mobile-slot` with `flex-1 justify-center` between logo and hamburger
+- [x] `MusicPlayer` rendered in `app/layout.tsx` after Footer
+- [x] Nav icons — small 12px inline SVGs on all 5 desktop links (cross=About, book=Word, pen=Blog, flame=New Life, envelope=Contact)
+- [x] Nav label: "The Word" → "Word"
+- [x] Nav reorganised: Hymns replaced by New Life — Hymns now lives exclusively in the music player playlist switcher, eliminating duplication
+- [x] `ReactElement` type used for icon map (not `JSX.Element` — removed in React 19)
+- [x] WCAG contrast on track strip text: full `#C9A84C` (6.7:1 on navy) not `rgba(…,0.8)`
 
 ### Phase 2i — General UI Polish (FTTG-58)
 - [x] Social icon hover animation: lift (translateY -3px) + scale (1.2×) + brand-color `drop-shadow` glow — `.social-icon` CSS class in globals.css
