@@ -100,7 +100,6 @@ export default function About({ section, brotherFemi }: Props) {
               style={{ maxWidth: "320px", height: "380px" }}
               frameBorder="0"
               scrolling="no"
-              allowTransparency
               allowFullScreen
             />
           </div>
