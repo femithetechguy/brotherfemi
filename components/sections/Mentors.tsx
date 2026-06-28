@@ -1,7 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import type { Section, Mentor } from "@/types";
+
+const MentorModal = dynamic(() => import("@/components/ui/MentorModal"), { ssr: false });
 
 interface Props {
   section: Section;
@@ -10,6 +13,7 @@ interface Props {
 
 export default function Mentors({ section, mentors }: Props) {
   const gridRef = useRef<HTMLDivElement>(null);
+  const [active, setActive] = useState<Mentor | null>(null);
 
   useEffect(() => {
     const cards = gridRef.current?.querySelectorAll<HTMLElement>(".mentor-card");
@@ -68,12 +72,10 @@ export default function Mentors({ section, mentors }: Props) {
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"
         >
           {mentors.map((mentor, i) => (
-            <a
+            <button
               key={mentor.name}
-              href={mentor.minstry_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mentor-card flex flex-col items-center text-center py-6 px-4 rounded-sm"
+              onClick={() => setActive(mentor)}
+              className="mentor-card flex flex-col items-center text-center py-7 px-4 rounded-sm w-full"
               style={{ "--delay": `${(i % 5) * 0.07}s` } as React.CSSProperties}
             >
               {/* Cross */}
@@ -82,7 +84,7 @@ export default function Mentors({ section, mentors }: Props) {
                 height="26"
                 viewBox="0 0 18 26"
                 fill="none"
-                className="mb-4 flex-shrink-0"
+                className="mb-5 flex-shrink-0"
                 style={{ color: "var(--color-gold)", opacity: 0.7 }}
                 aria-hidden="true"
               >
@@ -91,10 +93,10 @@ export default function Mentors({ section, mentors }: Props) {
               </svg>
 
               <span
-                className="leading-snug mb-1.5"
+                className="leading-snug mb-2"
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: "0.8rem",
+                  fontSize: "0.88rem",
                   fontWeight: 600,
                   color: "var(--color-dark-text)",
                   lineHeight: 1.45,
@@ -107,17 +109,26 @@ export default function Mentors({ section, mentors }: Props) {
                 style={{
                   fontFamily: "var(--font-body)",
                   fontStyle: "italic",
-                  fontSize: "0.68rem",
+                  fontSize: "0.73rem",
                   color: "var(--color-dark-muted)",
                   lineHeight: 1.5,
                 }}
               >
                 {mentor.Ministry}
               </span>
-            </a>
+            </button>
           ))}
         </div>
       </div>
+
+      {active && (
+        <MentorModal
+          name={active.name}
+          ministry={active.Ministry}
+          url={active.minstry_url}
+          onClose={() => setActive(null)}
+        />
+      )}
     </section>
   );
 }
