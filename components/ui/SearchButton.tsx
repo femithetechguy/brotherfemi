@@ -25,7 +25,7 @@ export default function SearchButton() {
         onClick={() => setOpen(true)}
         aria-label="Search"
         title="Search (⌘K)"
-        className="flex items-center justify-center"
+        className="flex items-center justify-center p-3"
         style={{ color: "rgba(201,168,76,0.7)", transition: "color 0.2s" }}
         onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
         onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(201,168,76,0.7)")}
