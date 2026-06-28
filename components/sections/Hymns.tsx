@@ -1,4 +1,5 @@
 import type { Section } from "@/types";
+import BibleVerseLink from "@/components/ui/BibleVerseLink";
 
 interface Props { section: Section }
 
@@ -37,10 +38,10 @@ export default function Hymns({ section }: Props) {
                 &ldquo;{section.bibleVerse}&rdquo;
               </p>
               {section.reference && (
-                <a
-                  href={section.bible_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <BibleVerseLink
+                  verse={section.bibleVerse!}
+                  reference={section.reference}
+                  bibleUrl={section.bible_url}
                   style={{
                     fontFamily: "var(--font-ui)",
                     fontSize: "0.7rem",
@@ -50,7 +51,7 @@ export default function Hymns({ section }: Props) {
                   }}
                 >
                   — {section.reference}
-                </a>
+                </BibleVerseLink>
               )}
             </blockquote>
           )}

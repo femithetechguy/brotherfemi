@@ -1,4 +1,5 @@
 import type { Section, BrotherFemi } from "@/types";
+import BibleVerseLink from "@/components/ui/BibleVerseLink";
 
 interface Props {
   section: Section;
@@ -54,10 +55,10 @@ export default function About({ section, brotherFemi }: Props) {
             >
               &ldquo;{anchor.bibleVerse}&rdquo;
             </p>
-            <a
-              href={anchor.bible_url}
-              target="_blank"
-              rel="noopener noreferrer"
+            <BibleVerseLink
+              verse={anchor.bibleVerse}
+              reference={anchor.reference}
+              bibleUrl={anchor.bible_url}
               style={{
                 fontFamily: "var(--font-ui)",
                 fontSize: "0.7rem",
@@ -67,7 +68,7 @@ export default function About({ section, brotherFemi }: Props) {
               }}
             >
               — {anchor.reference}
-            </a>
+            </BibleVerseLink>
           </blockquote>
         </div>
 

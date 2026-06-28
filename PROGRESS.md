@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, nav icons, nav reorganisation — FTTG-58, FTTG-59, FTTG-55)
+Last updated: 2026-06-28 (Session 11: FTTG-61 clean section URLs, FTTG-60 search, FTTG-62 bible verse modal — PR to develop pending)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -114,6 +114,24 @@ Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, na
 - [x] Added animated scroll indicator (bobbing chevron + "SCROLL" label) at bottom of hero
 - [x] Removed `brotherFemi` prop from Worship — no longer needed; `page.tsx` updated accordingly
 
+### Phase 2k — Clean Section URLs + Search + Bible Verse Modal (FTTG-61, FTTG-60, FTTG-62)
+- [x] FTTG-61: Route-based section URLs — `/worship`, `/about`, `/word`, `/contact` etc. instead of `/#hash` links
+- [x] `app/[section]/page.tsx` — dynamic route with `generateStaticParams` for all 11 section slugs; renders `<HomeContent />` + `<ScrollToSection id>` to scroll-on-mount
+- [x] `components/HomeContent.tsx` — server component extracted from `app/page.tsx` to share between `/` and `/[section]` routes
+- [x] `components/ui/ScrollToSection.tsx` — client-only component that calls `scrollIntoView({ behavior: "instant" })` on mount; prevents flash
+- [x] Section ID `the-word` → `word` in `data/sections.json`; all nav hrefs and footer links updated to `/word`
+- [x] Header: all nav hrefs changed from `/#section-id` to `/section-id`; `IntersectionObserver` uses `window.history.replaceState` to sync URL on scroll (worship → `/`, others → `/id`)
+- [x] FTTG-60: Client-side fuzzy search with Fuse.js v7.4.2
+- [x] `components/ui/SearchButton.tsx` — search icon with `p-3` (40×40px touch target on mobile); ⌘K / Ctrl+K global shortcut; lazy-loads `SearchModal` via `next/dynamic({ ssr: false })`
+- [x] `components/ui/SearchModal.tsx` — portaled full-screen overlay; Fuse.js with keys `title(0.6)/subtitle(0.2)/body(0.2)`, threshold 0.4; ↑↓ navigate, Enter go, Esc close; results show TYPE/title/subtitle
+- [x] `lib/search.ts` — `buildSearchIndex()` returns `SearchItem[]` from all sections, blog posts, mentors; `flatText()` recursively flattens nested JSON to string
+- [x] `SearchButton` added to Header (desktop: after music player with divider; mobile: alongside hamburger)
+- [x] FTTG-62: Bible verse modal on reference click
+- [x] `components/ui/BibleVerseLink.tsx` — drop-in replacement for `<a href={bible_url}>` tags; renders a `<button>` that opens `BibleVerseModal` lazily; accepts `verse`, `reference`, `bibleUrl`, `children`
+- [x] `components/ui/BibleVerseModal.tsx` — non-interruptive floating card (no overlay, no scroll lock); portaled to `document.body`; mobile: full-width bottom sheet with `0.75rem` margin all sides; desktop: anchored bottom-right, 420px max-width; 4px gold gradient top bar; ESC / X closes; `bvmSlideUp` animation
+- [x] 5 section files updated to use `BibleVerseLink`: Worship, TheWord, Hymns, Contact, About
+- [x] Build passes clean — zero TypeScript errors
+
 ### Phase 2j — Music Player + Nav Overhaul (FTTG-58, FTTG-59, FTTG-55)
 - [x] `MusicPlayer.tsx` created — single instance, portals into `#music-player-header-slot` (desktop) or `#music-player-mobile-slot` (mobile) via `createPortal`; detects viewport with `matchMedia("(max-width: 767px)")`
 - [x] YouTube IFrame API integration — hidden 1×1 iframe, autoplay muted, looping playlist
@@ -175,10 +193,15 @@ Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, na
 
 ---
 
-## ⚠️ Not Started
+## 🔁 In Progress
 
-### Phase 2 — Remaining Issues
-- [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
+### Phase 2 — Final Deploy (FTTG-53)
+- [x] PR #47 merged: `feature/FTTG-55-visual-redesign` → `develop` (2026-06-27)
+- [x] PR #48 opened: `develop` → `master` — https://github.com/femithetechguy/brotherfemi/pull/48
+- [ ] Verify Vercel preview build on PR #48 passes
+- [ ] Merge PR #48 → brotherfemi.org goes live on Next.js
+- [ ] Confirm production site loads correctly at brotherfemi.org
+- [ ] Delete stale feature branches (FTTG-47 through FTTG-51, FTTG-54, FTTG-55, FTTG-59)
 
 ### Phase 3 — Content & Enhancements
 - [ ] Add mission content (currently "To be disclosed" in sections.json)
@@ -201,6 +224,18 @@ Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, na
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 11 — 2026-06-28
+**Completed:**
+- FTTG-61: Clean section URLs — route-based (`/worship`, `/about`, `/word` etc.) instead of hash links; `[section]` dynamic route + `ScrollToSection` for scroll-on-mount; URL synced via `replaceState` on scroll; `the-word` → `word` rename throughout
+- FTTG-60: Client-side search — Fuse.js fuzzy search across sections/blog/mentors; ⌘K shortcut; `SearchButton` in Header (desktop + mobile); `SearchModal` portaled overlay with keyboard navigation
+- FTTG-62: Bible verse modal — `BibleVerseLink` replaces anchor tags on all reference clicks; `BibleVerseModal` floating card (non-blocking, no overlay, no scroll lock); mobile bottom sheet with margins; desktop bottom-right corner; 4px gold top bar; ESC to close
+
+**Key Decisions:**
+- `generateStaticParams` + `ScrollToSection` preferred over client-side router navigation — avoids full-page re-renders and keeps scroll behavior snappy with `behavior: "instant"`
+- `window.history.replaceState` used for URL sync on scroll (not Next.js router) — router pushes create history entries which break the back button for in-page scrolling
+- `aria-modal="false"` on BibleVerseModal — it's not a true modal (doesn't trap focus, page stays interactive); correct ARIA semantics for a supplemental panel
+- Fuse.js index built once at module level (`buildSearchIndex()` called outside component) — avoids rebuilding on every keystroke or re-render
 
 ### Session 9 — 2026-06-27
 **Completed:**
