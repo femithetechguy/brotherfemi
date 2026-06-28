@@ -1,4 +1,5 @@
 import type { Section } from "@/types";
+import BibleVerseLink from "@/components/ui/BibleVerseLink";
 
 interface Props {
   section: Section;
@@ -73,10 +74,10 @@ export default function Worship({ section }: Props) {
             </p>
             <span className="verse-underline" />
             {section.reference && (
-              <a
-                href={section.bible_url}
-                target="_blank"
-                rel="noopener noreferrer"
+              <BibleVerseLink
+                verse={section.bibleVerse!}
+                reference={section.reference}
+                bibleUrl={section.bible_url}
                 className="inline-block mt-3"
                 style={{
                   fontFamily: "var(--font-ui)",
@@ -88,7 +89,7 @@ export default function Worship({ section }: Props) {
                 }}
               >
                 — {section.reference}
-              </a>
+              </BibleVerseLink>
             )}
           </div>
         )}
