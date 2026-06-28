@@ -50,11 +50,10 @@ export default function Worship({ section }: Props) {
             fontFamily: "var(--font-display)",
             fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
             fontWeight: 700,
-            color: "var(--color-dark-text)",
+            color: "var(--color-gold)",
           }}
         >
-          Welcome,{" "}
-          <span style={{ color: "var(--color-gold)", whiteSpace: "nowrap" }}>Brother Femi</span>
+          Brother Femi
         </h1>
 
         {/* Scripture quote */}
