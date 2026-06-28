@@ -125,6 +125,28 @@ html.mobile-nav-open body > *:not(header) {
   filter: drop-shadow(0 0 6px currentColor);
 }
 
+/* Core value cards */
+@keyframes cvReveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cv-card {
+  background: var(--color-cobalt);
+  border: 1px solid rgba(201,168,76,0.1);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.cv-card--visible {
+  animation: cvReveal 0.6s cubic-bezier(0.16,1,0.3,1) both;
+  animation-delay: var(--cv-delay, 0s);
+}
+.cv-card:hover {
+  border-color: rgba(201,168,76,0.4);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(201,168,76,0.15);
+  transform: translateY(-5px);
+}
+
 /* Mentor cards */
 .mentor-card {
   background: var(--color-cobalt);
