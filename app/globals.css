@@ -117,13 +117,13 @@ html.mobile-nav-open body > *:not(header) {
 }
 
 .social-icon {
-  opacity: 0.7;
-  transition: opacity 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 .social-icon:hover {
   opacity: 1;
   transform: translateY(-3px) scale(1.2);
-  filter: drop-shadow(0 0 8px currentColor);
+  filter: drop-shadow(0 0 6px currentColor);
 }
 
 /* ─── Music Player ─────────────────────────────────────────────────────────── */
@@ -382,6 +382,7 @@ html.mobile-nav-open body > *:not(header) {
   75%       { transform: rotate(-3deg) scale(1.02); }
   90%       { transform: rotate(3deg)  scale(1.02); }
 }
+
 
 @keyframes bvmSlideUp {
   from { opacity: 0; transform: translateY(24px); }
