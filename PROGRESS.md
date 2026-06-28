@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-28 (Session 12: UI polish — section redesigns, animations, nav fix, pronoun fix — PR to develop pending)
+Last updated: 2026-06-28 (Session 13: section deep redesigns — TheWord/Blog/Hymns/NewLife; iOS music player skip fix)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -128,6 +128,20 @@ Last updated: 2026-06-28 (Session 12: UI polish — section redesigns, animation
 - [x] Nav click fix — nav `<a>` links now call `e.preventDefault()` + `scrollIntoView({ behavior: "smooth" })` instead of triggering full page reload; eliminates header visual shift (scrolled/activeId state no longer resets)
 - [x] Dolapo Lawal added to `data/mentors.json`; duplicate entry removed (30 mentors total)
 
+### Phase 2m — Section Deep Redesigns & Mobile Player Fix (Session 13, FTTG-61)
+- [x] TheWord: cobalt bg (was navy — clashed with Mentors), open-book SVG watermark at 4% opacity, scroll-reveal (`word-panel`/`word-visible`), label contrast dark-muted
+- [x] Blog: 2×2 grid (`sm:grid-cols-2`) fixes orphaned 4th card; Cinzel h2 with clamp + gold-bar; staggered scroll-reveal via `--blog-delay` CSS var; label fixed to "Blog" (was hardcoded "Reflections")
+- [x] Hymns: navy bg + gold borders; Cinzel h2 "Hymns & Worship"; right column replaced broken play-button rows with "Now Playing" cobalt panel (music note icon, Cinzel label, lora description, gold footer note); scroll-reveal via `about-panel`/`about-visible`
+- [x] NewLife — BibleRefPill: new `components/ui/BibleRefPill.tsx` — pill-shaped button opening BibleVerseModal; `dark` prop for navy/cobalt vs light backgrounds
+- [x] NewLife — Bible verse text: all 18 reference objects in `data/sections.json` updated with `bibleVerse` field (NKJV); 4 in core_beliefs_reference, 2 in spiritual_newlife, 12 in bibleReferences
+- [x] NewLife — FingerIcon: SVG component rendering 5 fingers with active index highlighted; one per Five Finger Prayer card
+- [x] NewLife — Five Finger Prayer: 5th card orphan fixed (`sm:col-span-2 sm:max-w-xs sm:mx-auto lg:col-span-1`); scripture refs → BibleRefPill
+- [x] NewLife — Spiritual Warfare: navy bg; shield SVG watermark; two-column layout; h2 "Stand Firm in the Faith"; labeled pill groups
+- [x] NewLife — Stub sections (christian/acknowledgement/confession) consolidated into 3-card "Steps into New Life" grid instead of 3 separate flat blocks
+- [x] NewLife — Altar Call: prayer text grouped into stanzas (split on `""` empty string); tight `space-y-1` within stanzas, `space-y-8` between; "Heavenly Father," gold salutation; "Amen." gold + bold; Cinzel h2 "A Prayer of Surrender" + gold-bar; cross SVG watermark at 4%
+- [x] NewLife — Children's Prayer: cream bg; structured parser groups text by `⸻` divider into prayer blocks; each block: gold numbered circle badge + uppercase Cinzel theme, cobalt italic salutation, opener paragraph, petition list with gold `—` leaders; thin gold dividers between blocks; "In Jesus' name, Amen." centered gold; heart SVG watermark at 4%
+- [x] MusicPlayer — iOS mobile fix: `muteRef` mirrors `muted` for use in YT event handler closure; `trackIndexRef` manually tracks playlist position; `handleNext`/`handlePrev` use `playVideoAt(index)` instead of `nextVideo()`/`previousVideo()` (more reliable on iOS); `onStateChange` PLAYING re-asserts `unMute()` + `setVolume(55)` on every new track when not muted — fixes iOS audio reset on video change; `trackIndexRef` reset on playlist switch
+
 ### Phase 2k — Clean Section URLs + Search + Bible Verse Modal (FTTG-61, FTTG-60, FTTG-62)
 - [x] FTTG-61: Route-based section URLs — `/worship`, `/about`, `/word`, `/contact` etc. instead of `/#hash` links
 - [x] `app/[section]/page.tsx` — dynamic route with `generateStaticParams` for all 11 section slugs; renders `<HomeContent />` + `<ScrollToSection id>` to scroll-on-mount
@@ -236,6 +250,20 @@ Last updated: 2026-06-28 (Session 12: UI polish — section redesigns, animation
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 13 — 2026-06-28
+**Completed:**
+- TheWord: cobalt bg, open-book watermark, scroll-reveal, contrast fixes
+- Blog: 2×2 grid (no orphan), Cinzel heading + gold-bar, staggered scroll-reveal, label = "Blog"
+- Hymns: navy bg, "Now Playing" cobalt right panel replaces broken play-button rows, scroll-reveal
+- NewLife deep redesigns: BibleRefPill component; verse text for all 18 scripture refs in JSON; FingerIcon SVG per Five Finger Prayer card; 5th card orphan fix; Spiritual Warfare navy bg + shield watermark; stub sections into 3-card grid; Altar Call stanza grouping + cross watermark + Cinzel heading; Children's Prayer structured hierarchy (parser, numbered badges, salutation, petition list, heart watermark)
+- MusicPlayer iOS fix: `playVideoAt()` + `muteRef` + re-assert `unMute()` on PLAYING — fixes "plays one song, won't skip" on mobile
+
+**Key Decisions:**
+- Children's Prayer parser uses `⸻` (U+2E3B three-em dash) as stanza divider — matches exact JSON character; closing line detected by absence of `/^\d+\./` header pattern
+- `playVideoAt(index)` preferred over `nextVideo()` on mobile — more reliable on iOS hidden players; manually tracked `trackIndexRef` keeps the index accurate across tracks
+- Re-asserting `unMute()` in `onStateChange PLAYING` is the correct fix for iOS audio reset — iOS mutes each new video load; re-unmuting on every PLAYING event corrects it without requiring another user gesture (since playback itself was already gesture-initiated)
+- Altar Call stanzas split on `""` empty string entries — existing JSON structure already encodes the natural stanza breaks; no JSON changes needed
 
 ### Session 12 — 2026-06-28
 **Completed:**
