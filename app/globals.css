@@ -125,6 +125,31 @@ html.mobile-nav-open body > *:not(header) {
   filter: drop-shadow(0 0 6px currentColor);
 }
 
+/* Mentor cards */
+.mentor-card {
+  background: var(--color-cobalt);
+  border: 1px solid rgba(201,168,76,0.12);
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+.mentor-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: var(--delay, 0s);
+}
+.mentor-card:hover {
+  background: #1e3560;
+  border-color: rgba(201,168,76,0.45);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.35), 0 0 0 1px rgba(201,168,76,0.18);
+  transform: translateY(-4px);
+}
+
 /* ─── Music Player ─────────────────────────────────────────────────────────── */
 .mp-wrapper {
   position: fixed;
