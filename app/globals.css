@@ -412,6 +412,33 @@ html.mobile-nav-open body > *:not(header) {
   to { transform: rotate(360deg); }
 }
 
+/* Mission / Vision animations */
+@keyframes flameDance {
+  0%, 100% { transform: scaleX(1)   scaleY(1)    skewX(0deg); }
+  25%       { transform: scaleX(0.94) scaleY(1.04) skewX(-2deg); }
+  75%       { transform: scaleX(1.06) scaleY(0.97) skewX(2deg); }
+}
+@keyframes eyePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+@keyframes rayFade {
+  0%, 100% { opacity: 0.15; }
+  50%       { opacity: 0.55; }
+}
+@keyframes mvPulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 1;   transform: scale(1.4); }
+}
+@keyframes mvReveal {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.mission-icon { animation: flameDance 3.5s ease-in-out infinite; }
+.vision-icon  { animation: eyePulse  4s   ease-in-out infinite; }
+.mv-panel { opacity: 0; }
+.mv-panel.mv-visible { animation: mvReveal 0.7s cubic-bezier(0.16,1,0.3,1) forwards; }
+
 @keyframes bvmSlideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
