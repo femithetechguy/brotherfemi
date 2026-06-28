@@ -66,11 +66,11 @@ function EyeIcon() {
   );
 }
 
-function ComingSoon({ delay = "0s" }: { delay?: string }) {
+function ComingSoon({ delay = "0s", light = false }: { delay?: string; light?: boolean }) {
   return (
-    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-sm" style={{ border: "1px solid rgba(201,168,76,0.2)", background: "rgba(201,168,76,0.05)" }}>
+    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-sm" style={{ border: "1px solid rgba(201,168,76,0.25)", background: light ? "rgba(201,168,76,0.07)" : "rgba(201,168,76,0.05)" }}>
       <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "var(--color-gold)", animation: `mvPulse 2s ease-in-out infinite ${delay}` }} />
-      <span style={{ fontFamily: "var(--font-ui)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: "var(--color-dark-muted)" }}>
+      <span style={{ fontFamily: "var(--font-ui)", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase" as const, color: light ? "var(--color-cobalt)" : "var(--color-dark-muted)" }}>
         Coming Soon
       </span>
     </div>
@@ -92,47 +92,47 @@ export default function MissionVision({ mission, vision }: Props) {
   }, []);
 
   const divider = (
-    <div className="hidden md:block w-px self-stretch flex-shrink-0" style={{ background: "linear-gradient(to bottom, transparent, rgba(201,168,76,0.25) 30%, rgba(201,168,76,0.25) 70%, transparent)" }} />
+    <div className="hidden md:block w-px self-stretch flex-shrink-0" style={{ background: "linear-gradient(to bottom, transparent, rgba(201,168,76,0.4) 30%, rgba(201,168,76,0.4) 70%, transparent)" }} />
   );
 
   return (
-    <div className="flex flex-col md:flex-row" style={{ background: "var(--color-navy)" }}>
+    <div className="flex flex-col md:flex-row" style={{ background: "var(--color-cream)" }}>
       {/* Mission */}
       <section id={mission.id} className="relative flex-1 py-24 px-8 overflow-hidden">
-        <span aria-hidden="true" className="absolute select-none pointer-events-none" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(8rem,20vw,14rem)", fontWeight: 700, color: "rgba(201,168,76,0.04)", top: "50%", left: "5%", transform: "translateY(-50%)", lineHeight: 1 }}>I</span>
+        <span aria-hidden="true" className="absolute select-none pointer-events-none" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(8rem,20vw,14rem)", fontWeight: 700, color: "rgba(26,39,68,0.04)", top: "50%", left: "5%", transform: "translateY(-50%)", lineHeight: 1 }}>I</span>
         <div ref={missionRef} className="mv-panel relative z-10 max-w-sm mx-auto text-center">
           <div className="flex justify-center mb-8"><FlameIcon /></div>
-          <p className="section-label" style={{ color: "var(--color-sage)" }}>{mission.title}</p>
-          <h2 className="leading-tight mb-0" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "var(--color-dark-text)" }}>
+          <p className="section-label">{mission.title}</p>
+          <h2 className="leading-tight mb-0" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "var(--color-ink)" }}>
             Our Mission
           </h2>
           <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
-          <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1rem", color: "var(--color-gold-lt)", lineHeight: 1.9, marginBottom: "2rem" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1rem", color: "var(--color-cobalt)", lineHeight: 1.9, marginBottom: "2rem" }}>
             &ldquo;Being prayerfully discerned before the Lord.&rdquo;
           </p>
-          <ComingSoon delay="0s" />
+          <ComingSoon delay="0s" light />
         </div>
       </section>
 
       {divider}
 
       {/* Vision */}
-      <section id={vision.id} className="relative flex-1 py-24 px-8 overflow-hidden" style={{ borderTop: "1px solid rgba(201,168,76,0.08)" }}>
-        <span aria-hidden="true" className="absolute select-none pointer-events-none" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(8rem,20vw,14rem)", fontWeight: 700, color: "rgba(201,168,76,0.04)", top: "50%", right: "5%", transform: "translateY(-50%)", lineHeight: 1 }}>II</span>
+      <section id={vision.id} className="relative flex-1 py-24 px-8 overflow-hidden" style={{ borderTop: "1px solid rgba(201,168,76,0.12)" }}>
+        <span aria-hidden="true" className="absolute select-none pointer-events-none" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(8rem,20vw,14rem)", fontWeight: 700, color: "rgba(26,39,68,0.04)", top: "50%", right: "5%", transform: "translateY(-50%)", lineHeight: 1 }}>II</span>
         <div ref={visionRef} className="mv-panel relative z-10 max-w-sm mx-auto text-center" style={{ animationDelay: "0.15s" }}>
           <div className="flex justify-center mb-8"><EyeIcon /></div>
-          <p className="section-label" style={{ color: "var(--color-sage)" }}>{vision.title}</p>
-          <h2 className="leading-tight mb-0" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "var(--color-dark-text)" }}>
+          <p className="section-label">{vision.title}</p>
+          <h2 className="leading-tight mb-0" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "var(--color-ink)" }}>
             Our Vision
           </h2>
           <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
-          <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1rem", color: "var(--color-gold-lt)", lineHeight: 1.9, marginBottom: "0.5rem" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1rem", color: "var(--color-cobalt)", lineHeight: 1.9, marginBottom: "0.5rem" }}>
             &ldquo;Where there is no vision, the people perish.&rdquo;
           </p>
-          <p style={{ fontFamily: "var(--font-ui)", fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-dark-muted)", marginBottom: "2rem" }}>
+          <p style={{ fontFamily: "var(--font-ui)", fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: "var(--color-muted)", marginBottom: "2rem" }}>
             — Proverbs 29:18
           </p>
-          <ComingSoon delay="0.5s" />
+          <ComingSoon delay="0.5s" light />
         </div>
       </section>
     </div>
