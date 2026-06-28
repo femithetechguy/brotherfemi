@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, nav icons, nav reorganisation — FTTG-58, FTTG-59, FTTG-55)
+Last updated: 2026-06-27 (Session 10: PR #47 merged to develop, PR #48 open develop→master — FTTG-53 in progress)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -175,10 +175,15 @@ Last updated: 2026-06-27 (Session 10: Music player header, playlist switcher, na
 
 ---
 
-## ⚠️ Not Started
+## 🔁 In Progress
 
-### Phase 2 — Remaining Issues
-- [ ] FTTG-53: Deploy and validate on Vercel, PR develop → master
+### Phase 2 — Final Deploy (FTTG-53)
+- [x] PR #47 merged: `feature/FTTG-55-visual-redesign` → `develop` (2026-06-27)
+- [x] PR #48 opened: `develop` → `master` — https://github.com/femithetechguy/brotherfemi/pull/48
+- [ ] Verify Vercel preview build on PR #48 passes
+- [ ] Merge PR #48 → brotherfemi.org goes live on Next.js
+- [ ] Confirm production site loads correctly at brotherfemi.org
+- [ ] Delete stale feature branches (FTTG-47 through FTTG-51, FTTG-54, FTTG-55, FTTG-59)
 
 ### Phase 3 — Content & Enhancements
 - [ ] Add mission content (currently "To be disclosed" in sections.json)
