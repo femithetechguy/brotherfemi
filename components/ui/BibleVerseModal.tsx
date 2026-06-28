@@ -11,73 +11,93 @@ interface Props {
 }
 
 export default function BibleVerseModal({ verse, reference, bibleUrl, onClose }: Props) {
-  // Lock body scroll
-  useEffect(() => {
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = prev; };
-  }, []);
-
-  // ESC to close
+  // ESC to close — no scroll lock, page stays fully interactive
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
-  const modal = (
+  const card = (
     <div
       role="dialog"
-      aria-modal="true"
-      aria-label={`Bible verse — ${reference}`}
-      className="fixed inset-0 z-[200] flex items-center justify-center px-4 py-8"
-      style={{ background: "rgba(26,39,68,0.92)", backdropFilter: "blur(12px)" }}
-      onClick={onClose}
+      aria-modal="false"
+      aria-label={`${reference}`}
+      style={{
+        position: "fixed",
+        // Desktop: bottom-right corner. Mobile: full-width bottom sheet.
+        bottom: 0,
+        right: 0,
+        left: 0,
+        zIndex: 200,
+        animation: "bvmSlideUp 0.32s cubic-bezier(0.16,1,0.3,1)",
+      }}
+      // Desktop overrides via inline media — handled via className below
+      className="bvm-card"
     >
       <div
-        className="relative w-full max-w-lg overflow-hidden"
         style={{
-          background: "var(--color-navy)",
-          border: "1px solid rgba(201,168,76,0.28)",
-          borderRadius: "2px",
-          boxShadow: "0 32px 96px rgba(0,0,0,0.7), inset 0 1px 0 rgba(201,168,76,0.12)",
-          animation: "bvmIn 0.28s cubic-bezier(0.16,1,0.3,1)",
+          background: "linear-gradient(160deg, #1E2F50 0%, #16223C 100%)",
+          borderTop: "none",
+          borderLeft: "none",
+          borderRight: "none",
         }}
-        onClick={(e) => e.stopPropagation()}
+        className="bvm-inner"
       >
-        {/* Gold top accent bar */}
-        <div style={{ height: 2, background: "linear-gradient(90deg, transparent, #C9A84C 30%, #C9A84C 70%, transparent)" }} />
+        {/* Gold top bar */}
+        <div style={{ height: 4, background: "linear-gradient(90deg, #C9A84C 0%, #E8D4A8 50%, #C9A84C 100%)", borderRadius: "8px 8px 0 0" }} />
 
-        <div className="px-8 pt-8 pb-10 md:px-12 md:pt-10 md:pb-12">
+        <div className="bvm-body">
+          {/* Header row: reference + close */}
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div className="flex items-center gap-3 flex-wrap">
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.8rem",
+                  letterSpacing: "0.18em",
+                  color: "var(--color-gold)",
+                }}
+              >
+                {reference}
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-ui)",
+                  fontSize: "0.55rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.22em",
+                  color: "var(--color-navy)",
+                  background: "var(--color-gold)",
+                  borderRadius: "2px",
+                  padding: "2px 7px",
+                }}
+              >
+                NKJV
+              </span>
+            </div>
 
-          {/* Close */}
-          <button
-            onClick={onClose}
-            aria-label="Close"
-            className="absolute top-5 right-5 flex items-center justify-center w-8 h-8 rounded-full transition-colors"
-            style={{ color: "var(--color-dark-muted)", background: "rgba(159,176,192,0.08)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(201,168,76,0.12)")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(159,176,192,0.08)")}
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
-            </svg>
-          </button>
-
-          {/* Decorative oversized quote mark */}
-          <div
-            aria-hidden="true"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "7rem",
-              lineHeight: 0.65,
-              color: "rgba(201,168,76,0.1)",
-              userSelect: "none",
-              marginBottom: "0.75rem",
-              marginLeft: "-0.25rem",
-            }}
-          >
-            &ldquo;
+            <button
+              onClick={onClose}
+              aria-label="Close"
+              className="flex items-center justify-center flex-shrink-0"
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: "50%",
+                background: "rgba(159,176,192,0.1)",
+                color: "var(--color-dark-muted)",
+                border: "none",
+                cursor: "pointer",
+                transition: "background 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(201,168,76,0.15)")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(159,176,192,0.1)")}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
+            </button>
           </div>
 
           {/* Verse text */}
@@ -85,52 +105,14 @@ export default function BibleVerseModal({ verse, reference, bibleUrl, onClose }:
             style={{
               fontFamily: "var(--font-body)",
               fontStyle: "italic",
-              fontSize: "clamp(1rem, 2.8vw, 1.2rem)",
+              fontSize: "clamp(0.95rem, 2.2vw, 1.1rem)",
               color: "var(--color-gold-lt)",
-              lineHeight: 1.9,
-              marginBottom: "2rem",
+              lineHeight: 1.85,
+              marginBottom: "1rem",
             }}
           >
-            {verse}
+            &ldquo;{verse}&rdquo;
           </p>
-
-          {/* Gold divider */}
-          <div
-            style={{
-              width: 40,
-              height: 1,
-              background: "rgba(201,168,76,0.5)",
-              marginBottom: "1.25rem",
-            }}
-          />
-
-          {/* Reference + translation badge */}
-          <div className="flex items-center gap-3 flex-wrap mb-8">
-            <span
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "0.78rem",
-                letterSpacing: "0.18em",
-                color: "var(--color-gold)",
-              }}
-            >
-              — {reference}
-            </span>
-            <span
-              style={{
-                fontFamily: "var(--font-ui)",
-                fontSize: "0.58rem",
-                fontWeight: 600,
-                letterSpacing: "0.22em",
-                color: "var(--color-navy)",
-                background: "var(--color-gold)",
-                borderRadius: "2px",
-                padding: "3px 8px",
-              }}
-            >
-              NKJV
-            </span>
-          </div>
 
           {/* Read in context */}
           {bibleUrl && (
@@ -138,54 +120,28 @@ export default function BibleVerseModal({ verse, reference, bibleUrl, onClose }:
               href={bibleUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2"
+              className="inline-flex items-center gap-1.5"
               style={{
                 fontFamily: "var(--font-ui)",
-                fontSize: "0.65rem",
-                letterSpacing: "0.18em",
+                fontSize: "0.62rem",
+                letterSpacing: "0.16em",
                 textTransform: "uppercase",
                 color: "var(--color-dark-muted)",
-                borderBottom: "1px solid rgba(159,176,192,0.2)",
-                paddingBottom: "1px",
-                transition: "color 0.2s, border-color 0.2s",
+                transition: "color 0.2s",
               }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#C9A84C";
-                e.currentTarget.style.borderColor = "rgba(201,168,76,0.4)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "var(--color-dark-muted)";
-                e.currentTarget.style.borderColor = "rgba(159,176,192,0.2)";
-              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#C9A84C")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-dark-muted)")}
             >
               Read in context on Bible.com
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none">
+                <path d="M7 17L17 7M17 7H7M17 7v10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
           )}
-        </div>
-
-        {/* Subtle cross watermark */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            bottom: 16,
-            right: 24,
-            fontFamily: "var(--font-display)",
-            fontSize: "5rem",
-            color: "rgba(201,168,76,0.04)",
-            userSelect: "none",
-            lineHeight: 1,
-            pointerEvents: "none",
-          }}
-        >
-          ✝
         </div>
       </div>
     </div>
   );
 
-  return typeof document !== "undefined" ? createPortal(modal, document.body) : null;
+  return typeof document !== "undefined" ? createPortal(card, document.body) : null;
 }
