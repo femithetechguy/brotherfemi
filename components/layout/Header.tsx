@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback, type ReactElement } from "react";
 import Link from "next/link";
 import { getSections, getBrotherFemi } from "@/lib/data";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_NAV } from "@/components/ui/SocialIcon";
+import SearchButton from "@/components/ui/SearchButton";
 import type { Section } from "@/types";
 
 const NAV_IDS = ["about", "word", "blog", "newlife", "contact"];
@@ -176,6 +177,17 @@ export default function Header() {
           />
           {/* MusicPlayer portals inline content here on desktop */}
           <div id="music-player-header-slot" style={{ display: "flex", alignItems: "center" }} />
+          <span
+            style={{
+              display: "block",
+              width: 1,
+              height: 20,
+              background: "rgba(201,168,76,0.2)",
+              margin: "0 4px",
+              flexShrink: 0,
+            }}
+          />
+          <SearchButton />
         </div>
 
         {/* Music player slot — mobile center */}
@@ -184,13 +196,15 @@ export default function Header() {
           className="md:hidden flex-1 flex justify-center items-center"
         />
 
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden p-2 flex flex-col justify-center gap-1.5 flex-shrink-0"
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
+        {/* Mobile search + hamburger */}
+        <div className="md:hidden flex items-center gap-1 flex-shrink-0">
+          <SearchButton />
+          <button
+            className="p-2 flex flex-col justify-center gap-1.5"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
           <span
             className={`block h-0.5 w-6 origin-center transition-transform duration-200`}
             style={{ background: "var(--color-gold-lt)", transform: menuOpen ? "rotate(45deg) translateY(8px)" : "" }}
@@ -203,7 +217,8 @@ export default function Header() {
             className={`block h-0.5 w-6 origin-center transition-transform duration-200`}
             style={{ background: "var(--color-dark-muted)", transform: menuOpen ? "rotate(-45deg) translateY(-8px)" : "" }}
           />
-        </button>
+          </button>
+        </div>
       </div>
 
       {/* Mobile dropdown — absolutely positioned to overlay page content */}
