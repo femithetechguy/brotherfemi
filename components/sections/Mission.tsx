@@ -90,7 +90,7 @@ export default function Mission({ section }: Props) {
             color: "var(--color-dark-text)",
           }}
         >
-          Our Mission
+          My Mission
         </h2>
         <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
 

@@ -104,7 +104,7 @@ export default function MissionVision({ mission, vision }: Props) {
           <div className="flex justify-center mb-8"><FlameIcon /></div>
           <p className="section-label">{mission.title}</p>
           <h2 className="leading-tight mb-0" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "var(--color-ink)" }}>
-            Our Mission
+            My Mission
           </h2>
           <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
           <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1rem", color: "var(--color-cobalt)", lineHeight: 1.9, marginBottom: "2rem" }}>
@@ -123,7 +123,7 @@ export default function MissionVision({ mission, vision }: Props) {
           <div className="flex justify-center mb-8"><EyeIcon /></div>
           <p className="section-label">{vision.title}</p>
           <h2 className="leading-tight mb-0" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", color: "var(--color-ink)" }}>
-            Our Vision
+            My Vision
           </h2>
           <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
           <p style={{ fontFamily: "var(--font-body)", fontStyle: "italic", fontSize: "1rem", color: "var(--color-cobalt)", lineHeight: 1.9, marginBottom: "0.5rem" }}>

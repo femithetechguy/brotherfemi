@@ -108,7 +108,7 @@ export default function Vision({ section }: Props) {
             color: "var(--color-dark-text)",
           }}
         >
-          Our Vision
+          My Vision
         </h2>
         <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
 

@@ -87,7 +87,7 @@ export default function CoreValues({ section, coreValues }: Props) {
         <div className="text-center mb-16">
           <p className="section-label" style={{ color: "var(--color-sage)" }}>{section.title}</p>
           <h2 className="text-3xl leading-tight mb-0" style={{ fontFamily: "var(--font-display)", color: "var(--color-dark-text)" }}>
-            What We Stand For
+            What I Stand For
           </h2>
           <span className="gold-bar" style={{ margin: "1.25rem auto" }} />
         </div>
