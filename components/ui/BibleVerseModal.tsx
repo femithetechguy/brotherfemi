@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useBibleVerse } from "./BibleVerseContext";
 
-const AUTO_CLOSE_MS = 8000;
+const AUTO_CLOSE_MS = 10000;
 
 export default function BibleVerseModal() {
   const { current, close } = useBibleVerse();
@@ -137,12 +137,12 @@ export default function BibleVerseModal() {
         </div>
 
         {/* Auto-close progress bar — restarts on each new verse via key */}
-        <div style={{ overflow: "hidden", height: 2 }}>
+        <div style={{ overflow: "hidden", height: 4 }}>
           <div
             key={barKey}
             style={{
               height: "100%",
-              background: "rgba(201,168,76,0.35)",
+              background: "linear-gradient(90deg, #C9A84C 0%, #E8D4A8 60%, #C9A84C 100%)",
               transformOrigin: "left center",
               animation: `bvmAutoClose ${AUTO_CLOSE_MS}ms linear forwards`,
             }}
