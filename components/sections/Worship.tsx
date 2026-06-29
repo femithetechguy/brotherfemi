@@ -27,7 +27,7 @@ export default function Worship({ section }: Props) {
 
       <div className="relative z-10 flex flex-col items-center text-center px-6 max-w-4xl mx-auto py-24">
         {/* Eyebrow */}
-        <div className="flex items-center gap-3 mb-8">
+        <div className="hero-enter flex items-center gap-3 mb-8" style={{ animationDelay: "0ms" }}>
           <span className="block h-px w-12" style={{ background: "var(--color-dark-muted)" }} />
           <span
             style={{
@@ -46,13 +46,14 @@ export default function Worship({ section }: Props) {
 
         {/* Heading */}
         <h1
-          className="mb-8 leading-none"
+          className="hero-enter mb-8 leading-none"
           style={{
             fontFamily: "var(--font-display)",
             fontSize: "clamp(3.2rem, 8vw, 5.5rem)",
             fontWeight: 700,
             color: "var(--color-gold)",
             whiteSpace: "nowrap",
+            animationDelay: "150ms",
           }}
         >
           Brother Femi
@@ -60,7 +61,7 @@ export default function Worship({ section }: Props) {
 
         {/* Scripture quote */}
         {section.bibleVerse && (
-          <div className="mb-10 max-w-2xl">
+          <div className="hero-enter mb-10 max-w-2xl" style={{ animationDelay: "320ms" }}>
             <p
               className="leading-relaxed mb-3"
               style={{
@@ -96,7 +97,7 @@ export default function Worship({ section }: Props) {
         )}
 
         {/* CTAs */}
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="hero-enter flex flex-wrap gap-4 justify-center" style={{ animationDelay: "500ms" }}>
           <a
             href="/about"
             style={{

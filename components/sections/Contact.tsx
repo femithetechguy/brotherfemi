@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SocialIcon, getSocialColor, SOCIAL_ORDER_CONTACT } from "@/components/ui/SocialIcon";
 import BibleVerseLink from "@/components/ui/BibleVerseLink";
 import type { Section, ContactLink } from "@/types";
@@ -20,6 +20,7 @@ const inputStyle = {
   fontSize: "0.95rem",
   color: "var(--color-dark-text)",
   outline: "none",
+  transition: "border-color 0.2s, box-shadow 0.2s",
 };
 
 const labelStyle = {
@@ -39,6 +40,35 @@ export default function Contact({ section, contact }: Props) {
     .filter((c): c is ContactLink => c !== undefined);
 
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const leftRef    = useRef<HTMLDivElement>(null);
+  const rightRef   = useRef<HTMLFormElement>(null);
+  const socialsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const targets = [leftRef.current, rightRef.current].filter(Boolean) as HTMLElement[];
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("contact-visible"); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    targets.forEach((t) => observer.observe(t));
+
+    // Social stagger: trigger when socials container enters view
+    const socialsEl = socialsRef.current;
+    const socialsObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          socialsEl?.classList.add("contact-socials--visible");
+          socialsObserver.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (socialsEl) socialsObserver.observe(socialsEl);
+
+    return () => { observer.disconnect(); socialsObserver.disconnect(); };
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -70,7 +100,7 @@ export default function Contact({ section, contact }: Props) {
     >
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
         {/* Left: info */}
-        <div>
+        <div ref={leftRef} className="contact-left">
           <p className="section-label" style={{ color: "var(--color-sage)" }}>Get in Touch</p>
           <h2
             className="text-3xl leading-tight mb-0"
@@ -100,16 +130,16 @@ export default function Contact({ section, contact }: Props) {
           )}
 
           {/* Social icons */}
-          <div className="flex flex-wrap gap-4 mb-10">
-            {socials.map((link) => (
+          <div ref={socialsRef} className="flex flex-wrap gap-4 mb-10">
+            {socials.map((link, i) => (
               <a
                 key={link.type}
                 href={link.url}
                 target={link.url.startsWith("mailto") ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 aria-label={link.type}
-                style={{ color: getSocialColor(link.type) }}
-                className="social-icon"
+                style={{ color: getSocialColor(link.type), ["--si-delay" as string]: `${i * 0.07}s` }}
+                className="social-icon contact-social-item"
               >
                 <SocialIcon type={link.type} size={24} />
               </a>
@@ -124,19 +154,19 @@ export default function Contact({ section, contact }: Props) {
         </div>
 
         {/* Right: form */}
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form ref={rightRef} onSubmit={handleSubmit} className="contact-right space-y-5">
           <div>
             <label htmlFor="name" style={labelStyle}>Name</label>
-            <input id="name" name="name" type="text" required placeholder="Your name" style={inputStyle} />
+            <input id="name" name="name" type="text" required placeholder="Your name" className="contact-input" style={inputStyle} />
           </div>
           <div>
             <label htmlFor="email" style={labelStyle}>Email</label>
-            <input id="email" name="email" type="email" required placeholder="your@email.com" style={inputStyle} />
+            <input id="email" name="email" type="email" required placeholder="your@email.com" className="contact-input" style={inputStyle} />
           </div>
           <div>
             <label htmlFor="message" style={labelStyle}>Message</label>
             <textarea id="message" name="message" rows={5} required placeholder="What's on your heart?"
-              style={{ ...inputStyle, resize: "none" }} />
+              className="contact-input" style={{ ...inputStyle, resize: "none" }} />
           </div>
           <button
             type="submit"
