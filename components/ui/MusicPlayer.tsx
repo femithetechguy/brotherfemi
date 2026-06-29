@@ -120,7 +120,8 @@ export default function MusicPlayer() {
           e.target.setVolume(55);
           if (!startMuted) e.target.unMute();
           e.target.playVideo();
-          setState("playing");
+          // Don't set state("playing") here — iOS may silently block playVideo() in
+          // async callbacks. Let onStateChange be the sole source of truth for state.
         },
         onStateChange(e: any) {
           if (!window.YT) return;
@@ -187,20 +188,33 @@ export default function MusicPlayer() {
   function handlePlaylistSwitch(index: number) {
     if (index === activePlaylist) return;
 
-    const wasMuted = muted;
     setActivePlaylist(index);
-    setReady(false);
-    setState("idle");
     setTrackTitle("");
     trackIndexRef.current = START_INDEX;
 
-    if (playerRef.current) {
-      playerRef.current.destroy();
-      playerRef.current = null;
+    if (playerRef.current && ready) {
+      // loadPlaylist() runs synchronously inside the tap event — iOS allows playback
+      // because we're still within the user gesture context. destroy-and-recreate
+      // breaks that chain (onReady fires async, outside the gesture).
+      playerRef.current.loadPlaylist({
+        list:     PLAYLISTS[index].id,
+        listType: "playlist",
+        index:    0,
+      });
+      if (!muted) {
+        playerRef.current.unMute();
+        playerRef.current.setVolume(55);
+      }
+    } else {
+      // Player not ready yet — fall back to recreate
+      setReady(false);
+      setState("idle");
+      if (playerRef.current) {
+        playerRef.current.destroy();
+        playerRef.current = null;
+      }
+      createPlayer(index, muted);
     }
-
-    // createPlayer checks for the target div and recreates it if needed
-    createPlayer(index, wasMuted);
   }
 
   const isPlaying    = state === "playing";
