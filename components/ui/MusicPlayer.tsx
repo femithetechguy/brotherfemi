@@ -189,32 +189,17 @@ export default function MusicPlayer() {
     if (index === activePlaylist) return;
 
     setActivePlaylist(index);
+    setReady(false);
+    setState("idle");
     setTrackTitle("");
     trackIndexRef.current = START_INDEX;
 
-    if (playerRef.current && ready) {
-      // loadPlaylist() runs synchronously inside the tap event — iOS allows playback
-      // because we're still within the user gesture context. destroy-and-recreate
-      // breaks that chain (onReady fires async, outside the gesture).
-      playerRef.current.loadPlaylist({
-        list:     PLAYLISTS[index].id,
-        listType: "playlist",
-        index:    0,
-      });
-      if (!muted) {
-        playerRef.current.unMute();
-        playerRef.current.setVolume(55);
-      }
-    } else {
-      // Player not ready yet — fall back to recreate
-      setReady(false);
-      setState("idle");
-      if (playerRef.current) {
-        playerRef.current.destroy();
-        playerRef.current = null;
-      }
-      createPlayer(index, muted);
+    if (playerRef.current) {
+      playerRef.current.destroy();
+      playerRef.current = null;
     }
+
+    createPlayer(index, muted);
   }
 
   const isPlaying    = state === "playing";
