@@ -112,19 +112,21 @@ export default function Hymns({ section }: Props) {
         >
           {/* Musical note icon */}
           <div className="mb-5">
-            <svg
-              width="36" height="36" viewBox="0 0 24 24" fill="none"
-              aria-hidden="true"
-              style={{ color: "var(--color-gold)", opacity: 0.85 }}
-            >
-              <path
-                d="M9 18V5l12-2v13"
-                stroke="currentColor" strokeWidth="1.5"
-                strokeLinecap="round" strokeLinejoin="round"
-              />
-              <circle cx="6" cy="18" r="3" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="18" cy="16" r="3" stroke="currentColor" strokeWidth="1.5" />
-            </svg>
+            <span className="note-float" style={{ display: "inline-block" }}>
+              <svg
+                width="36" height="36" viewBox="0 0 24 24" fill="none"
+                aria-hidden="true"
+                style={{ color: "var(--color-gold)", opacity: 0.85 }}
+              >
+                <path
+                  d="M9 18V5l12-2v13"
+                  stroke="currentColor" strokeWidth="1.5"
+                  strokeLinecap="round" strokeLinejoin="round"
+                />
+                <circle cx="6" cy="18" r="3" stroke="currentColor" strokeWidth="1.5" />
+                <circle cx="18" cy="16" r="3" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+            </span>
           </div>
 
           <p
