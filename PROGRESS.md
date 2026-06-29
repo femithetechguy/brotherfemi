@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-28 (Session 15: animations across Worship, Hymns, Contact, NewLife)
+Last updated: 2026-06-29 (Session 16: CTA button hover and active states)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -127,6 +127,14 @@ Last updated: 2026-06-28 (Session 15: animations across Worship, Hymns, Contact,
 - [x] Pronoun fix — "Our Mission" → "My Mission", "Our Vision" → "My Vision", "What We Stand For" → "What I Stand For" (in MissionVision, Mission, Vision, CoreValues)
 - [x] Nav click fix — nav `<a>` links now call `e.preventDefault()` + `scrollIntoView({ behavior: "smooth" })` instead of triggering full page reload; eliminates header visual shift (scrolled/activeId state no longer resets)
 - [x] Dolapo Lawal added to `data/mentors.json`; duplicate entry removed (30 mentors total)
+
+### Phase 2p — CTA Button Hover & Active States (Session 16, FTTG-61)
+- [x] `globals.css` — added `.btn-gold` and `.btn-outline-gold` CSS classes
+- [x] `.btn-gold` — hover: 4px lift (`translateY(-4px)`), darker gold background (`#b8941a`), glow box-shadow `0 10px 32px rgba(201,168,76,0.5)`; active: compress to `scale(0.97)`; disabled: all effects suppressed
+- [x] `.btn-outline-gold` — hover: fills with gold background + navy text + 4px lift; active: compress `scale(0.97)`
+- [x] Applied `btn-gold` to: "My Story" (Worship hero), "Receive New Life" (NewLife Altar Call), "Send Message" submit (Contact)
+- [x] Applied `btn-outline-gold` to: "Let's Connect" (Worship hero)
+- [x] All hover/active values use `!important` to override inline style specificity
 
 ### Phase 2o — Section Animations (Session 15, FTTG-61)
 - [x] Worship: staggered hero entrance — eyebrow (0ms) → heading (150ms) → scripture (320ms) → CTAs (500ms); `heroFadeUp` keyframe; pure CSS, server component unchanged

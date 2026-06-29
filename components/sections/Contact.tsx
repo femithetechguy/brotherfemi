@@ -171,6 +171,7 @@ export default function Contact({ section, contact }: Props) {
           <button
             type="submit"
             disabled={status === "sending"}
+            className="btn-gold"
             style={{
               width: "100%",
               fontFamily: "var(--font-ui)",

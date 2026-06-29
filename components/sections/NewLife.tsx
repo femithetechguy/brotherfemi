@@ -457,6 +457,7 @@ export default function NewLife({ section }: Props) {
 
               <a
                 href="/contact"
+                className="btn-gold"
                 style={{
                   fontFamily: "var(--font-ui)",
                   fontSize: "0.78rem",
