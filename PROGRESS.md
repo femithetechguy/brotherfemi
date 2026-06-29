@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-28 (Session 14: BibleVerseModal singleton + auto-close; music player playlist switch fix)
+Last updated: 2026-06-28 (Session 15: animations across Worship, Hymns, Contact, NewLife)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -127,6 +127,13 @@ Last updated: 2026-06-28 (Session 14: BibleVerseModal singleton + auto-close; mu
 - [x] Pronoun fix — "Our Mission" → "My Mission", "Our Vision" → "My Vision", "What We Stand For" → "What I Stand For" (in MissionVision, Mission, Vision, CoreValues)
 - [x] Nav click fix — nav `<a>` links now call `e.preventDefault()` + `scrollIntoView({ behavior: "smooth" })` instead of triggering full page reload; eliminates header visual shift (scrolled/activeId state no longer resets)
 - [x] Dolapo Lawal added to `data/mentors.json`; duplicate entry removed (30 mentors total)
+
+### Phase 2o — Section Animations (Session 15, FTTG-61)
+- [x] Worship: staggered hero entrance — eyebrow (0ms) → heading (150ms) → scripture (320ms) → CTAs (500ms); `heroFadeUp` keyframe; pure CSS, server component unchanged
+- [x] Hymns: musical note icon in "Now Playing" panel floats and rotates on a 3.2s loop (`noteFloat` keyframe + `note-float` class)
+- [x] Contact: left column slides in from left, form slides in from right (120ms delay) via IntersectionObserver; social icons stagger-fade up 70ms apart (`contact-socials--visible` class); form inputs get gold border glow + box-shadow ring on focus (`contact-input` class)
+- [x] NewLife: converted to `"use client"`; single `IntersectionObserver` on section element watches all `.nl-panel` children via `querySelectorAll`; animated: core beliefs header/text/pills, Five Finger Prayer cards (80ms stagger), Spiritual Warfare left+right panels (120ms delay on right), Steps into New Life stub cards (100ms stagger), other prayer children, Altar Call, Children's Prayer heading + prayer blocks (100ms stagger)
+- [x] `globals.css`: added `@keyframes heroFadeUp`, `@keyframes noteFloat`, `.hero-enter`, `.note-float`, `.nl-panel`/`.nl-visible`, `.contact-left`/`.contact-right`/`.contact-visible`, `.contact-social-item`/`.contact-socials--visible`, `.contact-input:focus`
 
 ### Phase 2n — BibleVerseModal Singleton & Music Player Fixes (Session 14, FTTG-61)
 - [x] `BibleVerseContext.tsx` — new global context with `open(props)` / `close()`; single modal state shared across all `BibleRefPill` and `BibleVerseLink` instances; no more per-component modal mounting
@@ -259,6 +266,18 @@ Last updated: 2026-06-28 (Session 14: BibleVerseModal singleton + auto-close; mu
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 15 — 2026-06-28
+**Completed:**
+- Worship: staggered CSS hero entrance animation (4 elements, 0–500ms delays)
+- Hymns: musical note icon continuous float/rotate animation in Now Playing panel
+- Contact: scroll-reveal slide-in for left/right columns, social icon stagger, input focus gold glow
+- NewLife: full IntersectionObserver scroll-reveal across all subsections (15+ panels with staggered delays)
+
+**Key Decisions:**
+- Worship kept as server component — pure CSS `animation` with `both` fill-mode handles initial hidden state without JS; no hydration concerns
+- Single `querySelectorAll('.nl-panel')` observer in NewLife preferred over dozens of individual refs — cleaner, scales to any number of panels added later
+- `contact-socials--visible` parent-class pattern (vs direct class on each icon) allows the stagger to be driven entirely by CSS, keeping the IntersectionObserver callback simple
 
 ### Session 14 — 2026-06-28
 **Completed:**
