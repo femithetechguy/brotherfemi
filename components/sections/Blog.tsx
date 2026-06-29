@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import type { Section } from "@/types";
 import { getBlogPosts } from "@/lib/data";
@@ -7,24 +10,43 @@ interface Props { section: Section }
 export default function Blog({ section }: Props) {
   const intro = typeof section.text === "string" ? section.text : "";
   const posts = getBlogPosts();
+  const cardsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  useEffect(() => {
+    const els = cardsRef.current.filter(Boolean) as HTMLElement[];
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add("blog-card--visible"); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.08 }
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id={section.id}
-      className="py-20 px-4"
+      className="py-24 px-4"
       style={{ background: "var(--color-parchment)" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
-          <p className="section-label">Reflections</p>
+          <p className="section-label">{section.title}</p>
           <h2
-            className="text-3xl leading-tight"
-            style={{ color: "var(--color-ink)" }}
+            className="leading-tight mb-0"
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "clamp(1.8rem,4vw,2.6rem)",
+              color: "var(--color-ink)",
+            }}
           >
             From the Heart
           </h2>
+          <span className="gold-bar" style={{ display: "block", margin: "0.75rem auto" }} />
           {intro && (
             <p
-              className="mt-4 max-w-md mx-auto"
+              className="mt-2 max-w-md mx-auto"
               style={{
                 fontFamily: "var(--font-body)",
                 fontSize: "0.95rem",
@@ -37,19 +59,20 @@ export default function Blog({ section }: Props) {
           )}
         </div>
 
-        <div
-          className="grid gap-6"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))" }}
-        >
-          {posts.map((post) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {posts.map((post, i) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="flex flex-col group"
-              style={{ textDecoration: "none" }}
+              ref={(el) => { cardsRef.current[i] = el; }}
+              className="blog-card flex flex-col group"
+              style={{
+                textDecoration: "none",
+                "--blog-delay": `${i * 0.1}s`,
+              } as React.CSSProperties}
             >
               <article
-                className="flex flex-col flex-1 rounded-sm overflow-hidden transition-transform duration-200 group-hover:-translate-y-1"
+                className="flex flex-col flex-1 rounded-sm overflow-hidden"
                 style={{
                   background: "#fff",
                   border: "1px solid rgba(201,168,76,0.15)",
