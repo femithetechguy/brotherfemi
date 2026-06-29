@@ -25,7 +25,9 @@ declare global {
 type PlayerState = "idle" | "playing" | "paused";
 
 export default function MusicPlayer() {
-  const playerRef = useRef<any>(null);
+  const playerRef     = useRef<any>(null);
+  const muteRef       = useRef(true);      // mirrors muted — readable inside YT event handlers
+  const trackIndexRef = useRef(START_INDEX); // current playlist position, kept in sync on PLAYING
   const [state, setState]                   = useState<PlayerState>("idle");
   const [muted, setMuted]                   = useState(true);
   const [ready, setReady]                   = useState(false);
@@ -36,6 +38,9 @@ export default function MusicPlayer() {
   const [activePlaylist, setActivePlaylist] = useState(0);
   const [showPlaylists, setShowPlaylists]   = useState(false);
   const [trackTitle, setTrackTitle]         = useState("");
+
+  // Keep muteRef in sync so YT event handlers can read current mute state
+  useEffect(() => { muteRef.current = muted; }, [muted]);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -121,16 +126,25 @@ export default function MusicPlayer() {
           if (!window.YT) return;
           if (e.data === window.YT.PlayerState.PLAYING) {
             setState("playing");
+            // iOS resets audio on each new video load — re-assert unmute if user has enabled audio
+            if (!muteRef.current) {
+              e.target.unMute();
+              e.target.setVolume(55);
+            }
+            const idx = e.target.getPlaylistIndex();
+            if (idx >= 0) trackIndexRef.current = idx;
             const title = e.target.getVideoData()?.title ?? "";
             setTrackTitle(title);
-            const idx    = e.target.getPlaylistIndex();
             const seekTo = TRACK_STARTS[idx];
             if (seekTo !== undefined && e.target.getCurrentTime() < 3) {
               e.target.seekTo(seekTo, true);
             }
           }
           if (e.data === window.YT.PlayerState.PAUSED) setState("paused");
-          if (e.data === window.YT.PlayerState.ENDED)  e.target.playVideoAt(0);
+          if (e.data === window.YT.PlayerState.ENDED) {
+            trackIndexRef.current = 0;
+            e.target.playVideoAt(0);
+          }
         },
       },
     });
@@ -150,12 +164,24 @@ export default function MusicPlayer() {
 
   function handleNext() {
     if (!ready || !playerRef.current) return;
-    playerRef.current.nextVideo();
+    const playlist = playerRef.current.getPlaylist?.() as string[] | null;
+    if (playlist?.length) {
+      trackIndexRef.current = (trackIndexRef.current + 1) % playlist.length;
+      playerRef.current.playVideoAt(trackIndexRef.current);
+    } else {
+      playerRef.current.nextVideo();
+    }
   }
 
   function handlePrev() {
     if (!ready || !playerRef.current) return;
-    playerRef.current.previousVideo();
+    const playlist = playerRef.current.getPlaylist?.() as string[] | null;
+    if (playlist?.length) {
+      trackIndexRef.current = (trackIndexRef.current - 1 + playlist.length) % playlist.length;
+      playerRef.current.playVideoAt(trackIndexRef.current);
+    } else {
+      playerRef.current.previousVideo();
+    }
   }
 
   function handlePlaylistSwitch(index: number) {
@@ -166,6 +192,7 @@ export default function MusicPlayer() {
     setReady(false);
     setState("idle");
     setTrackTitle("");
+    trackIndexRef.current = START_INDEX;
 
     if (playerRef.current) {
       playerRef.current.destroy();

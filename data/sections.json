@@ -141,18 +141,22 @@
       "core_beliefs_reference": [
         {
           "reference": "1 Corinthians 15:3–4",
+          "bibleVerse": "For I delivered to you first of all that which I also received: that Christ died for our sins according to the Scriptures, and that He was buried, and that He rose again the third day according to the Scriptures.",
           "bible_url": "https://www.bible.com/bible/114/1CO.15.3-4.NKJV"
         },
         {
           "reference": "Ephesians 2:8–9",
+          "bibleVerse": "For by grace you have been saved through faith, and that not of yourselves; it is the gift of God, not of works, lest anyone should boast.",
           "bible_url": "https://www.bible.com/bible/114/EPH.2.8-9.NKJV"
         },
         {
           "reference": "2 Timothy 3:16",
+          "bibleVerse": "All Scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness.",
           "bible_url": "https://www.bible.com/bible/114/2TI.3.16.NKJV"
         },
         {
           "reference": "Matthew 22:37–39",
+          "bibleVerse": "Jesus said to him, ‘You shall love the Lord your God with all your heart, with all your soul, and with all your mind.’ This is the first and great commandment. And the second is like it: ‘You shall love your neighbor as yourself.’",
           "bible_url": "https://www.bible.com/bible/114/MAT.22.37-39.NKJV"
         }
       ],
@@ -168,60 +172,74 @@
         "spiritual_newlife_text_reference": [
           {
             "reference": "Ephesians 6:10–18",
+            "bibleVerse": "Finally, my brethren, be strong in the Lord and in the power of His might. Put on the whole armor of God, that you may be able to stand against the wiles of the devil. For we do not wrestle against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this age, against spiritual hosts of wickedness in the heavenly places.",
             "bible_url": "https://www.bible.com/bible/114/EPH.6.10-18.NKJV"
           },
           {
             "reference": "John 16:33",
+            "bibleVerse": "These things I have spoken to you, that in Me you may have peace. In the world you will have tribulation; but be of good cheer, I have overcome the world.",
             "bible_url": "https://www.bible.com/bible/114/JHN.16.33.NKJV"
           }
         ],
         "bibleReferences": [
           {
             "reference": "1 Timothy 6:12",
+            "bibleVerse": "Fight the good fight of faith, lay hold on eternal life, to which you were also called and have confessed the good confession in the presence of many witnesses.",
             "url": "https://www.bible.com/bible/114/1TI.6.12.NKJV"
           },
           {
             "reference": "2 Timothy 4:7",
+            "bibleVerse": "I have fought the good fight, I have finished the race, I have kept the faith.",
             "url": "https://www.bible.com/bible/114/2TI.4.7.NKJV"
           },
           {
             "reference": "Ephesians 6:11-12",
+            "bibleVerse": "Put on the whole armor of God, that you may be able to stand against the wiles of the devil. For we do not wrestle against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this age, against spiritual hosts of wickedness in the heavenly places.",
             "url": "https://www.bible.com/bible/114/EPH.6.11-12.NKJV"
           },
           {
             "reference": "1 Corinthians 9:26–27",
+            "bibleVerse": "Therefore I run thus: not with uncertainty. Thus I fight: not as one who beats the air. But I discipline my body and bring it into subjection, lest, when I have preached to others, I myself should become disqualified.",
             "url": "https://www.bible.com/bible/114/1CO.9.26-27.NKJV"
           },
           {
             "reference": "James 1:12",
+            "bibleVerse": "Blessed is the man who endures temptation; for when he has been approved, he will receive the crown of life which the Lord has promised to those who love Him.",
             "url": "https://www.bible.com/bible/114/JAS.1.12.NKJV"
           },
           {
             "reference": "Hebrews 12:1",
+            "bibleVerse": "Therefore we also, since we are surrounded by so great a cloud of witnesses, let us lay aside every weight, and the sin which so easily ensnares us, and let us run with endurance the race that is set before us.",
             "url": "https://www.bible.com/bible/114/HEB.12.1.NKJV"
           },
           {
             "reference": "Romans 8:37",
+            "bibleVerse": "Yet in all these things we are more than conquerors through Him who loved us.",
             "url": "https://www.bible.com/bible/114/ROM.8.37.NKJV"
           },
           {
             "reference": "1 Peter 5:8–9",
+            "bibleVerse": "Be sober, be vigilant; because your adversary the devil walks about like a roaring lion, seeking whom he may devour. Resist him, steadfast in the faith, knowing that the same sufferings are experienced by your brotherhood in the world.",
             "url": "https://www.bible.com/bible/114/1PE.5.8-9.NKJV"
           },
           {
             "reference": "Philippians 3:14",
+            "bibleVerse": "I press toward the goal for the prize of the upward call of God in Christ Jesus.",
             "url": "https://www.bible.com/bible/114/PHP.3.14.NKJV"
           },
           {
             "reference": "Galatians 6:9",
+            "bibleVerse": "And let us not grow weary while doing good, for in due season we shall reap if we do not lose heart.",
             "url": "https://www.bible.com/bible/114/GAL.6.9.NKJV"
           },
           {
             "reference": "2 Corinthians 4:17",
+            "bibleVerse": "For our light and momentary troubles are achieving for us an eternal glory that far outweighs them all.",
             "url": "https://www.bible.com/bible/114/2CO.4.17.NKJV"
           },
           {
             "reference": "Romans 8:18",
+            "bibleVerse": "For I consider that the sufferings of this present time are not worth comparing with the glory that will be revealed in us.",
             "url": "https://www.bible.com/bible/114/ROM.8.18.NKJV"
           }
         ]
