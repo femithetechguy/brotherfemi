@@ -657,6 +657,39 @@ html.mobile-nav-open body > *:not(header) {
   }
 }
 
+/* ── CTA Button hover / active states ──────────────────────────────── */
+.btn-gold {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+.btn-gold:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 10px 32px rgba(201,168,76,0.5) !important;
+  background: #b8941a !important;
+}
+.btn-gold:active {
+  transform: translateY(-1px) scale(0.97) !important;
+  box-shadow: 0 3px 10px rgba(201,168,76,0.3) !important;
+}
+.btn-gold:disabled,
+.btn-gold[disabled] {
+  transform: none !important;
+  box-shadow: none !important;
+  background: var(--color-gold) !important;
+}
+
+.btn-outline-gold {
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, border-color 0.2s ease !important;
+}
+.btn-outline-gold:hover {
+  background: var(--color-gold) !important;
+  color: var(--color-navy) !important;
+  border-color: var(--color-gold) !important;
+  transform: translateY(-4px) !important;
+}
+.btn-outline-gold:active {
+  transform: translateY(-1px) scale(0.97) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

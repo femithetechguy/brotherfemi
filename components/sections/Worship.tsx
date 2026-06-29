@@ -100,6 +100,7 @@ export default function Worship({ section }: Props) {
         <div className="hero-enter flex flex-wrap gap-4 justify-center" style={{ animationDelay: "500ms" }}>
           <a
             href="/about"
+            className="btn-gold"
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "0.78rem",
@@ -117,6 +118,7 @@ export default function Worship({ section }: Props) {
           </a>
           <a
             href="/contact"
+            className="btn-outline-gold"
             style={{
               fontFamily: "var(--font-ui)",
               fontSize: "0.78rem",
