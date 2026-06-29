@@ -1,5 +1,5 @@
 # Project Progress — BrotherFemi Ministry Website
-Last updated: 2026-06-28 (Session 13: section deep redesigns — TheWord/Blog/Hymns/NewLife; iOS music player skip fix)
+Last updated: 2026-06-28 (Session 14: BibleVerseModal singleton + auto-close; music player playlist switch fix)
 
 **Owner:** Adefemi (Femi) Kolawole  
 **Domain:** brotherfemi.org  
@@ -128,6 +128,15 @@ Last updated: 2026-06-28 (Session 13: section deep redesigns — TheWord/Blog/Hy
 - [x] Nav click fix — nav `<a>` links now call `e.preventDefault()` + `scrollIntoView({ behavior: "smooth" })` instead of triggering full page reload; eliminates header visual shift (scrolled/activeId state no longer resets)
 - [x] Dolapo Lawal added to `data/mentors.json`; duplicate entry removed (30 mentors total)
 
+### Phase 2n — BibleVerseModal Singleton & Music Player Fixes (Session 14, FTTG-61)
+- [x] `BibleVerseContext.tsx` — new global context with `open(props)` / `close()`; single modal state shared across all `BibleRefPill` and `BibleVerseLink` instances; no more per-component modal mounting
+- [x] `BibleVerseModal.tsx` — rewritten as singleton; rendered once in `layout.tsx` inside `BibleVerseProvider`; auto-closes after 10s; 4px gold gradient progress bar at bottom restarts on each new verse (key-based remount); bar pauses via CSS `animation-play-state: paused` on hover; JS timer pauses/resumes with remaining time on mouse enter/leave; ESC and X still close manually
+- [x] `BibleRefPill` + `BibleVerseLink` — removed own `useState`/modal instances; now call `useBibleVerse().open()` from context; no `dynamic` import per instance
+- [x] `app/layout.tsx` — wrapped body with `<BibleVerseProvider>`; `<BibleVerseModal />` rendered once for entire app
+- [x] `app/globals.css` — added `@keyframes bvmAutoClose` (scaleX 1→0); `.bvm-card:hover .bvm-progress { animation-play-state: paused }`
+- [x] MusicPlayer — `setState("playing")` removed from `onReady`; `onStateChange` is now sole source of truth for player state; fixes iOS play button calling `pauseVideo()` on a player that never started
+- [x] MusicPlayer — playlist switch reverted to destroy-and-recreate after `loadPlaylist()` loaded wrong content (Praise→Messages, Worship→Praise, Messages→Worship); all 4 playlist IDs confirmed correct — issue was YouTube IFrame API `loadPlaylist()` unreliability
+
 ### Phase 2m — Section Deep Redesigns & Mobile Player Fix (Session 13, FTTG-61)
 - [x] TheWord: cobalt bg (was navy — clashed with Mentors), open-book SVG watermark at 4% opacity, scroll-reveal (`word-panel`/`word-visible`), label contrast dark-muted
 - [x] Blog: 2×2 grid (`sm:grid-cols-2`) fixes orphaned 4th card; Cinzel h2 with clamp + gold-bar; staggered scroll-reveal via `--blog-delay` CSS var; label fixed to "Blog" (was hardcoded "Reflections")
@@ -250,6 +259,18 @@ Last updated: 2026-06-28 (Session 13: section deep redesigns — TheWord/Blog/Hy
 - JSON files carry over as-is into `data/` — no CMS needed initially
 - `output: 'export'` for Vercel static hosting
 - Start fresh on feature branches off develop
+
+### Session 14 — 2026-06-28
+**Completed:**
+- BibleVerseModal refactored as singleton via `BibleVerseContext` — one modal instance for entire app; tapping any verse replaces content without stacking; auto-closes after 10s with gold progress bar; bar pauses on hover, resumes with remaining time; ESC/X still close manually
+- MusicPlayer: removed `setState("playing")` from `onReady` — fixes iOS play button calling `pauseVideo()` on a never-started player (optimistic state was the root cause)
+- MusicPlayer: reverted playlist switch to destroy-and-recreate — `loadPlaylist()` silently loaded wrong playlists (confirmed all 4 IDs correct; API unreliability was the cause)
+
+**Key Decisions:**
+- `BibleVerseContext` chosen over event bus or Zustand — idiomatic React, no extra deps, provider wraps entire app in `layout.tsx`
+- Progress bar uses CSS `animation-play-state: paused` on hover (CSS-only pause) + JS timer with remaining-time tracking for actual close — decoupled so visual and functional pause both work correctly
+- `onReady` must not set player state — iOS may silently block `playVideo()` in async callbacks; only `onStateChange` can reliably confirm what the player is doing
+- `loadPlaylist()` abandoned for playlist switching — YouTube IFrame API doesn't reliably honor the `list` parameter; destroy-and-recreate is the only guaranteed path to correct playlist loading
 
 ### Session 13 — 2026-06-28
 **Completed:**
