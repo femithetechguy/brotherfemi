@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import type { Section } from "@/types";
 import BibleRefPill from "@/components/ui/BibleRefPill";
 import BibleVerseLink from "@/components/ui/BibleVerseLink";
@@ -102,6 +105,22 @@ function PrayerLines({ lines }: { lines: string[] }) {
 }
 
 export default function NewLife({ section }: Props) {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const panels = Array.from(el.querySelectorAll<HTMLElement>(".nl-panel"));
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { (e.target as HTMLElement).classList.add("nl-visible"); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.08 }
+    );
+    panels.forEach((p) => observer.observe(p));
+    return () => observer.disconnect();
+  }, []);
+
   const s = section as NewLifeSection;
   const text = Array.isArray(s.text) ? s.text : [];
   const coreBeliefsRefs = s.core_beliefs_reference ?? [];
@@ -118,12 +137,12 @@ export default function NewLife({ section }: Props) {
   const otherChildren      = children.filter((c) => !EXCLUDE_IDS.includes(c.id));
 
   return (
-    <section id={section.id}>
+    <section id={section.id} ref={sectionRef}>
       {/* CORE BELIEFS — parchment bg */}
       <div className="py-20 px-4" style={{ background: "var(--color-parchment)" }}>
         <div className="max-w-4xl mx-auto">
           {section.bibleVerse && (
-            <div className="mb-10 text-center">
+            <div className="nl-panel mb-10 text-center">
               <p className="section-label">New Life in Christ</p>
               <h2
                 className="leading-tight mb-0"
@@ -156,13 +175,13 @@ export default function NewLife({ section }: Props) {
           )}
 
           {/* What is a Christian */}
-          <div className="space-y-2 mb-8">
+          <div className="nl-panel space-y-2 mb-8" style={{ "--nl-delay": "0.1s" } as React.CSSProperties}>
             {text.map((line, i) => (
               <CoreBeliefLine key={i} line={line} />
             ))}
           </div>
           {coreBeliefsRefs.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-6">
+            <div className="nl-panel flex flex-wrap gap-2 mt-6" style={{ "--nl-delay": "0.18s" } as React.CSSProperties}>
               {coreBeliefsRefs.map((ref) => (
                 <BibleRefPill
                   key={ref.reference}
@@ -180,19 +199,21 @@ export default function NewLife({ section }: Props) {
       {fiveFingerChild && (
         <div className="py-20 px-4" style={{ background: "var(--color-cobalt)" }}>
           <div className="max-w-5xl mx-auto">
-            <p className="section-label" style={{ color: "var(--color-sage)" }}>{fiveFingerChild.title}</p>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "var(--color-dark-muted)", lineHeight: 1.75, marginBottom: "2.5rem" }}>
-              {fiveFingerChild.text[0]}
-            </p>
+            <div className="nl-panel">
+              <p className="section-label" style={{ color: "var(--color-sage)" }}>{fiveFingerChild.title}</p>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.95rem", color: "var(--color-dark-muted)", lineHeight: 1.75, marginBottom: "2.5rem" }}>
+                {fiveFingerChild.text[0]}
+              </p>
+            </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {fiveFingerChild.fiveFingerPrayer?.map((f, i) => (
                 <div
                   key={f.finger}
-                  className={`rounded-sm p-5 flex flex-col${
+                  className={`nl-panel rounded-sm p-5 flex flex-col${
                     i === 4 ? " sm:col-span-2 sm:max-w-xs sm:mx-auto lg:col-span-1 lg:max-w-none lg:mx-0" : ""
                   }`}
-                  style={{ background: "rgba(250,247,242,0.05)", border: "1px solid rgba(201,168,76,0.2)" }}
+                  style={{ background: "rgba(250,247,242,0.05)", border: "1px solid rgba(201,168,76,0.2)", ["--nl-delay" as string]: `${i * 0.08}s` }}
                 >
                   {/* Finger SVG */}
                   <div className="flex justify-center mb-4">
@@ -263,7 +284,7 @@ export default function NewLife({ section }: Props) {
             <div className="max-w-6xl mx-auto relative grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
 
               {/* Left: heading + body */}
-              <div>
+              <div className="nl-panel">
                 <p className="section-label" style={{ color: "var(--color-dark-muted)" }}>Spiritual Warfare</p>
                 <h2
                   className="leading-tight mb-0"
@@ -286,7 +307,7 @@ export default function NewLife({ section }: Props) {
               </div>
 
               {/* Right: key refs + meditation pills */}
-              <div className="lg:pt-16">
+              <div className="nl-panel lg:pt-16" style={{ "--nl-delay": "0.12s" } as React.CSSProperties}>
                 {/* Key references */}
                 <p style={{ fontFamily: "var(--font-ui)", fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--color-gold)", marginBottom: "0.6rem" }}>
                   Key References
@@ -334,11 +355,12 @@ export default function NewLife({ section }: Props) {
               {stubChildren.map((child, i) => (
                 <div
                   key={child.id}
-                  className="rounded-sm p-6 flex flex-col"
+                  className="nl-panel rounded-sm p-6 flex flex-col"
                   style={{
                     background: "#fff",
                     border: "1px solid rgba(201,168,76,0.15)",
                     borderTop: "3px solid var(--color-gold)",
+                    ["--nl-delay" as string]: `${i * 0.1}s`,
                   }}
                 >
                   <span
@@ -370,7 +392,7 @@ export default function NewLife({ section }: Props) {
       {/* OTHER CHILDREN — parchment bg */}
       {otherChildren.map((child) => (
         <div key={child.id} className="py-16 px-4" style={{ background: "var(--color-parchment)", borderTop: "1px solid rgba(201,168,76,0.1)" }}>
-          <div className="max-w-3xl mx-auto">
+          <div className="nl-panel max-w-3xl mx-auto">
             <p className="section-label">{child.title}</p>
             <PrayerLines lines={child.text} />
           </div>
@@ -395,7 +417,7 @@ export default function NewLife({ section }: Props) {
               <rect x="80"  y="152" width="240" height="24" fill="var(--color-gold)" />
             </svg>
 
-            <div className="max-w-xl mx-auto relative">
+            <div className="nl-panel max-w-xl mx-auto relative">
               <p className="section-label" style={{ color: "var(--color-dark-muted)" }}>Altar Call</p>
               <h2
                 className="leading-tight mb-0"
@@ -490,18 +512,20 @@ export default function NewLife({ section }: Props) {
             </svg>
 
             <div className="max-w-xl mx-auto relative">
-              <p className="section-label" style={{ color: "var(--color-cobalt)" }}>For the Little Ones</p>
-              <h2
-                className="leading-tight mb-0"
-                style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.4rem,3vw,2rem)", color: "var(--color-navy)" }}
-              >
-                {childrenPrayerChild.title}
-              </h2>
-              <span className="gold-bar" style={{ display: "block", margin: "0.75rem 0" }} />
+              <div className="nl-panel">
+                <p className="section-label" style={{ color: "var(--color-cobalt)" }}>For the Little Ones</p>
+                <h2
+                  className="leading-tight mb-0"
+                  style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.4rem,3vw,2rem)", color: "var(--color-navy)" }}
+                >
+                  {childrenPrayerChild.title}
+                </h2>
+                <span className="gold-bar" style={{ display: "block", margin: "0.75rem 0" }} />
+              </div>
 
               <div className="mt-8 space-y-10">
                 {prayerBlocks.map(({ num, theme, salutation, opener, petitions }, i) => (
-                  <div key={i}>
+                  <div key={i} className="nl-panel" style={{ ["--nl-delay" as string]: `${i * 0.1}s` }}>
                     {/* Numbered section badge */}
                     <div className="flex items-center gap-3 mb-3">
                       <span
