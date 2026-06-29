@@ -406,6 +406,21 @@ html.mobile-nav-open body > *:not(header) {
   opacity: 1;
 }
 
+/* Mobile: larger touch targets (Apple HIG minimum 44pt) */
+@media (max-width: 767px) {
+  .mp-main-btn-inline {
+    height: 44px;
+    padding: 0 12px;
+  }
+  .mp-side-btn-sm {
+    width: 40px;
+    height: 40px;
+  }
+  .mp-side-wrap.mp-side-visible {
+    max-width: 52px;
+  }
+}
+
 .mp-audio-bar {
   display: block;
   width: 3px;
